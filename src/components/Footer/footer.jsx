@@ -1,56 +1,37 @@
-import '../../css/App.css';
-
-
+import './Footer.scss';
 
 export const Footer = () => {
-  return <div className="footer">
-            <div className="container-fluid">
-                 <div className="footerItems">
-                    <div className="firstCol">
-                        <a href=" " className="footerItem">
-                            Меблі
-                        </a>
-                        <a href=" " className="footerItem">
-                            Текстиль
-                        </a>
-                        <a href=" " className="footerItem">
-                            Все для для дому
-                        </a>
-                        <a href=" " className="footerItem">
-                            Дитячий світ
-                        </a>
-                        <a href=" " className="footerItem">
-                            Домашні улюбленці
-                        </a>
-                    </div>
-                    <div className="firstCol">
-                        <a href=" " className="footerItem">
-                            Улюблене
-                        </a>
-                        <a href=" " className="footerItem">
-                            Мій кабінет
-                        </a>
-                        <a href=" " className="footerItem">
-                            Про нас
-                        </a>
-                        <a href=" " className="footerItem">
-                            Умови використання
-                        </a>
-                        <a href=" " className="footerItem">
-                            Політика конфіденційності
-                        </a>
-                    </div>
-                    <div className="firstCol">
-                        <a href=" " className="footerItem">
-                            Допомога
-                        </a>
-                        <a href=" " className="footerItem">
-                            Зворотній зв’язок
-                        </a>
-                    </div>
-                </div>
-            </div>
+  return (
+    <div className="wrapper_footer">
+      <footer className="footer container">
+        <div className="logo_footer">
+          <img src="/Reborn_UA/img/logo_white.svg" alt="" />
         </div>
-
-
+        <nav className="nav_footer">
+          <div className='nav_left'>
+            <ul>
+              <li>Меблі</li>
+              <li>Одяг</li>
+              <li>Техніка</li>
+              <li>Все для дому</li>
+              <li>Дитячий світ</li>
+              <li>Домашні улюбленці</li>
+            </ul>
+            <ul>
+              <li>Улюблене</li>
+              <li>Мій кабінет</li>
+              <li>Про нас</li>
+              <li>Умови використання</li>
+              <li>Політика конфіденційності</li>
+            </ul>
+          </div>
+          <ul>
+            <li>Допомога</li>
+            <li>Зворотній зв’язок</li>
+          </ul>
+        </nav>
+        <h3>Друге життя речей</h3>
+      </footer>
+    </div>
+  );
 };

@@ -1,0 +1,30 @@
+* {
+  box-sizing: border-box;
+}
+
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  padding-top: 30px;
+}
+
+body {
+  font-family: 'Kodchasan', sans-serif;
+  font-size: 18px;
+  font-weight: 300;
+  background: #F4F4F4;
+  color: #161616;
+}
+
+img {
+  width: 100%;
+  height: auto;
+}
+
+.container {
+  max-width: 1810px;
+  margin: 0 auto;
+  padding: 0 15px;
+}

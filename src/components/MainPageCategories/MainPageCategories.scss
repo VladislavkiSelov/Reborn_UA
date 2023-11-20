@@ -1,0 +1,87 @@
+.categories {
+    width: 100%;
+    padding-top: 75px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &>h2 {
+        margin-bottom: 86px;
+        text-align: center;
+        color: var(--black, #161616);
+        font-family: Jost;
+        font-size: 48px;
+        font-weight: 700;
+        line-height: 48px;
+        letter-spacing: -0.96px;
+    }
+}
+
+.wrapper_categories {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 110px;
+    margin-bottom: 110px;
+    max-width: 1270px;
+
+    &>div {
+        position: relative;
+        width: 100%;
+        max-width: 350px;
+        height: 350px;
+        width: calc(100% - 220px / 3);
+        border-radius: 50%;
+        cursor: pointer;
+
+        img {
+            position: relative;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: contain;
+            display: block;
+            width: auto;
+            height: auto;
+        }
+
+        h3 {
+            white-space: nowrap;
+            position: absolute;
+            bottom: 35px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #161616;
+            font-family: Jost;
+            font-size: 32px;
+            font-weight: 500;
+            line-height: 32px;
+            letter-spacing: 0.96px;
+            z-index: 2;
+        }
+    }
+}
+
+.card_furniture {
+    background: #ABD998;
+}
+
+.card_cloth {
+    background: #FFE562;
+}
+
+.card_machinery {
+    background: #5FA0CA;
+}
+
+.card_home {
+    background: #329BAD;
+}
+
+.card_kidsToys {
+    background: #89C4C4;
+}
+
+.card_animals {
+    background: #92B884;
+}

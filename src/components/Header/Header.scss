@@ -1,0 +1,32 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    // justify-content: space-between;
+
+    .header-logo {
+        min-width: 183px;
+        margin-right: 53px;
+    }
+
+    .searchContainer {
+        display: flex;
+        align-items: center;
+    }
+
+    .box_btn_header {
+        display: flex;
+        gap: 14px;
+        margin-left: 60px;
+        min-width: 90px;
+
+        &>button{
+            width: 100%;
+            background: inherit;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+        }
+    }
+}

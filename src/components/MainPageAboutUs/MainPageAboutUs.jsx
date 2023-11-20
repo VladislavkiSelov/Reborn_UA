@@ -1,32 +1,44 @@
-import React from 'react'
+import React from 'react';
+import './MainPageAboutUs.scss';
 
 export default function MainPageAboutUs() {
   return (
-    <section className="aboutUs">
-    <div className="container-fluid">
-      <div className="aboutUsHolder">
-        <h2 className="aboutUsTitle">Про нас</h2>
+    <div className="aboutUs">
+      <div className="aboutUs_wrapper">
+        <h2>Про нас</h2>
         <div className="aboutUsContent">
-          <p className="aboutUsDiscription">
-            Наша мета - дати нове життя старим речам + <br />
+          <p>
+            <span className="green">Наша мета </span>
+             - дати нове життя старим речам + <br />
             допомогти Вам знайти щось особливе та ексклюзивне
           </p>
-          <ul className="aboutUsList">
-            <li className="aboutUsItem">
+          <ul>
+            <li>
+              <img
+                src="/Reborn_UA//img/material-symbols_menstrual-health.svg"
+                alt="#"
+              />
               Допомагаємо екології нашої планети користуючись тими <br />
               речами які вже були у споживанні
             </li>
-            <li className="aboutUsItem">
+            <li>
+              <img
+                src="/Reborn_UA//img/material-symbols_menstrual-health.svg"
+                alt="#"
+              />
               У нас є речі які ви дійсно більше ніде не знайдете
             </li>
-            <li className="aboutUsItem">
-              Заощаджуй кошти на подорожі, навчання та враження від життя
-              разом з нами!
+            <li>
+              <img
+                src="/Reborn_UA//img/material-symbols_menstrual-health.svg"
+                alt="#"
+              />
+              Заощаджуй кошти на подорожі, навчання та враження від життя разом
+              з нами!
             </li>
           </ul>
         </div>
       </div>
     </div>
-  </section>
-  )
+  );
 }

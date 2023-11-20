@@ -1,0 +1,20 @@
+.NewAnnouncements {
+    margin-bottom: 76px;
+
+    &>h2 {
+        color: #2C2C2C;
+        font-family: Jost;
+        font-size: 48px;
+        font-weight: 700;
+        line-height: 48px;
+        letter-spacing: -0.96px;
+        text-align: center;
+        margin: 80px;
+    }
+}
+
+.wrapper_card_product {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 45px;
+}

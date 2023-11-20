@@ -1,53 +1,27 @@
-import React from 'react'
+import React from 'react';
+import './MainPageCategories.scss'
 
 export default function MainPageCategories() {
+  const arrayCategories = [
+    { text: 'Меблі', img: '/Reborn_UA/img/catagoty_1.svg',classCard:'furniture' },
+    { text: 'Одяг', img: '/Reborn_UA/img/catagoty_2.svg', classCard:'cloth' },
+    { text: 'Техніка', img: '/Reborn_UA/img/catagoty_3.svg', classCard:'machinery' },
+    { text: 'Все для дому', img: '/Reborn_UA/img/catagoty_4.svg', classCard:'home' },
+    { text: 'Дитячий світ', img: '/Reborn_UA/img/catagoty_5.svg', classCard:'kidsToys' },
+    { text: 'Наші улюбленці', img: '/Reborn_UA/img/catagoty_6.svg', classCard:'animals' },
+  ];
+
   return (
-    <section className="categories">
-    <div className="container-fluid">
-      <div className="cardsHolder">
-        <div className="categoriesHeader">
-          <h2>Категорії</h2>
-        </div>
-        <div className="categoryContainer">
-          <div className="categoryContainerUpper">
-            <div className="cardsCategories">
-              <a className="card" href=" ">
-                Меблі
-              </a>
-            </div>
-            <div className="cardsCategories">
-              <a className="card" href=" ">
-                Одяг
-              </a>
-            </div>
-            <div className="cardsCategories">
-              <a className="card" href=" ">
-                Техніка
-              </a>
-            </div>
+    <div className="categories container">
+      <h2>Категорії</h2>
+      <div className="wrapper_categories">
+        {arrayCategories.map((el, i) => (
+          <div key={i} className={`card_${el.classCard}`}>
+            <img src={el.img} alt={el.text} />
+            <h3>{el.text}</h3>
           </div>
-          <div className="categoryContainerLower">
-            <div className="cardsCategories">
-              <a className="card" href=" ">
-                Все для дому
-              </a>
-            </div>
-            <div className="cardsCategories">
-              <a className="card" href=" ">
-                Дитячий <br />
-                світ
-              </a>
-            </div>
-            <div className="cardsCategories">
-              <a className="card" href=" ">
-                Домашні <br />
-                улюбленці
-              </a>
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
-  </section>
-  )
+  );
 }
