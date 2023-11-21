@@ -15,7 +15,7 @@ export default function MainPageAboutUs() {
           <ul>
             <li>
               <img
-                src="/Reborn_UA//img/material-symbols_menstrual-health.svg"
+                src="/img/material-symbols_menstrual-health.svg"
                 alt="#"
               />
               Допомагаємо екології нашої планети користуючись тими <br />
@@ -23,14 +23,14 @@ export default function MainPageAboutUs() {
             </li>
             <li>
               <img
-                src="/Reborn_UA//img/material-symbols_menstrual-health.svg"
+                src="/img/material-symbols_menstrual-health.svg"
                 alt="#"
               />
               У нас є речі які ви дійсно більше ніде не знайдете
             </li>
             <li>
               <img
-                src="/Reborn_UA//img/material-symbols_menstrual-health.svg"
+                src="/img/material-symbols_menstrual-health.svg"
                 alt="#"
               />
               Заощаджуй кошти на подорожі, навчання та враження від життя разом

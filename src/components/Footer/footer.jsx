@@ -5,7 +5,7 @@ export const Footer = () => {
     <div className="wrapper_footer">
       <footer className="footer container">
         <div className="logo_footer">
-          <img src="/Reborn_UA/img/logo_white.svg" alt="" />
+          <img src="/img/logo_white.svg" alt="" />
         </div>
         <nav className="nav_footer">
           <div className='nav_left'>

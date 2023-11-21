@@ -14,7 +14,7 @@ export const App = () => {
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route path="/Reborn_UA" element={<MainPage />}></Route>
+          <Route path="/" element={<MainPage />}></Route>
         </Routes>
         <Footer />
       </BrowserRouter>
