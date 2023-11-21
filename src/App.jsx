@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Footer } from './components/Footer/Footer';
 import Header from './components/Header/Header';
 import MainPage from './page/MainPage/MainPage';
+import ErrorPage from 'page/ErrorPage/ErrorPage';
 
 export const App = () => {
   return (
@@ -15,6 +16,7 @@ export const App = () => {
         <Header />
         <Routes>
           <Route path="/" element={<MainPage />}></Route>
+          <Route path="*" element={<ErrorPage />}></Route>
         </Routes>
         <Footer />
       </BrowserRouter>

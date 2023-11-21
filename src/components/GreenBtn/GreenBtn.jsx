@@ -1,7 +1,7 @@
 import React from 'react';
-import './MainBtn.scss'
+import './GreenBtn.scss'
 
-export default function MainBtn({ text, classBtn, handelClick }) {
+export default function GreenBtn({ text, classBtn, handelClick }) {
   return (
     <button onClick={handelClick} className={`btn ${classBtn || ''}`}>
       {text}
