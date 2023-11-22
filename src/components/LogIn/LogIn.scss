@@ -8,7 +8,7 @@
     z-index: 5;
 }
 
-.sing_up {
+.log_in {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -50,7 +50,7 @@
         }
     }
 
-    .header_sing_up {
+    .header_log_in {
         display: flex;
         justify-content: center;
         margin: 0 -34px;
@@ -79,10 +79,16 @@
         }
     }
 
-    .form_sing_up {
+    .form_log_in {
         display: flex;
         flex-direction: column;
         gap: 28px;
+        &>p{
+            a{
+                color: #000;
+                text-decoration: none;
+            }
+        }
 
         label {
             display: flex;
