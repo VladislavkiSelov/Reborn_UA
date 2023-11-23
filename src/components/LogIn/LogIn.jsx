@@ -4,10 +4,9 @@ import { IMaskInput } from 'react-imask';
 import BtnGraphite from 'components/BtnGraphite/BtnGraphite';
 import { ReactComponent as HideSvg } from '../../images/Hide.svg';
 import { ReactComponent as ShowSvg } from '../../images/Show.svg';
-import { ReactComponent as CloseSvg } from '../../images/Close.svg';
 import './LogIn.scss';
 
-export default function LogIn({ setStatusProfile }) {
+export default function LogIn() {
   const [showHideElement1, setShowHideElement1] = useState(false);
   const inputRef = useRef(null);
   const {
@@ -22,10 +21,6 @@ export default function LogIn({ setStatusProfile }) {
   } = useForm({ mode: 'onSubmit' });
 
   const validationPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-
-  function closePage() {
-    setStatusProfile(false);
-  }
 
   function showPassword(e) {
     const input = e.currentTarget;
@@ -66,78 +61,65 @@ export default function LogIn({ setStatusProfile }) {
 
   return (
     <>
-      <div onClick={closePage} className="wrapper_modal_authentication"></div>
-      <div className="log_in">
-        <CloseSvg onClick={closePage} className="close_btn" />
-        <div className="header_log_in">
-          <button className="active_btn_header_sing_up">Увійти</button>
-          <button>Зареєструватися</button>
-        </div>
-        <form className="form_log_in" onSubmit={handleSubmit(onSubmit)}>
-          <label className={errors.phone && `error_label`}>
-            Номер телефону
-            <IMaskInput
-              mask="+{38}(000)-00-00-000"
-              radix="."
-              unmask={false}
-              inputRef={inputRef}
-              value={getValues('phone')}
-              onAccept={handleAccept}
-              onComplete={handleEmpty}
-              className={errors.phone && `error_input`}
-              type="text"
-              {...register('phone', {
-                required: true,
-              })}
-            />
-            {errors.phone && (
-              <p className="error_text">*Невірно введено номер</p>
-            )}
-          </label>
-          <label className={errors.password && `error_label`}>
-            Пароль
-            <input
-              className={errors.password && `error_input`}
-              type="password"
-              onClick={e => showPassword(e)}
-              {...register('password', {
-                required: true,
-                pattern: validationPassword,
-              })}
-            />
-            {showHideElement1 && (
-              <span className="show">
-                <ShowSvg className={errors?.password && `error_svg`} />
-              </span>
-            )}
-            {showHideElement1 === false && (
-              <span className="show">
-                <HideSvg className={errors?.password && `error_svg`} />
-              </span>
-            )}
-            {errors.password && (
-              <p className="error_text">*Пароль має містити від 8 символів</p>
-            )}
-          </label>
-          <label htmlFor="remember_me" className="label_remember_me">
-            <input
-              type="checkbox"
-              id="remember_me"
-              {...register('remember_me')}
-            />
-            <span className="check_box"></span>
-            <p>Запам’ятати мене</p>
-          </label>
-          <p>
-            <a href="#">Забули пароль?</a>
-          </p>
-          <BtnGraphite text="Зарєеструватися" />
-        </form>
+      <form className="form_log_in" onSubmit={handleSubmit(onSubmit)}>
+        <label className={errors.phone && `error_label`}>
+          Номер телефону
+          <IMaskInput
+            mask="+{38}(000)-00-00-000"
+            radix="."
+            unmask={false}
+            inputRef={inputRef}
+            value={getValues('phone')}
+            onAccept={handleAccept}
+            onComplete={handleEmpty}
+            className={errors.phone && `error_input`}
+            type="text"
+            {...register('phone', {
+              required: true,
+            })}
+          />
+          {errors.phone && <p className="error_text">*Невірно введено номер</p>}
+        </label>
+        <label className={errors.password && `error_label`}>
+          Пароль
+          <input
+            className={errors.password && `error_input`}
+            type="password"
+            onClick={e => showPassword(e)}
+            {...register('password', {
+              required: true,
+              pattern: validationPassword,
+            })}
+          />
+          {showHideElement1 && (
+            <span className="show">
+              <ShowSvg className={errors?.password && `error_svg`} />
+            </span>
+          )}
+          {showHideElement1 === false && (
+            <span className="show">
+              <HideSvg className={errors?.password && `error_svg`} />
+            </span>
+          )}
+          {errors.password && (
+            <p className="error_text">*Пароль має містити від 8 символів</p>
+          )}
+        </label>
+        <label htmlFor="remember_me" className="label_remember_me">
+          <input
+            type="checkbox"
+            className='input_checkbox'
+            id="remember_me"
+            {...register('remember_me')}
+          />
+          <span className="check_box"></span>
+          <p>Запам’ятати мене</p>
+        </label>
         <p>
-          Під час входу ви погоджуєтесь з нашими{' '}
-          <a href="#">Умовами користування</a>
+          <a href="#">Забули пароль?</a>
         </p>
-      </div>
+        <BtnGraphite text="Зарєеструватися" />
+      </form>
     </>
   );
 }

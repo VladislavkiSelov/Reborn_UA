@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import Search from 'components/Search/Search';
 import MainBtn from 'components/BtnGreen/BtnGreen';
-import SignUp from 'components/SignUp/SignUp';
-import LogIn from 'components/LogIn/LogIn';
+import Authentication from 'components/Authentication/Authentication';
 import './Header.scss';
 
 export default function Header() {
@@ -29,8 +28,7 @@ export default function Header() {
         </div>
       </header>
       {statusProfile &&
-      //  <SignUp setStatusProfile={(value)=>setStatusProfile(value)}/>
-       <LogIn setStatusProfile={(value)=>setStatusProfile(value)}/>
+       <Authentication setStatusProfile={(value)=>setStatusProfile(value)}/>
        }
     </>
   );
