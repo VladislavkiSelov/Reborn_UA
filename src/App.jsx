@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Footer } from './components/Footer/Footer';
 import Header from './components/Header/Header';
 import MainPage from './page/MainPage/MainPage';
+import CategoryPage from 'page/CategoryPage/CategoryPage';
 import ErrorPage from 'page/ErrorPage/ErrorPage';
 
 export const App = () => {
@@ -16,6 +17,7 @@ export const App = () => {
         <Header />
         <Routes>
           <Route path="/" element={<MainPage />}></Route>
+          <Route path="/category/:categoryId" element={<CategoryPage />}></Route>
           <Route path="*" element={<ErrorPage />}></Route>
         </Routes>
         <Footer />

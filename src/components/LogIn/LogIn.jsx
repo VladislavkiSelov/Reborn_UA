@@ -108,7 +108,7 @@ export default function LogIn() {
         <label htmlFor="remember_me" className="label_remember_me">
           <input
             type="checkbox"
-            className='input_checkbox'
+            className="input_checkbox"
             id="remember_me"
             {...register('remember_me')}
           />

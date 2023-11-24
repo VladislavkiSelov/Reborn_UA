@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Search from 'components/Search/Search';
 import MainBtn from 'components/BtnGreen/BtnGreen';
 import Authentication from 'components/Authentication/Authentication';
@@ -14,7 +15,9 @@ export default function Header() {
     <>
       <header className="header container">
         <div className="header-logo">
-          <img src="/img/logo.svg" alt="logo" />
+        <Link to="/">
+        <img src="/img/logo.svg" alt="logo" />
+        </Link>
         </div>
         <Search />
         <MainBtn text="Додати оголошення" className="btn_header" />

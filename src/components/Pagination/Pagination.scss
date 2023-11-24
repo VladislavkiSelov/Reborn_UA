@@ -1,0 +1,40 @@
+.pagination {
+    display: flex;
+}
+
+.pagination_value_box {
+    display: flex;
+    align-items: center;
+
+    input {
+        width: 27px;
+        height: 24px;
+        border-radius: 2px;
+        border: 1px solid #3E3E3E;
+        color: #161616;
+        font-size: 18px;
+        font-weight: 300;
+        line-height: 22px;
+    }
+
+    h5 {
+        color: #000;
+        font-size: 18px;
+        font-weight: 300;
+        line-height: 22px;
+    }
+}
+
+.btn_left_pagination {
+    background: inherit;
+    border: none;
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+.btn_right_pagination {
+    background: inherit;
+    border: none;
+    margin-left: 26px;
+    cursor: pointer;
+}
