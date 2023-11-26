@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Pagination from 'components/Pagination/Pagination';
 import CardProductCategory from 'components/CardProductCategory/CardProductCategory';
 import BtnGreen from 'components/BtnGreen/BtnGreen';
+import { Oval } from 'react-loader-spinner';
+import { ReactComponent as ArrowDown } from '../../images/arrow_down.svg';
 import './CategoryPage.scss';
 
 export default function CategoryPage() {
   const params = useParams();
+  const navigate = useNavigate();
   const [arrayProducts, setArrayProducts] = useState([]);
   const [responseServe, setResponseServe] = useState([]);
   const [page, setPage] = useState(0);
@@ -23,24 +26,75 @@ export default function CategoryPage() {
     setSort(e.target.value);
   }
 
+  console.log(params);
+
   useEffect(() => {
-    fetch(
-      `http://ec2-3-79-99-48.eu-central-1.compute.amazonaws.com/api/v1/public/products/listing?category=${params.categoryId}&page=${page}&size=6&sort=${sort}`
-    )
-      .then(res => res.json())
-      .then(res => {
-        setResponseServe(res);
-        setArrayProducts(res.content);
-      });
-  }, [params, page, sort]);
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `http://ec2-3-79-99-48.eu-central-1.compute.amazonaws.com/api/v1/public/products/listing?category=${params.categoryId}&page=${page}&size=6&sort=${sort}`
+        );
+        const data = await response.json();
+        setResponseServe(data);
+        setArrayProducts(data.content);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        navigate('*');
+      }
+    };
+
+    fetchData();
+  }, [params, page, sort, navigate]);
 
   const onSubmit = data => {
     console.log(data);
     reset();
   };
 
+  const getTypeCategory = category => {
+    switch (category) {
+      case 'FURNITURE':
+        return 'Меблі';
+        break;
+      case 'CLOTHE':
+        return 'Одяг';
+        break;
+      case 'ELECTRONIC':
+        return 'Техніка';
+        break;
+      case 'HOSE':
+        return 'Все для дому';
+        break;
+      case 'CHILDREN':
+        return 'Дитячий світ';
+        break;
+      case 'PETS':
+        return 'Наші улюбленці';
+        break;
+        default:
+          return '';
+    }
+  };
+
+  if (arrayProducts.length === 0) {
+    return (
+      <Oval
+        height={80}
+        width={80}
+        color="#4fa94d"
+        wrapperClass="container"
+        visible={true}
+        ariaLabel="oval-loading"
+        secondaryColor="#4fa94d"
+        strokeWidth={2}
+        strokeWidthSecondary={2}
+      />
+    );
+  }
+
   return (
     <div className="category container">
+      <h5>Головна сторінка/Категорія {getTypeCategory(params.categoryId)}</h5>
       <div className="header_category">
         <Pagination
           maxElementPage={responseServe.totalElements}
@@ -48,10 +102,15 @@ export default function CategoryPage() {
         />
         <div className="box_sort_category_page">
           <h5>Сортувати за:</h5>
-          <select onChange={e => CheckSort(e)}>
-            <option value="POPULARITY">Популярніші</option>
-            <option value="DATE">Дата</option>
-          </select>
+          <div className="wrapper_select">
+            <div className="select_arrow_down">
+              <ArrowDown />
+            </div>
+            <select onChange={e => CheckSort(e)}>
+              <option value="POPULARITY">Популярніші</option>
+              <option value="DATE">Дата</option>
+            </select>
+          </div>
         </div>
       </div>
       <div className="сategory_main_box">
@@ -107,12 +166,12 @@ export default function CategoryPage() {
               state={el.state}
             />
           ))}
-                {/* <div className="footer_category">
+          <div className="footer_category">
           <Pagination
             maxElementPage={responseServe.totalElements}
             setPage={value => setPage(value)}
           />
-        </div> */}
+        </div>
         </div>
       </div>
     </div>

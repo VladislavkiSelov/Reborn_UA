@@ -1,5 +1,9 @@
 .category {
     width: 100%;
+
+    &>h5{
+        padding-top: 50px;
+    }
 }
 
 .header_category {
@@ -17,11 +21,27 @@
     select {
         border-radius: 4px;
         border: 1px solid #555;
-        padding: 15px;
+        padding: 18px 45px 15px 15px;
         color: #000;
         font-size: 18px;
         font-weight: 300;
         line-height: 22px;
+        appearance: none;
+        cursor: pointer;
+    }
+
+    .wrapper_select {
+        position: relative;
+    }
+
+    .select_arrow_down {
+        position: absolute;
+        width: 10.925px;
+        height: 20.194px;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
     }
 }
 
@@ -29,12 +49,13 @@
     display: flex;
     width: 100%;
     padding-top: 70px;
+
 }
 
-.footer_category{
-display: flex;
-justify-content: center;
-margin-bottom: 55px;
+.footer_category {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 55px;
 }
 
 .filter_wrapper {
