@@ -26,13 +26,11 @@ export default function CategoryPage() {
     setSort(e.target.value);
   }
 
-  console.log(params);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://ec2-3-79-99-48.eu-central-1.compute.amazonaws.com/api/v1/public/products/listing?category=${params.categoryId}&page=${page}&size=6&sort=${sort}`
+          `http://ec2-18-197-60-214.eu-central-1.compute.amazonaws.com/api/v1/public/products/listing?category=${params.categoryId}&page=${page}&size=6&sort=${sort}`
         );
         const data = await response.json();
         setResponseServe(data);
@@ -159,6 +157,8 @@ export default function CategoryPage() {
         <div className="cards_category">
           {arrayProducts.map((el, i) => (
             <CardProductCategory
+            categoryId={params.categoryId}
+            reference={el.reference}
               key={i}
               productTitle={el.productTitle}
               productDescription={el.productDescription}

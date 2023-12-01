@@ -17,4 +17,8 @@
     display: flex;
     flex-wrap: wrap;
     gap: 45px;
+
+    &>a{
+        width: calc((100% - 135px) / 4);
+    }
 }

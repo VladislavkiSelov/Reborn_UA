@@ -1,0 +1,115 @@
+.product {
+    width: 100%;
+    &>h5 {
+        padding-top: 50px;
+        padding-bottom: 65px;
+        font-family: Jost;
+        font-size: 27px;
+        font-weight: 500;
+        line-height: 27px;
+        letter-spacing: 0.27px;
+    }
+
+    .product_main_block {
+        display: flex;
+        gap: 50px;
+        margin-bottom: 65px;
+    }
+
+    .box_img {
+        width: 100%;
+        max-width: 760px;
+        border-radius: 10px;
+    }
+
+    .content_product {
+        padding: 50px 70px;
+        border-radius: 10px;
+        border: 1px solid #EFEFEF;
+        background: #EFEFEF;
+        box-shadow: 0px 10px 22px 0px rgba(20, 0, 100, 0.14);
+        min-height: 585px;
+        margin-bottom: 15px;
+        // height: 100%;
+    }
+
+    .wrapper_content_product {
+        &>h4 {
+            padding: 30px 80px;
+            border-radius: 5px;
+            background: #EFEFEF;
+            box-shadow: 0px 10px 22px 0px rgba(20, 0, 100, 0.14);
+            margin-bottom: 15px;
+            color: #3E3E3E;
+            font-family: Kodchasan;
+            font-size: 19px;
+            font-weight: 700;
+            line-height: 19px;
+            letter-spacing: 0.57px;
+        }
+    }
+
+    .wrapper_content {
+        &>h3 {
+            font-family: Jost;
+            font-size: 35px;
+            font-weight: 600;
+            line-height: 35px;
+            letter-spacing: 0.35px;
+            margin-bottom: 10px;
+        }
+
+        &>div {
+            display: flex;
+            margin-bottom: 50px;
+        }
+
+        h4 {
+            color: #567A49;
+            font-family: Kodchasan;
+            font-size: 19px;
+            font-weight: 700;
+            line-height: 19px;
+            letter-spacing: 0.57px;
+        }
+
+        &>p {
+            font-family: Kodchasan;
+            font-size: 18px;
+            font-weight: 300;
+            line-height: 22px;
+        }
+    }
+
+    .btn_call {
+        width: 100%;
+        background: #329BAD;
+    }
+
+    .similar_ads {
+        &>h3 {
+            text-align: center;
+            color: #161616;
+            font-family: Jost;
+            font-size: 35px;
+            font-weight: 600;
+            line-height: 35px;
+            letter-spacing: 0.35px;
+            margin-bottom: 55px;
+        }
+
+        &>div {
+            display: flex;
+            gap: 50px;
+            justify-content: center;
+            margin-bottom: 55px;
+            &>a{
+                width: 100%;
+            }
+        }
+        .card_product{
+            width: 100%;
+        }
+        
+    }
+}
