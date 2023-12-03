@@ -3,9 +3,11 @@
     background: white;
     backdrop-filter: blur(1px);
     padding: 8px;
+    height: 100%;
+
     position: relative;
 
-    &>h4 {
+    h4 {
         color: #161616;
         text-align: center;
         font-size: 19px;
@@ -55,6 +57,7 @@
         font-size: 18px;
         line-height: 22px;
         padding-left: 15px;
+        color: black;
     }
 
     &>img {

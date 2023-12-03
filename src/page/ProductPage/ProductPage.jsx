@@ -3,7 +3,9 @@ import { Oval } from 'react-loader-spinner';
 import { useNavigate, useParams } from 'react-router-dom';
 import Pagination from 'components/Pagination/Pagination';
 import CardProduct from 'components/CardProduct/CardProduct';
+import Slider from 'components/Slider/Slider';
 import BtnGreen from 'components/BtnGreen/BtnGreen';
+import { ReactComponent as Like } from '../../images/heart.svg';
 import './ProductPage.scss';
 
 export default function ProductPage() {
@@ -48,7 +50,6 @@ export default function ProductPage() {
 
     fetchData();
   }, [params, page, navigate]);
-  console.log(product);
 
   const getTypeCategory = category => {
     switch (category) {
@@ -95,19 +96,24 @@ export default function ProductPage() {
     <section className="product container">
       <h5>Головна сторінка/Категорія {getTypeCategory(params.categoryId)}</h5>
       <div className="product_main_block">
-        <div className="box_img">
+        <Slider/>
+        {/* <div className="box_img">
           <img src="/img/img_furniture.png" alt="#" />
-        </div>
+        </div> */}
         <div className="wrapper_content_product">
           <div className="content_product">
             <div className="wrapper_content">
               <h3>{product.productTitle}</h3>
               <div>
+                <div className='wrapper_location'>
+                <img src="/img/location.svg" alt="location" />
                 <h4>{product.city}</h4>
+                </div>
                 <h5>{product.state}</h5>
               </div>
               <p>{product.productDescription}</p>
             </div>
+            <Like className="like" />
           </div>
           <h4>{product.ownerUsername}</h4>
           <BtnGreen text="Зателефонувати" classBtn="btn_call" />

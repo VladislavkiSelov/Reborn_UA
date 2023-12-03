@@ -5,11 +5,13 @@ import BtnGraphite from 'components/BtnGraphite/BtnGraphite';
 import { ReactComponent as HideSvg } from '../../images/Hide.svg';
 import { ReactComponent as ShowSvg } from '../../images/Show.svg';
 import './SignUp.scss';
+import axios from 'axios';
 
 export default function SignUp() {
   const [showHideElement1, setShowHideElement1] = useState(false);
   const [showHideElement2, setShowHideElement2] = useState(false);
   const inputRef = useRef(null);
+  const url = `http://ec2-18-197-60-214.eu-central-1.compute.amazonaws.com/api/v1/public/users/registration`;
   const {
     register,
     setValue,
@@ -23,7 +25,7 @@ export default function SignUp() {
 
   const validationName = /^[А-ЯA-Z][а-яА-Яa-zA-Z]{1,20}$/;
   const validationEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  const validationPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+  const validationPassword = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
 
   function showPassword(e) {
     const input = e.currentTarget;
@@ -67,7 +69,19 @@ export default function SignUp() {
       clearErrors('phone');
     }
 
-    console.log(data);
+    axios
+      .post(url, {
+        username: data.name,
+        email: data.email,
+        password: data.password,
+        phoneNumber: data.phone,
+      })
+      .then(response => {
+        console.log('Ответ сервера:', response.data);
+      })
+      .catch(error => {
+        console.error('Ошибка запроса:', error);
+      });
     reset();
   };
 
@@ -169,7 +183,7 @@ export default function SignUp() {
         </label>
         <label htmlFor="remember_me" className="label_remember_me">
           <input
-           className='input_checkbox'
+            className="input_checkbox"
             type="checkbox"
             id="remember_me"
             {...register('remember_me')}

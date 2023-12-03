@@ -24,6 +24,6 @@ export default function CardProduct({
           <img src="/img/heart.svg" alt="like" className="like" />
         </button>
       </div>
-    </Link>
+      </Link>
   );
 }

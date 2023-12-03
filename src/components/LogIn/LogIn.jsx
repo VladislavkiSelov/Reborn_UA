@@ -5,8 +5,10 @@ import BtnGraphite from 'components/BtnGraphite/BtnGraphite';
 import { ReactComponent as HideSvg } from '../../images/Hide.svg';
 import { ReactComponent as ShowSvg } from '../../images/Show.svg';
 import './LogIn.scss';
+import axios from 'axios';
 
 export default function LogIn() {
+  const url = `http://ec2-18-197-60-214.eu-central-1.compute.amazonaws.com/api/v1/public/auth`;
   const [showHideElement1, setShowHideElement1] = useState(false);
   const inputRef = useRef(null);
   const {
@@ -54,6 +56,18 @@ export default function LogIn() {
     } else {
       clearErrors('phone');
     }
+
+    axios
+    .post(url, {
+      email: data.email,
+      password: data.password,
+    })
+    .then(response => {
+      console.log('Ответ сервера:', response.data);
+    })
+    .catch(error => {
+      console.error('Ошибка запроса:', error);
+    });
 
     console.log(data);
     reset();

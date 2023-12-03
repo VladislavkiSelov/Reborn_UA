@@ -1,5 +1,6 @@
 .product {
     width: 100%;
+
     &>h5 {
         padding-top: 50px;
         padding-bottom: 65px;
@@ -23,6 +24,7 @@
     }
 
     .content_product {
+        position: relative;
         padding: 50px 70px;
         border-radius: 10px;
         border: 1px solid #EFEFEF;
@@ -31,6 +33,12 @@
         min-height: 585px;
         margin-bottom: 15px;
         // height: 100%;
+
+        .like {
+            position: absolute;
+            right: 75px;
+            top: 50px;
+        }
     }
 
     .wrapper_content_product {
@@ -62,6 +70,8 @@
         &>div {
             display: flex;
             margin-bottom: 50px;
+            align-items: center;
+            gap: 30px;
         }
 
         h4 {
@@ -103,13 +113,20 @@
             gap: 50px;
             justify-content: center;
             margin-bottom: 55px;
-            &>a{
+
+            &>a {
                 width: 100%;
             }
         }
-        .card_product{
+
+        .card_product {
             width: 100%;
         }
-        
+
+    }
+
+    .wrapper_location {
+        display: flex;
+        align-items: center;
     }
 }
