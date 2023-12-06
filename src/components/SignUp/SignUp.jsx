@@ -23,7 +23,7 @@ export default function SignUp() {
     formState: { errors },
   } = useForm({ mode: 'onSubmit' });
 
-  const validationName = /^[А-ЯA-Z][а-яА-Яa-zA-Z]{1,20}$/;
+  const validationName =  /^[А-Яа-яЁё]+ [А-Яа-яЁё]+$/;
   const validationEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const validationPassword = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
 

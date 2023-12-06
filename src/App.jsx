@@ -10,7 +10,7 @@ import MainPage from './page/MainPage/MainPage';
 import CategoryPage from 'page/CategoryPage/CategoryPage';
 import ProductPage from 'page/ProductPage/ProductPage';
 import ErrorPage from 'page/ErrorPage/ErrorPage';
-import OwnOfficePage from 'page/OwnOfficePage/OwnOfficePage';
+import OwnCabinetPage from 'page/OwnOfficePage/OwnCabinetPage';
 
 export const App = () => {
   return (
@@ -21,7 +21,7 @@ export const App = () => {
           <Route path="/" element={<MainPage />}></Route>
           <Route path="/category/:categoryId" element={<CategoryPage />}></Route>
           <Route path="/category/:categoryId/product/:productId" element={<ProductPage />}></Route>
-          <Route path="/own-office" element={<OwnOfficePage />}></Route>
+          <Route path="/own-cabinet" element={<OwnCabinetPage />}></Route>
           <Route path="*" element={<ErrorPage />}></Route>
         </Routes>
         <Footer />
