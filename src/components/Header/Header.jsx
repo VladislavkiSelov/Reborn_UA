@@ -22,9 +22,9 @@ export default function Header() {
         <Search />
         <MainBtn text="Додати оголошення" className="btn_header" />
         <div className="box_btn_header">
-          <button>
+          <Link to="/favorite">
             <img src="/img/heart.svg" alt="like" />
-          </button>
+          </Link>
           <button onClick={handelClickProfile}>
             <img src="/img/profile.svg" alt="profile" />
           </button>

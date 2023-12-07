@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import './OwnCabinetPage.scss';
 import axios from 'axios';
+import CardUser from 'components/CardUser/CardUser';
 import { useForm } from 'react-hook-form';
 import BtnGraphite from 'components/BtnGraphite/BtnGraphite';
-import BtnGreen from 'components/BtnGreen/BtnGreen';
-import { ReactComponent as UserProfil } from '../../images/user_cabinet.svg';
-import { ReactComponent as UserEmail } from '../../images/mail.svg';
-import { ReactComponent as UserPhone } from '../../images/phone.svg';
 
 export default function OwnCabinetPage() {
   const [user, setUser] = useState({});
-  const validationName = /^[А-Яа-яЁёA-Za-z]+ [А-Яа-яЁёA-Za-z]+$/;
+  
+  const validationName = /^[А-Яа-яЁёA-Za-z]{2,20} [А-Яа-яЁёA-Za-z]{2,20}$/;
   const validationEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const validationPhone = /^(\+38)?\(0\d{2}\)-\d{2}-\d{2}-\d{3}$/;
-  const userId = `9826e6a1-7d37-41cf-b7ed-1df3e2222b42`;
-  const url = `http://ec2-18-197-60-214.eu-central-1.compute.amazonaws.com/api/v1/public/users/${userId}`;
-  const urlSend = `http://ec2-18-197-60-214.eu-central-1.compute.amazonaws.com/api/v1/private/users/${userId}`;
+
+  const userId = JSON.parse(localStorage.getItem('user'));
+  const url = `http://ec2-18-197-60-214.eu-central-1.compute.amazonaws.com/api/v1/public/users/${userId.userReference}`;
+  const urlSend = `http://ec2-18-197-60-214.eu-central-1.compute.amazonaws.com/api/v1/private/users/${userId.userReference}`;
   const {
     register,
     setValue,
@@ -36,11 +35,16 @@ export default function OwnCabinetPage() {
 
   const onSubmit = data => {
     axios
-      .get(urlSend, {
-        username: data.name,
-        email: data.email,
-        phoneNumber: data.phone,
-      })
+    .patch(urlSend, {
+      username: data.name,
+      email: data.email,
+      phoneNumber: data.phone,
+    }, {
+      headers: {
+        Authorization: `Bearer ${userId.authenticationToken}`,
+        'Content-Type': 'application/json',
+      },
+    })
       .then(res => console.log(res));
     reset();
   };
@@ -48,22 +52,7 @@ export default function OwnCabinetPage() {
   return (
     <div className="own_cabinet container">
       <div>
-        <div className="own_cabinet__card">
-          <h3>Особисті дані</h3>
-          <div>
-            <UserProfil />
-            <h4>{user.username}</h4>
-          </div>
-          <div>
-            <UserPhone />
-            <h4>{user.phoneNumber}</h4>
-          </div>
-          <div>
-            <UserEmail />
-            <h4>{user.email}</h4>
-          </div>
-          <BtnGreen text="Редагувати" />
-        </div>
+        <CardUser user={user} />
       </div>
       <form className="own_cabinet__form" onSubmit={handleSubmit(onSubmit)}>
         <label>

@@ -11,6 +11,7 @@ import CategoryPage from 'page/CategoryPage/CategoryPage';
 import ProductPage from 'page/ProductPage/ProductPage';
 import ErrorPage from 'page/ErrorPage/ErrorPage';
 import OwnCabinetPage from 'page/OwnOfficePage/OwnCabinetPage';
+import FavoritePage from 'page/FavoritePage/FavoritePage';
 
 export const App = () => {
   return (
@@ -21,6 +22,7 @@ export const App = () => {
           <Route path="/" element={<MainPage />}></Route>
           <Route path="/category/:categoryId" element={<CategoryPage />}></Route>
           <Route path="/category/:categoryId/product/:productId" element={<ProductPage />}></Route>
+          <Route path="/favorite" element={<FavoritePage />}></Route>
           <Route path="/own-cabinet" element={<OwnCabinetPage />}></Route>
           <Route path="*" element={<ErrorPage />}></Route>
         </Routes>
