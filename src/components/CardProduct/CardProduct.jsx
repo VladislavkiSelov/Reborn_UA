@@ -8,8 +8,17 @@ export default function CardProduct({
   titleImage,
   categoryId,
   reference,
+  el,
 }) {
-  function handelClick() {}
+  function handelClick() {
+    const allProducts = JSON.parse(localStorage.getItem('products')) || [];
+    const res = allProducts.find(item => item.reference === reference);
+    if (res !== undefined) {
+      return;
+    }
+    const newAllProducts = [...allProducts, el];
+    localStorage.setItem('products', JSON.stringify(newAllProducts));
+  }
   return (
     <Link to={`/category/${categoryId}/product/${reference}`}>
       <div className="card_product">
@@ -21,7 +30,7 @@ export default function CardProduct({
           <img src="/img/location_card_product.svg" alt="#" />
           <h5>{city} - 31.10.23</h5>
         </div>
-        <button onClick={() => handelClick()}>
+        <button onClick={handelClick}>
           <img src="/img/heart.svg" alt="like" className="like" />
         </button>
       </div>

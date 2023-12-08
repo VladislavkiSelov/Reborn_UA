@@ -2,19 +2,18 @@ import React, { useEffect, useState } from 'react';
 import './OwnCabinetPage.scss';
 import axios from 'axios';
 import CardUser from 'components/CardUser/CardUser';
+import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import BtnGraphite from 'components/BtnGraphite/BtnGraphite';
 
 export default function OwnCabinetPage() {
-  const [user, setUser] = useState({});
+  const user = useSelector(state => state.user.user)
+  console.log(user);
   
   const validationName = /^[А-Яа-яЁёA-Za-z]{2,20} [А-Яа-яЁёA-Za-z]{2,20}$/;
   const validationEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const validationPhone = /^(\+38)?\(0\d{2}\)-\d{2}-\d{2}-\d{3}$/;
 
-  const userId = JSON.parse(localStorage.getItem('user'));
-  const url = `http://ec2-18-197-60-214.eu-central-1.compute.amazonaws.com/api/v1/public/users/${userId.userReference}`;
-  const urlSend = `http://ec2-18-197-60-214.eu-central-1.compute.amazonaws.com/api/v1/private/users/${userId.userReference}`;
   const {
     register,
     setValue,
@@ -24,16 +23,15 @@ export default function OwnCabinetPage() {
   } = useForm({ mode: 'onSubmit' });
 
   useEffect(() => {
-    axios.get(url).then(res => setUser(res.data));
-  }, [url]);
-
-  useEffect(() => {
     setValue('name', user.username);
     setValue('phone', user.phoneNumber);
     setValue('email', user.email);
   }, [user]);
 
   const onSubmit = data => {
+    const userId = JSON.parse(localStorage.getItem('user'));
+    const urlSend = `http://ec2-18-197-60-214.eu-central-1.compute.amazonaws.com/api/v1/private/users/${userId.userReference}`;
+    
     axios
     .patch(urlSend, {
       username: data.name,
@@ -52,7 +50,7 @@ export default function OwnCabinetPage() {
   return (
     <div className="own_cabinet container">
       <div>
-        <CardUser user={user} />
+        <CardUser />
       </div>
       <form className="own_cabinet__form" onSubmit={handleSubmit(onSubmit)}>
         <label>

@@ -1,4 +1,14 @@
 .favorite{
     display: flex;
     width: 100%;
+    gap: 65px;
+    padding-top: 65px;
+    padding-bottom: 55px;
+
+    &__box-product{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 50px;
+    }
 }

@@ -19,6 +19,7 @@ export default function MainPageNewAnnouncements() {
       <div className="wrapper_card_product">
         {allProduct.map((el, i) => (
           <CardProduct
+            el={el}
             categoryId={el.categoryName}
             reference={el.reference}
             key={i}
