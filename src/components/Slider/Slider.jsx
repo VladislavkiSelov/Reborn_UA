@@ -47,7 +47,7 @@ export default function Slider({
             onClick={e => handelClick(e)}
             className="box_img"
             id={i}
-            key={el.img}
+            key={i}
           >
             <img src={el} alt="#" />
           </div>

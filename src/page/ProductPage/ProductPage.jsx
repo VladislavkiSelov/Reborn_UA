@@ -92,6 +92,19 @@ export default function ProductPage() {
     );
   }
 
+  function addProductFavotite(e) {
+    if (e.target.classList.contains('like')) {
+      const allProducts = JSON.parse(localStorage.getItem('products')) || [];
+      const res = allProducts.find(item => item.reference === product.reference);
+      if (res !== undefined) {
+        return;
+      }
+      const newAllProducts = [...allProducts, product];
+      localStorage.setItem('products', JSON.stringify(newAllProducts));
+      return;
+    }
+  }
+
   return (
     <section className="product container">
       <h5>Головна сторінка/Категорія {getTypeCategory(params.categoryId)}</h5>
@@ -113,7 +126,7 @@ export default function ProductPage() {
               </div>
               <p>{product.productDescription}</p>
             </div>
-            <Like className="like" />
+            <Like onClick={(e)=>addProductFavotite(e)} className="like" />
           </div>
           <h4>{product.ownerUsername}</h4>
           <BtnGreen text="Зателефонувати" classBtn="btn_call" />

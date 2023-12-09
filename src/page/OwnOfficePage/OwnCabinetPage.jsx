@@ -8,7 +8,6 @@ import BtnGraphite from 'components/BtnGraphite/BtnGraphite';
 
 export default function OwnCabinetPage() {
   const user = useSelector(state => state.user.user)
-  console.log(user);
   
   const validationName = /^[А-Яа-яЁёA-Za-z]{2,20} [А-Яа-яЁёA-Za-z]{2,20}$/;
   const validationEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;

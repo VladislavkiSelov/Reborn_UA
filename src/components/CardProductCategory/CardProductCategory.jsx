@@ -1,6 +1,6 @@
 import React from 'react';
 import './CardProductCategory.scss';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ReactComponent as Like } from '../../images/heart.svg';
 
 export default function CardProductCategory({
@@ -9,11 +9,29 @@ export default function CardProductCategory({
   city,
   state,
   reference,
-  categoryId
+  categoryId,
+  el
 }) {
+  const navigate = useNavigate()
+
+  function goToAnotherPage(e) {
+    if (e.target.classList.contains('like')) {
+      console.log('like');
+      const allProducts = JSON.parse(localStorage.getItem('products')) || [];
+      const res = allProducts.find(item => item.reference === reference);
+      if (res !== undefined) {
+        return;
+      }
+      const newAllProducts = [...allProducts, el];
+      localStorage.setItem('products', JSON.stringify(newAllProducts));
+      return;
+    }
+    navigate(`/category/${categoryId}/product/${reference}`);
+  }
+  
+
   return (
-    <Link to={`/category/${categoryId}/product/${reference}`}>
-      <div className="card_product_category">
+      <div onClick={e => goToAnotherPage(e)} className="card_product_category">
         <div className="box_img_card_product_category">
           <img src="/img/img_furniture.png" alt="#" />
         </div>
@@ -30,6 +48,5 @@ export default function CardProductCategory({
           <Like className="like" />
         </div>
       </div>
-    </Link>
   );
 }

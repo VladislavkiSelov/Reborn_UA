@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import CardUser from 'components/CardUser/CardUser';
-import CardProductCategory from 'components/CardProductCategory/CardProductCategory';
+import CardFavorite from 'components/CardFavorite/CardFavorite';
 import './FavoritePage.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { setFavoriteProducts } from 'store/sliceFavoriteProducts/sliceFavoriteProducts';
 
 export default function FavoritePage() {
-  const allProducts = JSON.parse(localStorage.getItem('products')) || [];
+  const dispatch = useDispatch();
+  const getAllProducts = useSelector(
+    state => state.favoriteProducts.favoriteProducts
+  );
+
+  useEffect(() => {
+    dispatch(
+      setFavoriteProducts(JSON.parse(localStorage.getItem('products')) || [])
+    );
+  }, [dispatch]);
 
   return (
     <div className="favorite container">
@@ -12,8 +23,9 @@ export default function FavoritePage() {
         <CardUser />
       </div>
       <div className="favorite__box-product">
-        {allProducts.map(el => (
-          <CardProductCategory
+        {getAllProducts.map(el => (
+          <CardFavorite
+            key={el.reference}
             productTitle={el.productTitle}
             productDescription={el.productDescription}
             city={el.city}

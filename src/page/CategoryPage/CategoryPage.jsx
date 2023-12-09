@@ -164,6 +164,7 @@ export default function CategoryPage() {
               productDescription={el.productDescription}
               city={el.city}
               state={el.state}
+              el={el}
             />
           ))}
           <div className="footer_category">

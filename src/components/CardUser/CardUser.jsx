@@ -1,36 +1,40 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 import BtnGreen from 'components/BtnGreen/BtnGreen';
 import { ReactComponent as UserProfil } from '../../images/user_cabinet.svg';
 import { ReactComponent as UserEmail } from '../../images/mail.svg';
 import { ReactComponent as UserPhone } from '../../images/phone.svg';
-import './CardUser.scss'
+import './CardUser.scss';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 export default function CardUser() {
-  const [user, setUser] = useState({});
-  const userId = JSON.parse(localStorage.getItem('user'));
-  const url = `http://ec2-18-197-60-214.eu-central-1.compute.amazonaws.com/api/v1/public/users/${userId.userReference}`;
+  const user = useSelector(state => state.user.user);
+  const navigate = useNavigate()
 
-  useEffect(() => {
-    axios.get(url).then(res => setUser(res.data));
-  }, [url]);
+  if (Object.keys(user).length === 0) {
+    return null;
+  }
+
+  function goEditInfoUser(){
+    navigate('/own-cabinet')
+  }
 
   return (
     <div className="card-user">
-    <h3>Особисті дані</h3>
-    <div>
-      <UserProfil />
-      <h4>{user.username}</h4>
+      <h3>Особисті дані</h3>
+      <div>
+        <UserProfil />
+        <h4>{user.username}</h4>
+      </div>
+      <div>
+        <UserPhone />
+        <h4>{user.phoneNumber}</h4>
+      </div>
+      <div>
+        <UserEmail />
+        <h4>{user.email}</h4>
+      </div>
+      <BtnGreen text="Редагувати" handelClick={goEditInfoUser} />
     </div>
-    <div>
-      <UserPhone />
-      <h4>{user.phoneNumber}</h4>
-    </div>
-    <div>
-      <UserEmail />
-      <h4>{user.email}</h4>
-    </div>
-    <BtnGreen text="Редагувати" />
-  </div>
-  )
+  );
 }

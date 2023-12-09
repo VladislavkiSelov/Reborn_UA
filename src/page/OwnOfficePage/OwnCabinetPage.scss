@@ -3,6 +3,15 @@
     width: 100%;
     gap: 145px;
 
+    &>div {
+        button {
+            cursor: auto;
+            border-radius: 10px;
+            background: #9ED3DC;
+
+        }
+    }
+
     &__form {
         width: 100%;
         display: flex;
@@ -20,7 +29,7 @@
             gap: 8px;
             margin-bottom: 30px;
 
-            &:nth-of-type(3){
+            &:nth-of-type(3) {
                 margin-bottom: 150px;
             }
         }
@@ -33,7 +42,8 @@
             padding: 15px;
             border-radius: 10px;
             border: 1px solid #3E3E3E;
-            color:  #161616;
+            color: #161616;
         }
+
     }
 }

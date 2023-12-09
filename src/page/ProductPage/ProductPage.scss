@@ -38,6 +38,12 @@
             position: absolute;
             right: 75px;
             top: 50px;
+            transition: 0.2s;
+            cursor: pointer;
+
+            &:hover{
+                transform: scale(1.2);
+            }
         }
     }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './CardProduct.scss';
 
 export default function CardProduct({
@@ -10,30 +10,36 @@ export default function CardProduct({
   reference,
   el,
 }) {
-  function handelClick() {
-    const allProducts = JSON.parse(localStorage.getItem('products')) || [];
-    const res = allProducts.find(item => item.reference === reference);
-    if (res !== undefined) {
+  const navigate = useNavigate();
+
+  function goToAnotherPage(e) {
+    if (e.target.classList.contains('like')) {
+      console.log('like');
+      const allProducts = JSON.parse(localStorage.getItem('products')) || [];
+      const res = allProducts.find(item => item.reference === reference);
+      if (res !== undefined) {
+        return;
+      }
+      const newAllProducts = [...allProducts, el];
+      localStorage.setItem('products', JSON.stringify(newAllProducts));
       return;
     }
-    const newAllProducts = [...allProducts, el];
-    localStorage.setItem('products', JSON.stringify(newAllProducts));
+    navigate(`/category/${categoryId}/product/${reference}`);
   }
+  
   return (
-    <Link to={`/category/${categoryId}/product/${reference}`}>
-      <div className="card_product">
-        <div className="box_img_product_card">
-          <img src={titleImage} alt={productTitle} />
-        </div>
-        <h4>{productTitle}</h4>
-        <div className="box_location">
-          <img src="/img/location_card_product.svg" alt="#" />
-          <h5>{city} - 31.10.23</h5>
-        </div>
-        <button onClick={handelClick}>
-          <img src="/img/heart.svg" alt="like" className="like" />
-        </button>
+    <div onClick={e => goToAnotherPage(e)} className="card_product">
+      <div className="box_img_product_card">
+        <img src={titleImage} alt={productTitle} />
       </div>
-    </Link>
+      <h4>{productTitle}</h4>
+      <div className="box_location">
+        <img src="/img/location_card_product.svg" alt="#" />
+        <h5>{city} - 31.10.23</h5>
+      </div>
+      <button>
+        <img src="/img/heart.svg" alt="like" className="like" />
+      </button>
+    </div>
   );
 }
