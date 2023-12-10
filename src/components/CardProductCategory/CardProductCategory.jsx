@@ -1,7 +1,8 @@
 import React from 'react';
 import './CardProductCategory.scss';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Like } from '../../images/heart.svg';
+
 
 export default function CardProductCategory({
   productTitle,
@@ -12,6 +13,7 @@ export default function CardProductCategory({
   categoryId,
   el
 }) {
+
   const navigate = useNavigate()
 
   function goToAnotherPage(e) {

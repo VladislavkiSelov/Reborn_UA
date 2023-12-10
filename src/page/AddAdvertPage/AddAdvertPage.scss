@@ -1,0 +1,25 @@
+.advert-page {
+    display: flex;
+    width: 100%;
+    gap: 160px;
+    padding-top: 50px;
+    margin-bottom: 100px;
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 45px;
+        max-width: 1030px;
+
+        input,select,textarea {
+            width: 100%;
+        }
+
+        button{
+            margin: 0 auto;
+            width: fit-content;
+        }
+    }
+
+}

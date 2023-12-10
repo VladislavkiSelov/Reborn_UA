@@ -14,6 +14,7 @@ import ProductPage from 'page/ProductPage/ProductPage';
 import ErrorPage from 'page/ErrorPage/ErrorPage';
 import OwnCabinetPage from 'page/OwnOfficePage/OwnCabinetPage';
 import FavoritePage from 'page/FavoritePage/FavoritePage';
+import AddAdvertPage from 'page/AddAdvertPage/AddAdvertPage';
 import axios from 'axios';
 
 export const App = () => {
@@ -50,6 +51,7 @@ export const App = () => {
           ></Route>
           <Route path="/favorite" element={<FavoritePage />}></Route>
           <Route path="/own-cabinet" element={<OwnCabinetPage />}></Route>
+          <Route path="/add-advert" element={<AddAdvertPage />}></Route>
           <Route path="*" element={<ErrorPage />}></Route>
         </Routes>
         <Footer />
