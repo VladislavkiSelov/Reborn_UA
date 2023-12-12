@@ -12,13 +12,171 @@
         gap: 45px;
         max-width: 1030px;
 
-        input,select,textarea {
-            width: 100%;
+        &>h3 {
+            color: #567A49;
+            font-family: Jost;
+            font-size: 32px;
+            font-weight: 500;
+            line-height: 32px;
+            letter-spacing: 0.96px;
         }
 
-        button{
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+
+        .wrapper_select {
+            position: relative;
+
+            span {
+                position: absolute;
+                right: 40px;
+                top: 50%;
+                transform: translateY(-50%);
+                pointer-events: none;
+                cursor: pointer;
+            }
+        }
+
+        .titel {
+            input {
+                padding: 30px;
+            }
+        }
+
+        label {
+            &>p {
+                color: #161616;
+                font-weight: 700;
+                margin-bottom: 8px;
+            }
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 15px 30px;
+            border-radius: 10px;
+            border: 1px solid #3E3E3E;
+            font-size: 18px;
+            font-weight: 300;
+
+            &::placeholder {
+                text-align: center;
+            }
+        }
+
+        textarea {
+            min-height: 400px;
+        }
+
+        button {
             margin: 0 auto;
             width: fit-content;
+        }
+
+        .container_box_input {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 50px;
+            margin-top: 30px;
+        }
+    }
+
+
+    .box_delivery_method {
+        display: flex;
+
+        &>div {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+            max-width: 460px;
+            column-gap: 100px;
+            margin-left: 60px;
+        }
+    }
+
+    .wrapper_checkbox {
+        display: flex;
+        width: calc((100% - 100px) / 2);
+        flex-direction: row;
+        align-items: center;
+        cursor: pointer;
+        position: relative;
+        margin-bottom: 30px;
+
+        p {
+            margin-left: 25px;
+            margin-bottom: 0;
+        }
+
+        .check_box {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background-image: url('../../images/checkbox.svg');
+            background-size: cover;
+        }
+
+        .input_checkbox {
+            -webkit-appearance: none;
+            appearance: none;
+            border: none;
+            width: 0;
+            padding: 0;
+            font-size: 0;
+
+            &:checked+.check_box {
+                background-image: url('../../images/check.svg');
+            }
+        }
+    }
+
+    .box_state_product {
+        display: flex;
+
+        &>div {
+            display: flex;
+            margin-left: 132px;
+            column-gap:40px;
+        }
+    }
+
+    .wrapper_radio {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        cursor: pointer;
+        position: relative;
+
+        p {
+            margin-left: 25px;
+            margin-bottom: 0;
+        }
+
+        .radio {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background-image: url('../../images/radio_empty.svg');
+            background-size: cover;
+        }
+
+        .input_radio {
+            -webkit-appearance: none;
+            appearance: none;
+            border: none;
+            width: 0;
+            padding: 0;
+            font-size: 0;
+
+            &:checked+.radio {
+                background-image: url('../../images/radio_active.svg');
+            }
         }
     }
 

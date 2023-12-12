@@ -1,20 +1,37 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
 import CardUser from 'components/CardUser/CardUser';
 import BtnGraphite from 'components/BtnGraphite/BtnGraphite';
+import { ReactComponent as ArrowDown } from '../../images/arrow_down.svg';
+import InputFile from 'components/InputFile/InputFile';
 import './AddAdvertPage.scss';
 
 export default function AddAdvertPage() {
+  const arrayDefaultValuesImg = [
+    'img1',
+    'img2',
+    'img3',
+    'img4',
+    'img5',
+    'img6',
+  ];
   const {
     register,
-    setValue,
-    getValues,
-    setError,
     handleSubmit,
-    clearErrors,
     reset,
+    control,
     formState: { errors },
-  } = useForm({ mode: 'onSubmit' });
+  } = useForm({
+    defaultValues: {
+      img1: '',
+      img2: '',
+      img3: '',
+      img4: '',
+      img5: '',
+      img6: '',
+    },
+    mode: 'onSubmit',
+  });
 
   const onSubmit = data => {
     console.log(data);
@@ -30,13 +47,23 @@ export default function AddAdvertPage() {
         <h3>Додати оголошення</h3>
         <label>
           <p>Оберіть категорію</p>
-          <select
-            {...register('category', {
-              required: true,
-            })}
-          >
-            <option value="A">A</option>
-          </select>
+          <div className="wrapper_select">
+            <span className="select_arrow_down">
+              <ArrowDown />
+            </span>
+            <select
+              {...register('category', {
+                required: true,
+              })}
+            >
+              <option value="Меблі">Меблі</option>
+              <option value="Одяг">Одяг</option>
+              <option value="Техніка">Техніка</option>
+              <option value="Все для  дому">Все для дому</option>
+              <option value="Дитячий світ">Дитячий світ</option>
+              <option value="Домашні улюбленці">Домашні улюбленці</option>
+            </select>
+          </div>
         </label>
         <label
           {...register('city', {
@@ -45,7 +72,7 @@ export default function AddAdvertPage() {
         >
           <p>Назва міста/селища</p>
           <select>
-            <option value="A">A</option>
+            <option value="Одеська область">Одеська область</option>
           </select>
         </label>
         <label>
@@ -66,9 +93,10 @@ export default function AddAdvertPage() {
             })}
           />
         </label>
-        <label>
+        <label className="titel">
           <p>Заголовок оголошення</p>
           <input
+            placeholder="Не більше 30 - ти символів"
             {...register('titel', {
               required: true,
             })}
@@ -84,32 +112,47 @@ export default function AddAdvertPage() {
         </label>
         <label>
           <p>Додати фото (Перше фото буде на обкладинці оголошення) </p>
-          <div>
-            <input type="file" {...register('photo')} />
-            <input type="file" {...register('photo')} />
-            <input type="file" {...register('photo')} />
-            <input type="file" {...register('photo')} />
-            <input type="file" {...register('photo')} />
-            <input type="file" {...register('photo')} />
+          <div className="container_box_input">
+            {arrayDefaultValuesImg.map((el, i) => (
+              <InputFile
+                key={i}
+                register={register}
+                register_name={el}
+                Controller={Controller}
+                control={control}
+              />
+            ))}
           </div>
         </label>
         <div className="box_state_product">
           <h4>Оберіть стан речі:</h4>
-          <label>
+          <div>
+          <label className='wrapper_radio'>
+            <p>
             Нова
-            <input {...register('state_product')} type="radio" value="A" />
+            </p>
+            <input className='input_radio' {...register('state_product')} type="radio" value="A" />
+            <span className='radio'></span>
           </label>
-          <label>
+          <label className='wrapper_radio'>
+            <p>
             Б/в
-            <input {...register('state_product')} type="radio" value="B" />
+            </p>
+            <input className='input_radio' {...register('state_product')} type="radio" value="B" />
+            <span className='radio'></span>
           </label>
-          <label>
+          <label className='wrapper_radio'>
+            <p>
             Пошкоджена
-            <input {...register('state_product')} type="radio" value="C" />
+            </p>
+            <input className='input_radio' {...register('state_product')} type="radio" value="C" />
+            <span className='radio'></span>
           </label>
+          </div>
         </div>
         <div className="box_delivery_method">
           <h4>Вкажіть спосіб відправки:</h4>
+          <div>
           <label className="wrapper_checkbox">
             <input
               className="input_checkbox"
@@ -141,11 +184,12 @@ export default function AddAdvertPage() {
             <input
               className="input_checkbox"
               type="checkbox"
-              {...register('personal_meeting')}
+              {...register('by_appointment')}
             />
-            <span className="by_agreement"></span>
+            <span className="check_box"></span>
             <p>За домовленістю</p>
           </label>
+          </div>
         </div>
         <BtnGraphite text="Зберегти" />
       </form>
