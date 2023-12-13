@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import CardUser from 'components/CardUser/CardUser';
 import BtnGraphite from 'components/BtnGraphite/BtnGraphite';
 import { ReactComponent as ArrowDown } from '../../images/arrow_down.svg';
 import InputFile from 'components/InputFile/InputFile';
 import './AddAdvertPage.scss';
+import axios from 'axios';
 
 export default function AddAdvertPage() {
+  const [cityList, setSityList] = useState([]);
+  const [filterCity, setFilterCity] = useState([]);
+
   const arrayDefaultValuesImg = [
     'img1',
     'img2',
@@ -15,10 +19,13 @@ export default function AddAdvertPage() {
     'img5',
     'img6',
   ];
+
   const {
     register,
     handleSubmit,
+    setValue,
     reset,
+    watch,
     control,
     formState: { errors },
   } = useForm({
@@ -32,6 +39,34 @@ export default function AddAdvertPage() {
     },
     mode: 'onSubmit',
   });
+
+  useEffect(() => {
+    axios
+      .get('/city.json')
+      .then(res => {
+        setSityList(res.data);
+      })
+      .catch(error => console.error('Error fetching data:', error));
+  }, []);
+
+  const cities = watch('city');
+
+  useEffect(() => {
+    setFilterCity(
+      cities
+        ? cityList.filter(city =>
+            city["Назва об'єкта українською мовою"]
+              .toUpperCase()
+              .startsWith(cities.toUpperCase())
+          )
+        : cityList.slice(0, 40)
+    );
+  }, [cities, cityList]);
+
+  function clickCity(e) {
+    console.log(e.target);
+    setValue('city', e.target.textContent);
+  }
 
   const onSubmit = data => {
     console.log(data);
@@ -65,15 +100,21 @@ export default function AddAdvertPage() {
             </select>
           </div>
         </label>
-        <label
-          {...register('city', {
-            required: true,
-          })}
-        >
+        <label>
           <p>Назва міста/селища</p>
-          <select>
-            <option value="Одеська область">Одеська область</option>
-          </select>
+          <input
+            type="seach"
+            {...register('city', {
+              required: true,
+            })}
+          />
+          <ul>
+            {filterCity.map((el, i) => (
+              <li onClick={e => clickCity(e)}>
+                {el["Назва об'єкта українською мовою"]}
+              </li>
+            ))}
+          </ul>
         </label>
         <label>
           <p>Ім’я та Прізвище</p>
@@ -127,68 +168,77 @@ export default function AddAdvertPage() {
         <div className="box_state_product">
           <h4>Оберіть стан речі:</h4>
           <div>
-          <label className='wrapper_radio'>
-            <p>
-            Нова
-            </p>
-            <input className='input_radio' {...register('state_product')} type="radio" value="A" />
-            <span className='radio'></span>
-          </label>
-          <label className='wrapper_radio'>
-            <p>
-            Б/в
-            </p>
-            <input className='input_radio' {...register('state_product')} type="radio" value="B" />
-            <span className='radio'></span>
-          </label>
-          <label className='wrapper_radio'>
-            <p>
-            Пошкоджена
-            </p>
-            <input className='input_radio' {...register('state_product')} type="radio" value="C" />
-            <span className='radio'></span>
-          </label>
+            <label className="wrapper_radio">
+              <p>Нова</p>
+              <input
+                className="input_radio"
+                {...register('state_product')}
+                type="radio"
+                value="A"
+              />
+              <span className="radio"></span>
+            </label>
+            <label className="wrapper_radio">
+              <p>Б/в</p>
+              <input
+                className="input_radio"
+                {...register('state_product')}
+                type="radio"
+                value="B"
+              />
+              <span className="radio"></span>
+            </label>
+            <label className="wrapper_radio">
+              <p>Пошкоджена</p>
+              <input
+                className="input_radio"
+                {...register('state_product')}
+                type="radio"
+                value="C"
+              />
+              <span className="radio"></span>
+            </label>
           </div>
         </div>
         <div className="box_delivery_method">
           <h4>Вкажіть спосіб відправки:</h4>
           <div>
-          <label className="wrapper_checkbox">
-            <input
-              className="input_checkbox"
-              type="checkbox"
-              {...register('pickup')}
-            />
-            <span className="check_box"></span>
-            <p>Самовивіз</p>
-          </label>
-          <label className="wrapper_checkbox">
-            <input
-              className="input_checkbox"
-              type="checkbox"
-              {...register('post_office')}
-            />
-            <span className="check_box"></span>
-            <p>Нова Пошта</p>
-          </label>
-          <label className="wrapper_checkbox">
-            <input
-              className="input_checkbox"
-              type="checkbox"
-              {...register('personal_meeting')}
-            />
-            <span className="check_box"></span>
-            <p>Особиста зустріч</p>
-          </label>
-          <label className="wrapper_checkbox">
-            <input
-              className="input_checkbox"
-              type="checkbox"
-              {...register('by_appointment')}
-            />
-            <span className="check_box"></span>
-            <p>За домовленістю</p>
-          </label>
+            <label className="wrapper_checkbox">
+              <input
+                className="input_checkbox"
+                type="checkbox"
+                {...register('pickup')}
+              />
+              <span className="check_box"></span>
+              <p>Самовивіз</p>
+            </label>
+            <label className="wrapper_checkbox">
+              <input
+                className="input_checkbox"
+                type="checkbox"
+                {...register('post_office')}
+              />
+              <span className="check_box"></span>
+              <p>Нова Пошта</p>
+            </label>
+            <label className="wrapper_checkbox">
+              <input
+                className="input_checkbox"
+                type="checkbox"
+                {...register('personal_meeting')}
+              />
+              <span className="check_box"></span>
+              <p>Особиста зустріч</p>
+            </label>
+            <label className="wrapper_checkbox">
+              <input
+                className="input_checkbox"
+                type="checkbox"
+                {...register('by_appointment')}
+              />
+              <span className="check_box"></span>
+              <p>За домовленістю</p>
+            </label>
           </div>
         </div>
         <BtnGraphite text="Зберегти" />
