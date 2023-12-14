@@ -85,6 +85,33 @@
             gap: 50px;
             margin-top: 30px;
         }
+
+        &__input-city {
+            position: relative;
+        }
+
+        &__list-city {
+            background: white;
+            padding: 15px 30px;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 83px;
+            border: 1px solid #3E3E3E;
+            max-height: 450px;
+            overflow-y: scroll;
+
+            li {
+                margin-bottom: 10px;
+                cursor: pointer;
+                display: block;
+
+                &:hover{
+                    color: #567A49;
+                    font-weight: 700;
+                }
+            }
+        }
     }
 
 
@@ -143,7 +170,7 @@
         &>div {
             display: flex;
             margin-left: 132px;
-            column-gap:40px;
+            column-gap: 40px;
         }
     }
 

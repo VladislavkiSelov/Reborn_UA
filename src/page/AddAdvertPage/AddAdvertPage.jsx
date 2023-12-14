@@ -9,6 +9,7 @@ import axios from 'axios';
 
 export default function AddAdvertPage() {
   const [cityList, setSityList] = useState([]);
+  const [showSityList, setShowSityList] = useState(false);
   const [filterCity, setFilterCity] = useState([]);
 
   const arrayDefaultValuesImg = [
@@ -59,19 +60,40 @@ export default function AddAdvertPage() {
               .toUpperCase()
               .startsWith(cities.toUpperCase())
           )
-        : cityList.slice(0, 40)
+        : cityList.slice(0, 200)
     );
   }, [cities, cityList]);
 
   function clickCity(e) {
-    console.log(e.target);
     setValue('city', e.target.textContent);
+    setShowSityList(false);
+    e.preventDefault();
   }
 
   const onSubmit = data => {
     console.log(data);
     reset();
   };
+
+  function show(e) {
+    if (showSityList === true) {
+      return;
+    }
+    setShowSityList(true);
+  }
+
+  function close(e) {
+    if (e.target.tagName === 'UL' || e.target.tagName === 'INPUT') {
+      return;
+    }
+    setShowSityList(false);
+  }
+
+  useEffect(() => {
+    document.querySelector('body').addEventListener('click', e => {
+      close(e);
+    });
+  }, []);
 
   return (
     <section className="advert-page container">
@@ -100,21 +122,24 @@ export default function AddAdvertPage() {
             </select>
           </div>
         </label>
-        <label>
+        <label className="advert-page__form__input-city">
           <p>Назва міста/селища</p>
           <input
             type="seach"
             {...register('city', {
               required: true,
             })}
+            onClick={e => show(e)}
           />
-          <ul>
-            {filterCity.map((el, i) => (
-              <li onClick={e => clickCity(e)}>
-                {el["Назва об'єкта українською мовою"]}
-              </li>
-            ))}
-          </ul>
+          {showSityList && (
+            <ul className="advert-page__form__list-city">
+              {filterCity.map((el, i) => (
+                <li key={i} onClick={e => clickCity(e)}>
+                  {el["Назва об'єкта українською мовою"]}
+                </li>
+              ))}
+            </ul>
+          )}
         </label>
         <label>
           <p>Ім’я та Прізвище</p>
