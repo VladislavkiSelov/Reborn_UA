@@ -12,14 +12,7 @@ export default function AddAdvertPage() {
   const [showSityList, setShowSityList] = useState(false);
   const [filterCity, setFilterCity] = useState([]);
 
-  const arrayDefaultValuesImg = [
-    'img1',
-    'img2',
-    'img3',
-    'img4',
-    'img5',
-    'img6',
-  ];
+  const arrayDefaultValuesImg = ['img1', 'img2', 'img3', 'img4', 'img5', 'img6'];
 
   const {
     register,
@@ -53,15 +46,7 @@ export default function AddAdvertPage() {
   const cities = watch('city');
 
   useEffect(() => {
-    setFilterCity(
-      cities
-        ? cityList.filter(city =>
-            city["Назва об'єкта українською мовою"]
-              .toUpperCase()
-              .startsWith(cities.toUpperCase())
-          )
-        : cityList.slice(0, 200)
-    );
+    setFilterCity(cities ? cityList.filter(city => city["Назва об'єкта українською мовою"].toUpperCase().startsWith(cities.toUpperCase())) : cityList.slice(0, 200));
   }, [cities, cityList]);
 
   function clickCity(e) {
@@ -90,9 +75,16 @@ export default function AddAdvertPage() {
   }
 
   useEffect(() => {
-    document.querySelector('body').addEventListener('click', e => {
+    function clickBody(e) {
+      console.log('aaa');
       close(e);
-    });
+    }
+
+    document.querySelector('body').addEventListener('click', clickBody);
+
+    return () => {
+      document.querySelector('body').removeEventListener('click', clickBody);
+    };
   }, []);
 
   return (
@@ -111,8 +103,7 @@ export default function AddAdvertPage() {
             <select
               {...register('category', {
                 required: true,
-              })}
-            >
+              })}>
               <option value="Меблі">Меблі</option>
               <option value="Одяг">Одяг</option>
               <option value="Техніка">Техніка</option>
@@ -152,12 +143,7 @@ export default function AddAdvertPage() {
         </label>
         <label>
           <p>Номер телефону вказаний у оголошенні</p>
-          <input
-            type="text"
-            {...register('phone', {
-              required: true,
-            })}
-          />
+          <input type="text" {...register('phone', { required: true })} />
         </label>
         <label className="titel">
           <p>Заголовок оголошення</p>
@@ -173,20 +159,13 @@ export default function AddAdvertPage() {
           <textarea
             {...register('text_advertisement', {
               required: true,
-            })}
-          ></textarea>
+            })}></textarea>
         </label>
         <label>
           <p>Додати фото (Перше фото буде на обкладинці оголошення) </p>
           <div className="container_box_input">
             {arrayDefaultValuesImg.map((el, i) => (
-              <InputFile
-                key={i}
-                register={register}
-                register_name={el}
-                Controller={Controller}
-                control={control}
-              />
+              <InputFile key={i} register={register} register_name={el} Controller={Controller} control={control} />
             ))}
           </div>
         </label>
@@ -195,32 +174,17 @@ export default function AddAdvertPage() {
           <div>
             <label className="wrapper_radio">
               <p>Нова</p>
-              <input
-                className="input_radio"
-                {...register('state_product')}
-                type="radio"
-                value="A"
-              />
+              <input className="input_radio" {...register('state_product')} type="radio" value="A" />
               <span className="radio"></span>
             </label>
             <label className="wrapper_radio">
               <p>Б/в</p>
-              <input
-                className="input_radio"
-                {...register('state_product')}
-                type="radio"
-                value="B"
-              />
+              <input className="input_radio" {...register('state_product')} type="radio" value="B" />
               <span className="radio"></span>
             </label>
             <label className="wrapper_radio">
               <p>Пошкоджена</p>
-              <input
-                className="input_radio"
-                {...register('state_product')}
-                type="radio"
-                value="C"
-              />
+              <input className="input_radio" {...register('state_product')} type="radio" value="C" />
               <span className="radio"></span>
             </label>
           </div>
@@ -229,38 +193,22 @@ export default function AddAdvertPage() {
           <h4>Вкажіть спосіб відправки:</h4>
           <div>
             <label className="wrapper_checkbox">
-              <input
-                className="input_checkbox"
-                type="checkbox"
-                {...register('pickup')}
-              />
+              <input className="input_checkbox" type="checkbox" {...register('pickup')} />
               <span className="check_box"></span>
               <p>Самовивіз</p>
             </label>
             <label className="wrapper_checkbox">
-              <input
-                className="input_checkbox"
-                type="checkbox"
-                {...register('post_office')}
-              />
+              <input className="input_checkbox" type="checkbox" {...register('post_office')} />
               <span className="check_box"></span>
               <p>Нова Пошта</p>
             </label>
             <label className="wrapper_checkbox">
-              <input
-                className="input_checkbox"
-                type="checkbox"
-                {...register('personal_meeting')}
-              />
+              <input className="input_checkbox" type="checkbox" {...register('personal_meeting')} />
               <span className="check_box"></span>
               <p>Особиста зустріч</p>
             </label>
             <label className="wrapper_checkbox">
-              <input
-                className="input_checkbox"
-                type="checkbox"
-                {...register('by_appointment')}
-              />
+              <input className="input_checkbox" type="checkbox" {...register('by_appointment')} />
               <span className="check_box"></span>
               <p>За домовленістю</p>
             </label>
