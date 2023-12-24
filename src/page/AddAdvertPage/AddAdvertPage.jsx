@@ -79,9 +79,7 @@ export default function AddAdvertPage() {
       console.log('aaa');
       close(e);
     }
-
     document.querySelector('body').addEventListener('click', clickBody);
-
     return () => {
       document.querySelector('body').removeEventListener('click', clickBody);
     };
