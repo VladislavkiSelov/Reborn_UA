@@ -10,6 +10,7 @@ import axios from 'axios';
 export default function AddAdvertPage() {
   const [cityList, setSityList] = useState([]);
   const [showSityList, setShowSityList] = useState(false);
+  const [showCategoryList, setShowCategoryList] = useState(false);
   const [filterCity, setFilterCity] = useState([]);
 
   const arrayDefaultValuesImg = ['img1', 'img2', 'img3', 'img4', 'img5', 'img6'];
@@ -55,12 +56,20 @@ export default function AddAdvertPage() {
     e.preventDefault();
   }
 
+  function clickCategory(e) {
+    if (e.target.tagName === 'LI') {
+      setValue('category', e.target.textContent);
+      setShowCategoryList(false);
+      e.preventDefault();
+    }
+  }
+
   const onSubmit = data => {
     console.log(data);
     reset();
   };
 
-  function show(e) {
+  function showCity(e) {
     if (showSityList === true) {
       return;
     }
@@ -72,6 +81,7 @@ export default function AddAdvertPage() {
       return;
     }
     setShowSityList(false);
+    setShowCategoryList(false)
   }
 
   useEffect(() => {
@@ -92,23 +102,27 @@ export default function AddAdvertPage() {
       </div>
       <form className="advert-page__form" onSubmit={handleSubmit(onSubmit)}>
         <h3>Додати оголошення</h3>
-        <label>
+        <label className="advert-page__form__input-category">
           <p>Оберіть категорію</p>
           <div className="wrapper_select">
             <span className="select_arrow_down">
               <ArrowDown />
             </span>
-            <select
+            <input
+              onClick={() => setShowCategoryList(true)}
               {...register('category', {
                 required: true,
-              })}>
-              <option value="Меблі">Меблі</option>
-              <option value="Одяг">Одяг</option>
-              <option value="Техніка">Техніка</option>
-              <option value="Все для  дому">Все для дому</option>
-              <option value="Дитячий світ">Дитячий світ</option>
-              <option value="Домашні улюбленці">Домашні улюбленці</option>
-            </select>
+              })}></input>
+            {showCategoryList && (
+              <ul onClick={e => clickCategory(e)} className="advert-page__form__list-category">
+                <li>Меблі</li>
+                <li>Одяг</li>
+                <li>Техніка</li>
+                <li>Все для дому</li>
+                <li>Дитячий світ</li>
+                <li>Домашні улюбленці</li>
+              </ul>
+            )}
           </div>
         </label>
         <label className="advert-page__form__input-city">
@@ -118,7 +132,7 @@ export default function AddAdvertPage() {
             {...register('city', {
               required: true,
             })}
-            onClick={e => show(e)}
+            onClick={e => showCity(e)}
           />
           {showSityList && (
             <ul className="advert-page__form__list-city">

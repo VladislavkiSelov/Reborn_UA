@@ -90,7 +90,8 @@
             position: relative;
         }
 
-        &__list-city {
+        &__list-city,
+        &__list-category {
             background: white;
             padding: 15px 30px;
             position: absolute;
@@ -100,17 +101,27 @@
             border: 1px solid #3E3E3E;
             max-height: 450px;
             overflow-y: scroll;
+            z-index: 2;
 
             li {
                 margin-bottom: 10px;
                 cursor: pointer;
                 display: block;
 
-                &:hover{
+                &:hover {
                     color: #567A49;
                     font-weight: 700;
                 }
             }
+        }
+
+        &__input-category {
+            position: relative;
+        }
+
+
+        &__list-category {
+            top: 51px;
         }
     }
 
