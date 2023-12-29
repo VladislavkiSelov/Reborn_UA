@@ -2,13 +2,17 @@ import React, { useEffect, useState } from 'react';
 import './OwnCabinetPage.scss';
 import axios from 'axios';
 import CardUser from 'components/CardUser/CardUser';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
+import { setStatusProfile } from 'store/sliceStatusProfile/sliceStatusProfile';
 import BtnGraphite from 'components/BtnGraphite/BtnGraphite';
+import { useNavigate } from 'react-router-dom';
 
 export default function OwnCabinetPage() {
-  const user = useSelector(state => state.user.user)
-  
+  const user = useSelector(state => state.user.user);
+  const navigation = useNavigate();
+  const dispatch = useDispatch();
+
   const validationName = /^[А-Яа-яЁёA-Za-z]{2,20} [А-Яа-яЁёA-Za-z]{2,20}$/;
   const validationEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const validationPhone = /^(\+38)?\(0\d{2}\)-\d{2}-\d{2}-\d{3}$/;
@@ -21,6 +25,11 @@ export default function OwnCabinetPage() {
     formState: { errors },
   } = useForm({ mode: 'onSubmit' });
 
+  if (Object.keys(user).length === 0) {
+    dispatch(setStatusProfile(true));
+    navigation('/');
+  }
+
   useEffect(() => {
     setValue('name', user.username);
     setValue('phone', user.phoneNumber);
@@ -30,18 +39,22 @@ export default function OwnCabinetPage() {
   const onSubmit = data => {
     const userId = JSON.parse(localStorage.getItem('user'));
     const urlSend = `http://ec2-18-197-60-214.eu-central-1.compute.amazonaws.com/api/v1/private/users/${userId.userReference}`;
-    
+
     axios
-    .patch(urlSend, {
-      username: data.name,
-      email: data.email,
-      phoneNumber: data.phone,
-    }, {
-      headers: {
-        Authorization: `Bearer ${userId.authenticationToken}`,
-        'Content-Type': 'application/json',
-      },
-    })
+      .patch(
+        urlSend,
+        {
+          username: data.name,
+          email: data.email,
+          phoneNumber: data.phone,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${userId.authenticationToken}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then(res => console.log(res));
     reset();
   };

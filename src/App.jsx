@@ -3,7 +3,7 @@ import './scss/fonts.scss';
 import './scss/index.scss';
 import './scss/App.css';
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Footer } from './components/Footer/Footer';
 import { setUser } from 'store/sliceReducer/sliceUser';
@@ -19,6 +19,9 @@ import axios from 'axios';
 
 export const App = () => {
   const dispatch = useDispatch();
+  const user = useSelector(state => state.user.user);
+  const statusProfile = useSelector(state => state.statusProfile.statusProfile);
+  console.log(statusProfile);
 
   useEffect(() => {
     const userId = JSON.parse(localStorage.getItem('user'));
@@ -26,7 +29,7 @@ export const App = () => {
       dispatch(setUser({}));
       return;
     }
-    
+
     if (Object.keys(userId).length > 0) {
       const url = `http://ec2-18-197-60-214.eu-central-1.compute.amazonaws.com/api/v1/public/users/${userId.userReference}`;
       axios.get(url).then(res => {
@@ -35,20 +38,16 @@ export const App = () => {
     }
   }, []);
 
+  console.log(user);
+
   return (
     <div className="wrapper">
       <BrowserRouter>
         <Header />
         <Routes>
           <Route path="/" element={<MainPage />}></Route>
-          <Route
-            path="/category/:categoryId"
-            element={<CategoryPage />}
-          ></Route>
-          <Route
-            path="/category/:categoryId/product/:productId"
-            element={<ProductPage />}
-          ></Route>
+          <Route path="/category/:categoryId" element={<CategoryPage />}></Route>
+          <Route path="/category/:categoryId/product/:productId" element={<ProductPage />}></Route>
           <Route path="/favorite" element={<FavoritePage />}></Route>
           <Route path="/own-cabinet" element={<OwnCabinetPage />}></Route>
           <Route path="/add-advert" element={<AddAdvertPage />}></Route>

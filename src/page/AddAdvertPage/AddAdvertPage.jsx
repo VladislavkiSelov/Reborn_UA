@@ -4,14 +4,25 @@ import CardUser from 'components/CardUser/CardUser';
 import BtnGraphite from 'components/BtnGraphite/BtnGraphite';
 import { ReactComponent as ArrowDown } from '../../images/arrow_down.svg';
 import InputFile from 'components/InputFile/InputFile';
+import { setStatusProfile } from 'store/sliceStatusProfile/sliceStatusProfile';
 import './AddAdvertPage.scss';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 export default function AddAdvertPage() {
   const [cityList, setSityList] = useState([]);
   const [showSityList, setShowSityList] = useState(false);
   const [showCategoryList, setShowCategoryList] = useState(false);
   const [filterCity, setFilterCity] = useState([]);
+  const navigation = useNavigate()
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.user.user);
+
+  if (Object.keys(user).length === 0) {
+    dispatch(setStatusProfile(true));
+    navigation('/')
+  }
 
   const arrayDefaultValuesImg = ['img1', 'img2', 'img3', 'img4', 'img5', 'img6'];
 
@@ -81,12 +92,11 @@ export default function AddAdvertPage() {
       return;
     }
     setShowSityList(false);
-    setShowCategoryList(false)
+    setShowCategoryList(false);
   }
 
   useEffect(() => {
     function clickBody(e) {
-      console.log('aaa');
       close(e);
     }
     document.querySelector('body').addEventListener('click', clickBody);
@@ -127,22 +137,27 @@ export default function AddAdvertPage() {
         </label>
         <label className="advert-page__form__input-city">
           <p>Назва міста/селища</p>
-          <input
-            type="seach"
-            {...register('city', {
-              required: true,
-            })}
-            onClick={e => showCity(e)}
-          />
-          {showSityList && (
-            <ul className="advert-page__form__list-city">
-              {filterCity.map((el, i) => (
-                <li key={i} onClick={e => clickCity(e)}>
-                  {el["Назва об'єкта українською мовою"]}
-                </li>
-              ))}
-            </ul>
-          )}
+          <div className="wrapper_select">
+            <span className="select_arrow_down">
+              <ArrowDown />
+            </span>
+            <input
+              type="seach"
+              {...register('city', {
+                required: true,
+              })}
+              onClick={e => showCity(e)}
+            />
+            {showSityList && (
+              <ul className="advert-page__form__list-city">
+                {filterCity.map((el, i) => (
+                  <li key={i} onClick={e => clickCity(e)}>
+                    {el["Назва об'єкта українською мовою"]}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         </label>
         <label>
           <p>Ім’я та Прізвище</p>

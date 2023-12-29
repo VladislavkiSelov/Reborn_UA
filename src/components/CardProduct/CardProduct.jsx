@@ -2,14 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './CardProduct.scss';
 
-export default function CardProduct({
-  productTitle,
-  city,
-  titleImage,
-  categoryId,
-  reference,
-  el,
-}) {
+export default function CardProduct({ productTitle, city, titleImage, categoryId, reference, el }) {
   const navigate = useNavigate();
 
   function goToAnotherPage(e) {
@@ -17,16 +10,17 @@ export default function CardProduct({
       console.log('like');
       const allProducts = JSON.parse(localStorage.getItem('products')) || [];
       const res = allProducts.find(item => item.reference === reference);
-      if (res !== undefined) {
+      if (res) {
         return;
       }
+      console.log(el);
       const newAllProducts = [...allProducts, el];
       localStorage.setItem('products', JSON.stringify(newAllProducts));
       return;
     }
     navigate(`/category/${categoryId}/product/${reference}`);
   }
-  
+
   return (
     <div onClick={e => goToAnotherPage(e)} className="card_product">
       <div className="box_img_product_card">

@@ -7,7 +7,7 @@ import { setFavoriteProducts } from 'store/sliceFavoriteProducts/sliceFavoritePr
 
 export default function FavoritePage() {
   const dispatch = useDispatch();
-  const getAllProducts = useSelector(
+  const allProducts = useSelector(
     state => state.favoriteProducts.favoriteProducts
   );
 
@@ -17,13 +17,15 @@ export default function FavoritePage() {
     );
   }, [dispatch]);
 
+  console.log(allProducts);
+
   return (
     <div className="favorite container">
       <div>
         <CardUser />
       </div>
       <div className="favorite__box-product">
-        {getAllProducts.map(el => (
+        {allProducts.map(el => (
           <CardFavorite
             key={el.reference}
             productTitle={el.productTitle}

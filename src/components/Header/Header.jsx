@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Search from 'components/Search/Search';
 import MainBtn from 'components/BtnGreen/BtnGreen';
 import Authentication from 'components/Authentication/Authentication';
+import { setStatusProfile } from 'store/sliceStatusProfile/sliceStatusProfile';
 import './Header.scss';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function Header() {
-  const [statusProfile, setStatusProfile] = useState(false);
+  const dispatch = useDispatch();
+  const statusProfile = useSelector(state => state.statusProfile.statusProfile);
   const navigate = useNavigate();
   function handelClickProfile() {
-    setStatusProfile(true);
+    dispatch(setStatusProfile(true));
   }
 
   function goToPage() {
@@ -25,11 +28,7 @@ export default function Header() {
           </Link>
         </div>
         <Search />
-        <MainBtn
-          handelClick={goToPage}
-          text="Додати оголошення"
-          className="btn_header"
-        />
+        <MainBtn handelClick={goToPage} text="Додати оголошення" className="btn_header" />
         <div className="box_btn_header">
           <Link to="/favorite">
             <img src="/img/heart.svg" alt="like" />
@@ -39,9 +38,7 @@ export default function Header() {
           </button>
         </div>
       </header>
-      {statusProfile && (
-        <Authentication setStatusProfile={value => setStatusProfile(value)} />
-      )}
+      {statusProfile && <Authentication/>}
     </>
   );
 }

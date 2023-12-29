@@ -143,6 +143,7 @@ export default function ProductPage() {
               productTitle={el.productTitle}
               city={el.city}
               titleImage={`/img/img_furniture.png`}
+              el={el}
             />
           ))}
         </div>
