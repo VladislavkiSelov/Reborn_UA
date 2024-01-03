@@ -7,7 +7,6 @@ export default function CardProduct({ productTitle, city, titleImage, categoryId
 
   function goToAnotherPage(e) {
     if (e.target.classList.contains('like')) {
-      console.log('like');
       const allProducts = JSON.parse(localStorage.getItem('products')) || [];
       const res = allProducts.find(item => item.reference === reference);
       if (res) {

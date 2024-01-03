@@ -128,7 +128,7 @@ export default function LogIn() {
         <p>
           <a href="#">Забули пароль?</a>
         </p>
-        <BtnGraphite text="Зарєеструватися" />
+        <BtnGraphite text="Увійти" />
       </form>
     </>
   );

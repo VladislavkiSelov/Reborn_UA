@@ -11,17 +11,31 @@ export const Footer = () => {
         <nav className="nav_footer">
           <div className="nav_left">
             <ul>
-              <li>Меблі</li>
-              <li>Одяг</li>
-              <li>Техніка</li>
-              <li>Все для дому</li>
-              <li>Дитячий світ</li>
-              <li>Домашні улюбленці</li>
+              <li>
+                <Link to={`/category/FURNITURE`}>Меблі</Link>
+              </li>
+              <li>
+                <Link to={`/category/CLOTHE`}>Одяг</Link>
+              </li>
+              <li>
+                <Link to={`/category/ELECTRONIC`}>Техніка</Link>
+              </li>
+              <li>
+                <Link to={`/category/HOSE`}>Все для дому</Link>
+              </li>
+              <li>
+                <Link to={`/category/CHILDREN`}>Дитячий світ</Link>
+              </li>
+              <li>
+                <Link to={`/category/PETS`}>Домашні улюбленці</Link>
+              </li>
             </ul>
             <ul>
-              <li>Улюблене</li>
               <li>
-                <Link to='own-cabinet'>Мій кабінет</Link>
+                <Link to="favorite">Улюблене</Link>
+              </li>
+              <li>
+                <Link to="own-cabinet">Мій кабінет</Link>
               </li>
               <li>Про нас</li>
               <li>Умови використання</li>
