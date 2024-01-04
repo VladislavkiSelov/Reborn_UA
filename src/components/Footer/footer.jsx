@@ -1,7 +1,8 @@
-import './Footer.scss';
+import React from 'react'
 import { Link } from 'react-router-dom';
+import './Footer.scss';
 
-export const Footer = () => {
+export default function Footer() {
   return (
     <div className="wrapper_footer">
       <footer className="footer container">
@@ -50,5 +51,5 @@ export const Footer = () => {
         <h3>Друге життя речей</h3>
       </footer>
     </div>
-  );
-};
+  )
+}

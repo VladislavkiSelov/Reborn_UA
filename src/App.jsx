@@ -5,7 +5,7 @@ import './scss/App.css';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Footer } from './components/Footer/Footer';
+import Footer from './components/Footer/Footer';
 import { setUser } from 'store/sliceReducer/sliceUser';
 import Header from './components/Header/Header';
 import MainPage from './page/MainPage/MainPage';
