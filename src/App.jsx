@@ -21,7 +21,6 @@ export const App = () => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.user.user);
   const statusProfile = useSelector(state => state.statusProfile.statusProfile);
-  console.log(statusProfile);
 
   useEffect(() => {
     const userId = JSON.parse(localStorage.getItem('user'));
@@ -37,8 +36,6 @@ export const App = () => {
       });
     }
   }, []);
-
-  console.log(user);
 
   return (
     <div className="wrapper">

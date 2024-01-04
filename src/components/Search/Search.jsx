@@ -4,6 +4,7 @@ import axios from 'axios';
 
 function Search() {
   const [cityList, setSityList] = useState([]);
+  const [product, setProduct] = useState('');
   const [filterCity, setFilterCity] = useState([]);
   const [showSityList, setShowSityList] = useState(false);
   const [cities, setCities] = useState('КИЇВ');
@@ -32,6 +33,19 @@ function Search() {
     setShowSityList(false);
   }
 
+  function seachProduct(e) {
+    setProduct(e.target.value);
+  }
+
+  function handleKeyPress(e) {
+    const url = `http://ec2-18-197-60-214.eu-central-1.compute.amazonaws.com/api/v1/public/products/search?product-title=${encodeURIComponent(product)}&city=CHERNIVTSI&page=0&size=20`;
+    if (e.key === 'Enter') {
+      axios.get(url).then(res => {
+        console.log(res.data.content);
+      });
+    }
+  }
+
   useEffect(() => {
     axios
       .get('/city.json')
@@ -39,6 +53,7 @@ function Search() {
         setSityList(res.data);
       })
       .catch(error => console.error('Error fetching data:', error));
+      setProduct('')
   }, []);
   //загружаю все города
 
@@ -58,13 +73,11 @@ function Search() {
   }, []);
   //закрываю список городов
 
-  console.log(cities);
-
   return (
     <div className="searchContainer">
       <label>
         <img src="/img/search.svg" alt="#" />
-        <input className="searchField" type="text" placeholder="шукати" />
+        <input className="searchField" type="text" onKeyDown={handleKeyPress} onChange={e => seachProduct(e)} value={product} placeholder="шукати" />
       </label>
       <label>
         <img src="/img/location.svg" alt="#" />
