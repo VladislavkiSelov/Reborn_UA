@@ -6,11 +6,13 @@ import CardProductCategory from 'components/CardProductCategory/CardProductCateg
 import BtnGreen from 'components/BtnGreen/BtnGreen';
 import { Oval } from 'react-loader-spinner';
 import { ReactComponent as ArrowDown } from '../../images/arrow_down.svg';
+import { useSelector } from 'react-redux';
 import './CategoryPage.scss';
 
 export default function CategoryPage() {
   const params = useParams();
   const navigate = useNavigate();
+  const seachProducts = useSelector(state => state.seachProducts.seachProducts);
   const [arrayProducts, setArrayProducts] = useState([]);
   const [responseServe, setResponseServe] = useState([]);
   const [page, setPage] = useState(0);
@@ -21,28 +23,31 @@ export default function CategoryPage() {
     reset,
     formState: { errors },
   } = useForm({ mode: 'onSubmit' });
-
   function CheckSort(e) {
     setSort(e.target.value);
   }
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `http://ec2-18-197-60-214.eu-central-1.compute.amazonaws.com/api/v1/public/products/listing?category=${params.categoryId}&page=${page}&size=6&sort=${sort}`
-        );
-        const data = await response.json();
-        setResponseServe(data);
-        setArrayProducts(data.content);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        navigate('*');
-      }
-    };
-
-    fetchData();
-  }, [params, page, sort, navigate]);
+    if (params.categoryId !== 'filter_name') {
+      const fetchData = async () => {
+        try {
+          const response = await fetch(
+            `http://ec2-18-197-60-214.eu-central-1.compute.amazonaws.com/api/v1/public/products/listing?category=${params.categoryId}&page=${page}&size=6&sort=${sort}`
+          );
+          const data = await response.json();
+          setResponseServe(data);
+          setArrayProducts(data.content);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+          navigate('*');
+        }
+      };
+      fetchData();
+    }
+    if (params.categoryId === 'filter_name') {
+      setArrayProducts(seachProducts);
+    }
+  }, [params, page, sort, navigate, seachProducts]);
 
   const onSubmit = data => {
     console.log(data);
@@ -69,8 +74,8 @@ export default function CategoryPage() {
       case 'PETS':
         return 'Наші улюбленці';
         break;
-        default:
-          return '';
+      default:
+        return '';
     }
   };
 
@@ -94,10 +99,7 @@ export default function CategoryPage() {
     <div className="category container">
       <h5>Головна сторінка/Категорія {getTypeCategory(params.categoryId)}</h5>
       <div className="header_category">
-        <Pagination
-          maxElementPage={responseServe.totalElements}
-          setPage={value => setPage(value)}
-        />
+        {/* <Pagination maxElementPage={responseServe.totalElements} setPage={value => setPage(value)} /> */}
         <div className="box_sort_category_page">
           <h5>Сортувати за:</h5>
           <div className="wrapper_select">
@@ -123,29 +125,17 @@ export default function CategoryPage() {
               <h4>Стан</h4>
               <div className="box_input_checkbox_filter">
                 <label className="checkbox_label">
-                  <input
-                    type="checkbox"
-                    className="input_checkbox"
-                    {...register('newState')}
-                  />
+                  <input type="checkbox" className="input_checkbox" {...register('newState')} />
                   <span className="check_box"></span>
                   <p>новий в гарному стані</p>
                 </label>
                 <label className="checkbox_label">
-                  <input
-                    type="checkbox"
-                    className="input_checkbox"
-                    {...register('used')}
-                  />
+                  <input type="checkbox" className="input_checkbox" {...register('used')} />
                   <span className="check_box"></span>
                   <p>б/у</p>
                 </label>
                 <label className="checkbox_label">
-                  <input
-                    type="checkbox"
-                    className="input_checkbox"
-                    {...register('damaged')}
-                  />
+                  <input type="checkbox" className="input_checkbox" {...register('damaged')} />
                   <span className="check_box"></span>
                   <p>пошкоджений</p>
                 </label>
@@ -157,8 +147,8 @@ export default function CategoryPage() {
         <div className="cards_category">
           {arrayProducts.map((el, i) => (
             <CardProductCategory
-            categoryId={params.categoryId}
-            reference={el.reference}
+              categoryId={params.categoryId}
+              reference={el.reference}
               key={i}
               productTitle={el.productTitle}
               productDescription={el.productDescription}
@@ -167,12 +157,7 @@ export default function CategoryPage() {
               el={el}
             />
           ))}
-          <div className="footer_category">
-          <Pagination
-            maxElementPage={responseServe.totalElements}
-            setPage={value => setPage(value)}
-          />
-        </div>
+          <div className="footer_category">{/* <Pagination maxElementPage={responseServe.totalElements} setPage={value => setPage(value)} /> */}</div>
         </div>
       </div>
     </div>

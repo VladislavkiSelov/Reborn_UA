@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import './Search.scss';
 import axios from 'axios';
+import { setProducts } from 'store/sliceSeachProducts/sliceSeachProducts';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 function Search() {
+  const dispatch = useDispatch();
   const [cityList, setSityList] = useState([]);
   const [product, setProduct] = useState('');
   const [filterCity, setFilterCity] = useState([]);
   const [showSityList, setShowSityList] = useState(false);
   const [cities, setCities] = useState('КИЇВ');
+  const navigation = useNavigate();
 
   function changeCity(e) {
     setCities(e.target.value);
@@ -38,11 +43,20 @@ function Search() {
   }
 
   function handleKeyPress(e) {
-    const url = `http://ec2-18-197-60-214.eu-central-1.compute.amazonaws.com/api/v1/public/products/search?product-title=${encodeURIComponent(product)}&city=CHERNIVTSI&page=0&size=20`;
+    const url = `http://ec2-18-197-60-214.eu-central-1.compute.amazonaws.com/api/v1/public/products/search?product-title=${encodeURIComponent(
+      product
+    )}&city=CHERNIVTSI&page=0&size=20`;
     if (e.key === 'Enter') {
-      axios.get(url).then(res => {
-        console.log(res.data.content);
-      });
+      const getData = async () => {
+        const res = await fetch(url);
+        const data = await res.json();
+        dispatch(setProducts(data.content));
+        if (data.content.length === 0) {
+          navigation('*');
+        }
+      };
+      getData();
+      navigation('/category/filter_name');
     }
   }
 
@@ -53,7 +67,7 @@ function Search() {
         setSityList(res.data);
       })
       .catch(error => console.error('Error fetching data:', error));
-      setProduct('')
+    setProduct('');
   }, []);
   //загружаю все города
 
