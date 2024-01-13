@@ -6,13 +6,11 @@ import CardProductCategory from 'components/CardProductCategory/CardProductCateg
 import BtnGreen from 'components/BtnGreen/BtnGreen';
 import { Oval } from 'react-loader-spinner';
 import { ReactComponent as ArrowDown } from '../../images/arrow_down.svg';
-import { useSelector } from 'react-redux';
 import './CategoryPage.scss';
 
 export default function CategoryPage() {
   const params = useParams();
   const navigate = useNavigate();
-  const seachProducts = useSelector(state => state.seachProducts.seachProducts);
   const [arrayProducts, setArrayProducts] = useState([]);
   const [responseServe, setResponseServe] = useState([]);
   const [page, setPage] = useState(0);
@@ -23,12 +21,13 @@ export default function CategoryPage() {
     reset,
     formState: { errors },
   } = useForm({ mode: 'onSubmit' });
+
   function CheckSort(e) {
     setSort(e.target.value);
   }
 
   useEffect(() => {
-    if (params.categoryId !== 'filter_name') {
+    if (params.categoryId) {
       const fetchData = async () => {
         try {
           const response = await fetch(
@@ -44,10 +43,22 @@ export default function CategoryPage() {
       };
       fetchData();
     }
-    if (params.categoryId === 'filter_name') {
-      setArrayProducts(seachProducts);
+    if (params.seachProduct) {
+      const url = `http://ec2-18-197-60-214.eu-central-1.compute.amazonaws.com/api/v1/public/products/search?product-title=${encodeURIComponent(
+        params.seachProduct
+      )}&city=CHERNIVTSI&page=0&size=20`;
+      const fetchData = async () => {
+        const res = await fetch(url);
+        const data = await res.json();
+        setResponseServe(data);
+        setArrayProducts(data.content);
+        if (data.content.length === 0) {
+          navigate('*');
+        }
+      };
+      fetchData();
     }
-  }, [params, page, sort, navigate, seachProducts]);
+  }, [params, page, sort, navigate]);
 
   const onSubmit = data => {
     console.log(data);
@@ -95,11 +106,13 @@ export default function CategoryPage() {
     );
   }
 
+  console.log(arrayProducts);
+
   return (
     <div className="category container">
       <h5>Головна сторінка/Категорія {getTypeCategory(params.categoryId)}</h5>
       <div className="header_category">
-        {/* <Pagination maxElementPage={responseServe.totalElements} setPage={value => setPage(value)} /> */}
+        <Pagination maxElementPage={responseServe.totalElements} setPage={value => setPage(value)} />
         <div className="box_sort_category_page">
           <h5>Сортувати за:</h5>
           <div className="wrapper_select">
@@ -147,7 +160,8 @@ export default function CategoryPage() {
         <div className="cards_category">
           {arrayProducts.map((el, i) => (
             <CardProductCategory
-              categoryId={params.categoryId}
+              categoryId={params.categoryId || el.categoryName}
+              seachProduct={params.seachProduct}
               reference={el.reference}
               key={i}
               productTitle={el.productTitle}

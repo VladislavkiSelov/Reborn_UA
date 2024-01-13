@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './Search.scss';
 import axios from 'axios';
-import { setProducts } from 'store/sliceSeachProducts/sliceSeachProducts';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 
 function Search() {
-  const dispatch = useDispatch();
   const [cityList, setSityList] = useState([]);
   const [product, setProduct] = useState('');
   const [filterCity, setFilterCity] = useState([]);
@@ -43,20 +40,8 @@ function Search() {
   }
 
   function handleKeyPress(e) {
-    const url = `http://ec2-18-197-60-214.eu-central-1.compute.amazonaws.com/api/v1/public/products/search?product-title=${encodeURIComponent(
-      product
-    )}&city=CHERNIVTSI&page=0&size=20`;
     if (e.key === 'Enter') {
-      const getData = async () => {
-        const res = await fetch(url);
-        const data = await res.json();
-        dispatch(setProducts(data.content));
-        if (data.content.length === 0) {
-          navigation('*');
-        }
-      };
-      getData();
-      navigation('/category/filter_name');
+      navigation(`/seachProduct/${product}`);
     }
   }
 
