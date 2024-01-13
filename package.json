@@ -2,7 +2,7 @@
   "name": "reborn_ua",
   "version": "0.1.0",
   "private": true,
-  "homepage": ".",
+  "homepage": "https://VladislavkiSelov.github.io/Reborn_UA",
   "dependencies": {
     "@reduxjs/toolkit": "^2.0.1",
     "@testing-library/jest-dom": "^5.16.3",
@@ -29,7 +29,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint:js": "eslint src/**/*.{js,jsx}"
+    "lint:js": "eslint src/**/*.{js,jsx}",
+    "predeploy": "npm run build ",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -50,6 +52,7 @@
     ]
   },
   "devDependencies": {
-    "@types/bootstrap": "^5.2.8"
+    "@types/bootstrap": "^5.2.8",
+    "gh-pages": "^6.1.1"
   }
 }
