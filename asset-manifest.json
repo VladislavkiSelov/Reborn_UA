@@ -1,0 +1,34 @@
+{
+  "files": {
+    "main.css": "/Reborn_UA/static/css/main.54e6846b.css",
+    "main.js": "/Reborn_UA/static/js/main.e2529679.js",
+    "static/js/787.3f70efe1.chunk.js": "/Reborn_UA/static/js/787.3f70efe1.chunk.js",
+    "static/media/check.svg": "/Reborn_UA/static/media/check.c662b45461163ddd0893.svg",
+    "static/media/no_photo.svg": "/Reborn_UA/static/media/no_photo.e3dc657d5eb1542bc403c1f295d2c15a.svg",
+    "static/media/Hide.svg": "/Reborn_UA/static/media/Hide.5c1f0ba567f42e921d5f10202eeaf90f.svg",
+    "static/media/Show.svg": "/Reborn_UA/static/media/Show.d5f76f849d3b1055403c08af1454cf1a.svg",
+    "static/media/Close.svg": "/Reborn_UA/static/media/Close.010dae7a2178fcb8908bf42453a2edcb.svg",
+    "static/media/close_slider.svg": "/Reborn_UA/static/media/close_slider.9bb9f40c2273d56203452ed9db54c582.svg",
+    "static/media/user_cabinet.svg": "/Reborn_UA/static/media/user_cabinet.161f0e15e35e6b008a13a4f48bad9841.svg",
+    "index.html": "/Reborn_UA/index.html",
+    "static/media/phone.svg": "/Reborn_UA/static/media/phone.4834bb5154df040bebeaf6a182a82b6a.svg",
+    "static/media/mail.svg": "/Reborn_UA/static/media/mail.c561c98fc1551e0f6f90c8b8a498a357.svg",
+    "static/media/heart.svg": "/Reborn_UA/static/media/heart.baff34b7f744bf8a9575711f62bd6f21.svg",
+    "static/media/like_active.svg": "/Reborn_UA/static/media/like_active.178c019505f32af3e4fc1dfbc2dcfa68.svg",
+    "static/media/radio_active.svg": "/Reborn_UA/static/media/radio_active.ad5c0d13932caf0f9761.svg",
+    "static/media/arrow_down.svg": "/Reborn_UA/static/media/arrow_down.b23c917fd62119761f6b9d4fb81c468f.svg",
+    "static/media/arrow_left.svg": "/Reborn_UA/static/media/arrow_left.6c30fe78af644399bf390d9c6004132d.svg",
+    "static/media/arrow_right.svg": "/Reborn_UA/static/media/arrow_right.4293004120848f33b73e8245a101b304.svg",
+    "static/media/left_parenthesis.svg": "/Reborn_UA/static/media/left_parenthesis.90de3f6e4d42b6d5b7b651d858d4d537.svg",
+    "static/media/right_parenthesis.svg": "/Reborn_UA/static/media/right_parenthesis.e4db7a2655232ac31018a01bbc036f45.svg",
+    "static/media/radio_empty.svg": "/Reborn_UA/static/media/radio_empty.688281a5267e4690b658.svg",
+    "static/media/checkbox.svg": "/Reborn_UA/static/media/checkbox.f1ec03b67020ac85f18a.svg",
+    "main.54e6846b.css.map": "/Reborn_UA/static/css/main.54e6846b.css.map",
+    "main.e2529679.js.map": "/Reborn_UA/static/js/main.e2529679.js.map",
+    "787.3f70efe1.chunk.js.map": "/Reborn_UA/static/js/787.3f70efe1.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.54e6846b.css",
+    "static/js/main.e2529679.js"
+  ]
+}
