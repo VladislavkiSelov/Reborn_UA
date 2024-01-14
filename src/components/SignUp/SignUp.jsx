@@ -11,7 +11,7 @@ export default function SignUp() {
   const [showHideElement1, setShowHideElement1] = useState(false);
   const [showHideElement2, setShowHideElement2] = useState(false);
   const inputRef = useRef(null);
-  const url = `http://ec2-18-197-60-214.eu-central-1.compute.amazonaws.com/api/v1/public/users/registration`;
+  const url = `https://back.komirka.pp.ua/api/v1/public/users/registration`;
   const {
     register,
     setValue,

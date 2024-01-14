@@ -24,7 +24,7 @@ export default function CategoryPage() {
       const fetchData = async () => {
         try {
           const response = await fetch(
-            `http://ec2-18-197-60-214.eu-central-1.compute.amazonaws.com/api/v1/public/products/listing?category=${params.categoryId}&page=${page}&size=6&sort=${sort}`
+            `https://back.komirka.pp.ua/api/v1/public/products/listing?category=${params.categoryId}&page=${page}&size=6&sort=${sort}`
           );
           const data = await response.json();
           setResponseServe(data);
@@ -37,7 +37,7 @@ export default function CategoryPage() {
       fetchData();
     }
     if (params.seachProduct) {
-      const url = `http://ec2-18-197-60-214.eu-central-1.compute.amazonaws.com/api/v1/public/products/search?product-title=${encodeURIComponent(
+      const url = `https://back.komirka.pp.ua/api/v1/public/products/search?product-title=${encodeURIComponent(
         params.seachProduct
       )}&city=CHERNIVTSI&page=0&size=20`;
       const fetchData = async () => {

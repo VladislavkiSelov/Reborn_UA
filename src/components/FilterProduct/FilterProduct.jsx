@@ -12,39 +12,54 @@ export default function FilterProduct({ arrayProducts, setArrayProducts }) {
     formState: { errors },
   } = useForm({ mode: 'onSubmit' });
 
-  function filterProduct() {
-    let newArrayProduct = [...arrayProducts];
-    const resFilterArrayProducts = [];
+  function filterCity(array) {
     const city = getValues('city');
+
+    if (city) {
+      const resFilter = array.filter(el => el.city === city);
+      return resFilter;
+    } else {
+      return array;
+    }
+  }
+
+  function filterState(array) {
+    const resFilterState = [];
     const newState = getValues('newState');
     const used = getValues('used');
     const damaged = getValues('damaged');
 
-    if (city) {
-      const resFilter = newArrayProduct.filter(el => el.city === city);
-      newArrayProduct = resFilter;
-    }
-
     if (newState) {
-      const resFilter = newArrayProduct.filter(el => el.state === newState);
-      resFilterArrayProducts.push(resFilter);
+      const resFilter = array.filter(el => el.state === 'NEW');
+      resFilterState.push(...resFilter);
     }
 
     if (used) {
-      const resFilter = newArrayProduct.filter(el => el.state === used);
-      resFilterArrayProducts.push(resFilter);
+      const resFilter = array.filter(el => el.state === 'USED');
+      resFilterState.push(...resFilter);
     }
 
     if (damaged) {
-      const resFilter = newArrayProduct.filter(el => el.state === damaged);
-      resFilterArrayProducts.push(resFilter);
+      const resFilter = array.filter(el => el.state === 'DAMAGED');
+      resFilterState.push(...resFilter);
     }
 
-    return resFilterArrayProducts;
+    if (resFilterState.length > 0) {
+      return resFilterState;
+    } else {
+      return array;
+    }
+  }
+
+  function filterProduct() {
+    const resFilterCity = filterCity(arrayProducts);
+    const resFilterState = filterState(resFilterCity);
+    return resFilterState;
   }
 
   const onSubmit = data => {
-    setArrayProducts(filterProduct());
+    const newArrayProducts = filterProduct();
+    setArrayProducts(newArrayProducts);
     reset();
   };
 

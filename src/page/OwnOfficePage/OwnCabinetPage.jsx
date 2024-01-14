@@ -38,7 +38,7 @@ export default function OwnCabinetPage() {
 
   const onSubmit = data => {
     const userId = JSON.parse(localStorage.getItem('user'));
-    const urlSend = `http://ec2-18-197-60-214.eu-central-1.compute.amazonaws.com/api/v1/private/users/${userId.userReference}`;
+    const urlSend = `https://back.komirka.pp.ua/api/v1/private/users/${userId.userReference}`;
 
     axios
       .patch(

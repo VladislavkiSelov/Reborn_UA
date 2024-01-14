@@ -20,7 +20,7 @@ export default function ProductPage() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://ec2-18-197-60-214.eu-central-1.compute.amazonaws.com/api/v1/public/products/${params.productId}`
+          `https://back.komirka.pp.ua/api/v1/public/products/${params.productId}`
         );
         const data = await response.json();
         setResponseServe(data);
@@ -37,7 +37,7 @@ export default function ProductPage() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://ec2-18-197-60-214.eu-central-1.compute.amazonaws.com/api/v1/public/products/listing?category=${params.categoryId}&page=${page}&size=12&sort=POPULARITY`
+          `https://back.komirka.pp.ua/api/v1/public/products/listing?category=${params.categoryId}&page=${page}&size=12&sort=POPULARITY`
         );
         const data = await response.json();
         setResponseServe(data);
