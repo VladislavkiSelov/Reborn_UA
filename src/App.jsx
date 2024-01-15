@@ -30,7 +30,7 @@ export const App = () => {
     }
 
     if (Object.keys(userId).length > 0) {
-      const url = `http://ec2-18-197-60-214.eu-central-1.compute.amazonaws.com/api/v1/public/users/${userId.userReference}`;
+      const url = `https://back.komirka.pp.ua/api/v1/public/users/${userId.userReference}`;
       axios.get(url).then(res => {
         dispatch(setUser(res.data));
       });
