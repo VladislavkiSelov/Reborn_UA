@@ -13,7 +13,7 @@ import CategoryPage from 'page/CategoryPage/CategoryPage';
 import ProductPage from 'page/ProductPage/ProductPage';
 import ErrorPage from 'page/ErrorPage/ErrorPage';
 import OwnCabinetPage from 'page/OwnOfficePage/OwnCabinetPage';
-import FavoritePage from 'page/FavoritePage/FavoritePage';
+import AdsPage from 'page/AdsPage/AdsPage';
 import AddAdvertPage from 'page/AddAdvertPage/AddAdvertPage';
 import axios from 'axios';
 
@@ -46,7 +46,7 @@ export const App = () => {
           <Route path="/category/:categoryId" element={<CategoryPage />}></Route>
           <Route path="/seachProduct/:seachProduct" element={<CategoryPage />}></Route>
           <Route path="/category/:categoryId/product/:productId" element={<ProductPage />}></Route>
-          <Route path="/favorite" element={<FavoritePage />}></Route>
+          <Route path="/favorite" element={<AdsPage />}></Route>
           <Route path="/own-cabinet" element={<OwnCabinetPage />}></Route>
           <Route path="/add-advert" element={<AddAdvertPage />}></Route>
           <Route path="*" element={<ErrorPage />}></Route>

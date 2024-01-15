@@ -1,0 +1,43 @@
+.ads {
+    display: flex;
+    width: 100%;
+    gap: 65px;
+    padding-top: 65px;
+    padding-bottom: 55px;
+
+    &__header {
+        display: flex;
+        padding: 15px 15px 0 15px;
+        margin-bottom: 35px;
+        width: 100%;
+        max-width: 720px;
+
+
+        &>p {
+            border-bottom: #787878 1px solid;
+            padding-bottom: 13px;
+            width: 100%;
+            cursor: pointer;
+
+            &:nth-child(3) {
+                margin-right: 0;
+            }
+        }
+
+        .active-tab {
+            color: #000;
+            font-size: 19px;
+            font-weight: 700;
+            line-height: 19px;
+            letter-spacing: 0.57px;
+            border-bottom: #161616 2px solid;
+        }
+    }
+
+    &__box-product {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 50px;
+    }
+}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import BtnGraphite from 'components/BtnGraphite/BtnGraphite';
+import Button from 'components/Button/Button';
 import { ReactComponent as HideSvg } from '../../images/Hide.svg';
 import { ReactComponent as ShowSvg } from '../../images/Show.svg';
 import './LogIn.scss';
@@ -128,7 +128,7 @@ export default function LogIn() {
         <p>
           <a href="#">Забули пароль?</a>
         </p>
-        <BtnGraphite text="Увійти" />
+        <Button text="Увійти" />
       </form>
     </>
   );

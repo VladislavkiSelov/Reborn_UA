@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import CardUser from 'components/CardUser/CardUser';
-import BtnGraphite from 'components/BtnGraphite/BtnGraphite';
+import Button from 'components/Button/Button';
 import { ReactComponent as ArrowDown } from '../../images/arrow_down.svg';
 import InputFile from 'components/InputFile/InputFile';
 import { setStatusProfile } from 'store/sliceStatusProfile/sliceStatusProfile';
@@ -241,7 +241,7 @@ export default function AddAdvertPage() {
             </label>
           </div>
         </div>
-        <BtnGraphite text="Зберегти" />
+        <Button text="Зберегти" />
       </form>
     </section>
   );

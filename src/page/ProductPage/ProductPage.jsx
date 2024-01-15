@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Pagination from 'components/Pagination/Pagination';
 import CardProduct from 'components/CardProduct/CardProduct';
 import Slider from 'components/Slider/Slider';
-import BtnGreen from 'components/BtnGreen/BtnGreen';
+import Button from 'components/Button/Button';
 import { ReactComponent as Like } from '../../images/heart.svg';
 import './ProductPage.scss';
 
@@ -129,7 +129,7 @@ export default function ProductPage() {
             <Like onClick={(e)=>addProductFavotite(e)} className="like" />
           </div>
           <h4>{product.ownerUsername}</h4>
-          <BtnGreen text="Зателефонувати" classBtn="btn_call" />
+          <Button text="Зателефонувати" classBtn="btn_call" />
         </div>
       </div>
       <div className="similar_ads">

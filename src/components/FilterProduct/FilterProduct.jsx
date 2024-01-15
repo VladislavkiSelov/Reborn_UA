@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import BtnGreen from 'components/BtnGreen/BtnGreen';
+import Button from 'components/Button/Button';
 import './FilterProduct.scss';
 
 export default function FilterProduct({ arrayProducts, setArrayProducts }) {
@@ -90,7 +90,7 @@ export default function FilterProduct({ arrayProducts, setArrayProducts }) {
               <p>пошкоджений</p>
             </label>
           </div>
-          <BtnGreen text="Показати результати" />
+          <Button text="Показати результати" />
         </form>
       </div>
     </aside>

@@ -1,5 +1,5 @@
 import React from 'react';
-import BtnGreen from 'components/BtnGreen/BtnGreen';
+import Button from 'components/Button/Button';
 import { ReactComponent as UserProfil } from '../../images/user_cabinet.svg';
 import { ReactComponent as UserEmail } from '../../images/mail.svg';
 import { ReactComponent as UserPhone } from '../../images/phone.svg';
@@ -34,7 +34,7 @@ export default function CardUser() {
         <UserEmail />
         <h4>{user.email}</h4>
       </div>
-      <BtnGreen text="Редагувати" handelClick={goEditInfoUser} />
+      <Button text="Редагувати" handelClick={goEditInfoUser} />
     </div>
   );
 }

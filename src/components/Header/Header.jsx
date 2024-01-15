@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Search from 'components/Search/Search';
-import MainBtn from 'components/BtnGreen/BtnGreen';
+import Button from 'components/Button/Button';
 import Authentication from 'components/Authentication/Authentication';
 import { setStatusProfile } from 'store/sliceStatusProfile/sliceStatusProfile';
 import './Header.scss';
@@ -28,7 +28,7 @@ export default function Header() {
           </Link>
         </div>
         <Search />
-        <MainBtn handelClick={goToPage} text="Додати оголошення" className="btn_header" />
+        <Button handelClick={goToPage} text="Додати оголошення" className="btn_header" />
         <div className="box_btn_header">
           <Link to="/favorite">
             <img src="/img/heart.svg" alt="like" />

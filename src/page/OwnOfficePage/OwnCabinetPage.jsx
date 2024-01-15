@@ -5,7 +5,7 @@ import CardUser from 'components/CardUser/CardUser';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { setStatusProfile } from 'store/sliceStatusProfile/sliceStatusProfile';
-import BtnGraphite from 'components/BtnGraphite/BtnGraphite';
+import Button from 'components/Button/Button';
 import { useNavigate } from 'react-router-dom';
 
 export default function OwnCabinetPage() {
@@ -95,7 +95,7 @@ export default function OwnCabinetPage() {
             })}
           />
         </label>
-        <BtnGraphite text="Зберегти" />
+        <Button text="Зберегти" />
       </form>
     </div>
   );

@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IMaskInput } from 'react-imask';
-import BtnGraphite from 'components/BtnGraphite/BtnGraphite';
+import Button from 'components/Button/Button';
 import { ReactComponent as HideSvg } from '../../images/Hide.svg';
 import { ReactComponent as ShowSvg } from '../../images/Show.svg';
 import './SignUp.scss';
@@ -191,7 +191,7 @@ export default function SignUp() {
           <span className="check_box"></span>
           <p>Запам’ятати мене</p>
         </label>
-        <BtnGraphite text="Зарєеструватися" />
+        <Button text="Зарєеструватися" />
       </form>
     </>
   );
