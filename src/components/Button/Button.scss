@@ -1,6 +1,5 @@
-.btn_green {
+.btn {
     border-radius: 10px;
-    background: #567A49;
     padding: 18px 50px;
     white-space: nowrap;
     color: #FFF;
@@ -11,4 +10,59 @@
     letter-spacing: 0.57px;
     border: none;
     cursor: pointer;
+    transition: 0.3s;
+}
+
+
+.btn-green {
+    background: #567A49;
+
+    &:hover {
+        background: #3F5935;
+    }
+
+    &:disabled {
+        background: #9FDB89;
+        pointer-events: none;
+    }
+
+    &:active {
+        background: #567A49;
+    }
+}
+
+
+.btn-blue {
+    background: #329BAD;
+
+    &:hover {
+        background: #177383;
+    }
+
+    &:disabled {
+        background: #9ED3DC;
+        pointer-events: none;
+    }
+
+    &:active {
+        background: #329BAD;
+    }
+}
+
+
+.btn-graphite {
+    background: #3E3E3E;
+
+    &:hover {
+        background: #303030;
+    }
+
+    &:disabled {
+        background: #B0B0B0;
+        pointer-events: none;
+    }
+
+    &:active {
+        background: #3E3E3E;
+    }
 }

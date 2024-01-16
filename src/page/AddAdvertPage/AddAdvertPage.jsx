@@ -241,7 +241,7 @@ export default function AddAdvertPage() {
             </label>
           </div>
         </div>
-        <Button text="Зберегти" />
+        <Button classBtn="btn-graphite" text="Зберегти" />
       </form>
     </section>
   );

@@ -9,6 +9,7 @@ import axios from 'axios';
 
 export default function SignUp() {
   const [showHideElement1, setShowHideElement1] = useState(false);
+  const [statusBtn, setStatusBtn] = useState(true);
   const [showHideElement2, setShowHideElement2] = useState(false);
   const inputRef = useRef(null);
   const url = `https://back.komirka.pp.ua/api/v1/public/users/registration`;
@@ -191,7 +192,7 @@ export default function SignUp() {
           <span className="check_box"></span>
           <p>Запам’ятати мене</p>
         </label>
-        <Button text="Зарєеструватися" />
+        <Button statusDisabled={statusBtn} classBtn="btn-blue" text="Зарєеструватися" />
       </form>
     </>
   );

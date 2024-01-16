@@ -7,7 +7,7 @@ import './CardUser.scss';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-export default function CardUser() {
+export default function CardUser(statusBtn) {
   const user = useSelector(state => state.user.user);
   const navigate = useNavigate()
 
@@ -34,7 +34,7 @@ export default function CardUser() {
         <UserEmail />
         <h4>{user.email}</h4>
       </div>
-      <Button text="Редагувати" handelClick={goEditInfoUser} />
+      <Button statusDisabled={statusBtn}  classBtn="btn-blue" text="Редагувати" handelClick={goEditInfoUser} />
     </div>
   );
 }

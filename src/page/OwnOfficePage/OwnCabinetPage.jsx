@@ -62,7 +62,7 @@ export default function OwnCabinetPage() {
   return (
     <div className="own_cabinet container">
       <div>
-        <CardUser />
+        <CardUser statusBtn={true} />
       </div>
       <form className="own_cabinet__form" onSubmit={handleSubmit(onSubmit)}>
         <label>

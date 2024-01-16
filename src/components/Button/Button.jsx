@@ -1,9 +1,9 @@
-import React from 'react';
-import './Button.scss'
+import React, { useEffect, useRef } from 'react';
+import './Button.scss';
 
-export default function Button({ text, classBtn, handelClick }) {
+export default function Button({ text, classBtn, handelClick, statusDisabled }) {
   return (
-    <button onClick={handelClick} className={`btn_green ${classBtn || ''}`}>
+    <button disabled={statusDisabled} onClick={handelClick} className={`btn ${classBtn || ''}`}>
       {text}
     </button>
   );

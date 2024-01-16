@@ -90,7 +90,7 @@ export default function FilterProduct({ arrayProducts, setArrayProducts }) {
               <p>пошкоджений</p>
             </label>
           </div>
-          <Button text="Показати результати" />
+          <Button classBtn="btn-blue" text="Показати результати" />
         </form>
       </div>
     </aside>

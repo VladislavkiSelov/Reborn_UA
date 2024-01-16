@@ -19,11 +19,8 @@ export default function ProductPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          `https://back.komirka.pp.ua/api/v1/public/products/${params.productId}`
-        );
+        const response = await fetch(`https://back.komirka.pp.ua/api/v1/public/products/${params.productId}`);
         const data = await response.json();
-        setResponseServe(data);
         setProduct(data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -36,9 +33,7 @@ export default function ProductPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          `https://back.komirka.pp.ua/api/v1/public/products/listing?category=${params.categoryId}&page=${page}&size=12&sort=POPULARITY`
-        );
+        const response = await fetch(`https://back.komirka.pp.ua/api/v1/public/products/listing?category=${params.categoryId}&page=${page}&size=12&sort=POPULARITY`);
         const data = await response.json();
         setResponseServe(data);
         setArrayProducts(data.content);
@@ -109,7 +104,7 @@ export default function ProductPage() {
     <section className="product container">
       <h5>Головна сторінка/Категорія {getTypeCategory(params.categoryId)}</h5>
       <div className="product_main_block">
-        <Slider/>
+        <Slider />
         {/* <div className="box_img">
           <img src="/img/img_furniture.png" alt="#" />
         </div> */}
@@ -118,18 +113,18 @@ export default function ProductPage() {
             <div className="wrapper_content">
               <h3>{product.productTitle}</h3>
               <div>
-                <div className='wrapper_location'>
-                <img src="/img/location.svg" alt="location" />
-                <h4>{product.city}</h4>
+                <div className="wrapper_location">
+                  <img src="/img/location.svg" alt="location" />
+                  <h4>{product.city}</h4>
                 </div>
                 <h5>{product.state}</h5>
               </div>
               <p>{product.productDescription}</p>
             </div>
-            <Like onClick={(e)=>addProductFavotite(e)} className="like" />
+            <Like onClick={e => addProductFavotite(e)} className="like" />
           </div>
           <h4>{product.ownerUsername}</h4>
-          <Button text="Зателефонувати" classBtn="btn_call" />
+          <Button  text="Зателефонувати" classBtn="btn-blue btn_call" />
         </div>
       </div>
       <div className="similar_ads">
@@ -148,10 +143,7 @@ export default function ProductPage() {
           ))}
         </div>
         <div className="footer_category">
-          <Pagination
-            maxElementPage={responseServe.totalElements}
-            setPage={value => setPage(value)}
-          />
+          <Pagination maxElementPage={responseServe.totalElements} setPage={value => setPage(value)} />
         </div>
       </div>
     </section>

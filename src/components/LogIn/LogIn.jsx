@@ -11,6 +11,7 @@ import { setUser } from 'store/sliceReducer/sliceUser';
 export default function LogIn() {
   const url = `https://back.komirka.pp.ua/api/v1/public/auth`;
   const [showHideElement1, setShowHideElement1] = useState(false);
+  const [statusBtn, setStatusBtn] = useState(true);
   const dispatch = useDispatch();
   const {
     register,
@@ -128,7 +129,7 @@ export default function LogIn() {
         <p>
           <a href="#">Забули пароль?</a>
         </p>
-        <Button text="Увійти" />
+        <Button statusDisabled={statusBtn} classBtn="btn-blue" text="Увійти" />
       </form>
     </>
   );
