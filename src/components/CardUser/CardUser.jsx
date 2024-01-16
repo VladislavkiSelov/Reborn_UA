@@ -7,7 +7,7 @@ import './CardUser.scss';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-export default function CardUser(statusBtn) {
+export default function CardUser({statusBtn}) {
   const user = useSelector(state => state.user.user);
   const navigate = useNavigate()
 

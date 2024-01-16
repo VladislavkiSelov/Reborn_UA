@@ -18,11 +18,13 @@ export default function LogIn() {
     setError,
     handleSubmit,
     watch,
+    getValues,
     reset,
     formState: { errors },
-  } = useForm({ mode: 'onSubmit' });
+  } = useForm({ mode: 'all' });
 
   const validationPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+  const validationEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   function showPassword(e) {
     const input = e.currentTarget;
@@ -37,23 +39,40 @@ export default function LogIn() {
     }
   }
 
+  // useEffect(() => {
+  //   if (isNaN(+watch('login')[0]) === false) {
+  //     const isValidPhone = watch('login').match(/^(\+38)?\(0\d{2}\)\d{2}\d{2}\d{3}$/);
+  //     if (!isValidPhone) {
+  //       setError('login');
+  //     }
+  //   } else {
+  //     // const validationEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  //     const isValidEmail = watch('login').match(validationEmail);
+  //     if (!isValidEmail) {
+  //       setError('login');
+  //     }
+  //   }
+  // }, [watch,setError]);
+
   useEffect(() => {
-    if (isNaN(+watch('login')[0]) === false) {
-      const isValidPhone = watch('login').match(
-        /^(\+38)?\(0\d{2}\)\d{2}\d{2}\d{3}$/
-      );
-      if (!isValidPhone) {
-        setError('login');
-      }
-    } else {
-      const validationEmail =
-        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      const isValidEmail = watch('login').match(validationEmail);
-      if (!isValidEmail) {
-        setError('login');
-      }
+    const login = getValues('login');
+    const password = getValues('password');
+
+    if (errors.login || errors.password) {
+      setStatusBtn(true);
+      return;
     }
-  }, [watch]);
+
+    if (login.length === 0 || password.length === 0) {
+      setStatusBtn(true);
+      return;
+    }
+
+    if (Object.keys(errors).length === 0) {
+      setStatusBtn(false);
+    }
+  }, [errors.login, errors.password, getValues('login'), getValues('password')]);
+  // добавление Disabled кнопке
 
   const onSubmit = data => {
     axios
@@ -63,7 +82,7 @@ export default function LogIn() {
       })
       .then(response => {
         localStorage.setItem('user', JSON.stringify(response.data));
-        return response
+        return response;
       })
       .then(response => {
         const url = `https://back.komirka.pp.ua/api/v1/public/users/${response.data.userReference}`;
@@ -80,18 +99,19 @@ export default function LogIn() {
   return (
     <>
       <form className="form_log_in" onSubmit={handleSubmit(onSubmit)}>
-        <label className={errors.phone && `error_label`}>
+        <label className={errors?.login && `error_label`}>
           Номер телефону або email
           <input
             type="text"
-            className={errors.phone && `error_input`}
+            className={errors.login && `error_input`}
             {...register('login', {
               required: true,
+              pattern: validationEmail,
             })}
           />
-          {errors.phone && <p className="error_text">*Невірно введено номер</p>}
+          {errors.login && <p className="error_text">*Невірно введено логін</p>}
         </label>
-        <label className={errors.password && `error_label`}>
+        <label className={errors?.password && `error_label`}>
           Пароль
           <input
             className={errors.password && `error_input`}
@@ -112,17 +132,10 @@ export default function LogIn() {
               <HideSvg className={errors?.password && `error_svg`} />
             </span>
           )}
-          {errors.password && (
-            <p className="error_text">*Пароль має містити від 8 символів</p>
-          )}
+          {errors.password && <p className="error_text">*Пароль має містити від 8 символів</p>}
         </label>
         <label htmlFor="remember_me" className="label_remember_me">
-          <input
-            type="checkbox"
-            className="input_checkbox"
-            id="remember_me"
-            {...register('remember_me')}
-          />
+          <input type="checkbox" className="input_checkbox" id="remember_me" {...register('remember_me')} />
           <span className="check_box"></span>
           <p>Запам’ятати мене</p>
         </label>

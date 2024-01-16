@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IMaskInput } from 'react-imask';
 import Button from 'components/Button/Button';
@@ -22,9 +22,9 @@ export default function SignUp() {
     clearErrors,
     reset,
     formState: { errors },
-  } = useForm({ mode: 'onSubmit' });
+  } = useForm({ mode: 'all' });
 
-  const validationName =  /^[А-Яа-яЁё]+ [А-Яа-яЁё]+$/;
+  const validationName = /^[А-Яа-яЁё]+ [А-Яа-яЁё]+$/;
   const validationEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const validationPassword = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
 
@@ -59,9 +59,7 @@ export default function SignUp() {
   };
 
   const onSubmit = data => {
-    const isValidPhone = inputRef.current.value.match(
-      /^(\+38)?\(0\d{2}\)-\d{2}-\d{2}-\d{3}$/
-    );
+    const isValidPhone = inputRef.current.value.match(/^(\+38)?\(0\d{2}\)-\d{2}-\d{2}-\d{3}$/);
 
     if (!isValidPhone) {
       setError('phone', { type: 'pattern', message: '*Невірно введено номер' });
@@ -86,19 +84,43 @@ export default function SignUp() {
     reset();
   };
 
+  useEffect(() => {
+    const name = getValues('name');
+    const email = getValues('email');
+    const password = getValues('password');
+    const phone = getValues('phone');
+    const repeatPassword = getValues('repeat_password');
+
+    if (Object.keys(errors).length > 0) {
+      setStatusBtn(true);
+      return;
+    }
+
+    if (!name || !email || !password || !phone || !repeatPassword) {
+      setStatusBtn(true);
+      return;
+    }
+
+    if (Object.keys(errors).length === 0) {
+      setStatusBtn(false);
+    }
+  }, [
+    errors,
+    getValues('name'),
+    getValues('email'),
+    getValues('password'),
+    getValues('phone'),
+    getValues('repeat_password'),
+  ]);
+  // добавление Disabled кнопке
+
   return (
     <>
       <form className="form_sing_up" onSubmit={handleSubmit(onSubmit)}>
         <label className={errors.name && `error_label`}>
           Ім’я та Прізвище
-          <input
-            type="text"
-            className={errors.name && `error_input`}
-            {...register('name', { required: true, pattern: validationName })}
-          />
-          {errors.name && (
-            <p className="error_text">*Ім'я може містити тільки букви</p>
-          )}
+          <input type="text" className={errors.name && `error_input`} {...register('name', { required: true, pattern: validationName })} />
+          {errors.name && <p className="error_text">*Ім'я може містити тільки букви</p>}
         </label>
         <label className={errors.phone && `error_label`}>
           Номер телефону
@@ -128,9 +150,7 @@ export default function SignUp() {
               pattern: validationEmail,
             })}
           />
-          {errors.email && (
-            <p className="error_text">*Невірно введено E-mail</p>
-          )}
+          {errors.email && <p className="error_text">*Невірно введено E-mail</p>}
         </label>
         <label className={errors.password && `error_label`}>
           Пароль
@@ -153,9 +173,7 @@ export default function SignUp() {
               <HideSvg className={errors?.password && `error_svg`} />
             </span>
           )}
-          {errors.password && (
-            <p className="error_text">*Пароль має містити від 8 символів</p>
-          )}
+          {errors.password && <p className="error_text">*Пароль має містити від 8 символів</p>}
         </label>
         <label className={errors.repeat_password && `error_label`}>
           Повторити пароль
@@ -178,17 +196,10 @@ export default function SignUp() {
               <HideSvg className={errors?.repeat_password && `error_svg`} />
             </span>
           )}
-          {errors.repeat_password && (
-            <p className="error_text">*Паролі не співпадають</p>
-          )}
+          {errors.repeat_password && <p className="error_text">*Паролі не співпадають</p>}
         </label>
         <label htmlFor="remember_me" className="label_remember_me">
-          <input
-            className="input_checkbox"
-            type="checkbox"
-            id="remember_me"
-            {...register('remember_me')}
-          />
+          <input className="input_checkbox" type="checkbox" id="remember_me" {...register('remember_me')} />
           <span className="check_box"></span>
           <p>Запам’ятати мене</p>
         </label>

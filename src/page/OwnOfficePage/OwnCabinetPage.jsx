@@ -95,7 +95,7 @@ export default function OwnCabinetPage() {
             })}
           />
         </label>
-        <Button text="Зберегти" />
+        <Button classBtn='btn-graphite' statusDisabled={false} text="Зберегти" />
       </form>
     </div>
   );

@@ -108,7 +108,7 @@ export default function AddAdvertPage() {
   return (
     <section className="advert-page container">
       <div className="advert-page__wrapper-user">
-        <CardUser />
+        <CardUser statusBtn={false}/>
       </div>
       <form className="advert-page__form" onSubmit={handleSubmit(onSubmit)}>
         <h3>Додати оголошення</h3>
