@@ -9,8 +9,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 export default function Header() {
   const dispatch = useDispatch();
-  const params = useParams()
-  const [statusBtn, setStatusBtn] = useState(true);
   const statusProfile = useSelector(state => state.statusProfile.statusProfile);
   const navigate = useNavigate();
   function handelClickProfile() {

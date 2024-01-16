@@ -4,6 +4,7 @@ import Pagination from 'components/Pagination/Pagination';
 import CardProductCategory from 'components/CardProductCategory/CardProductCategory';
 import FilterProduct from 'components/FilterProduct/FilterProduct';
 import { Oval } from 'react-loader-spinner';
+import translationCategory from 'components/TranslationText/TranslationCategory';
 import { ReactComponent as ArrowDown } from '../../images/arrow_down.svg';
 import './CategoryPage.scss';
 
@@ -23,9 +24,7 @@ export default function CategoryPage() {
     if (params.categoryId) {
       const fetchData = async () => {
         try {
-          const response = await fetch(
-            `https://back.komirka.pp.ua/api/v1/public/products/listing?category=${params.categoryId}&page=${page}&size=6&sort=${sort}`
-          );
+          const response = await fetch(`https://back.komirka.pp.ua/api/v1/public/products/listing?category=${params.categoryId}&page=${page}&size=6&sort=${sort}`);
           const data = await response.json();
           setResponseServe(data);
           setArrayProducts(data.content);
@@ -37,9 +36,7 @@ export default function CategoryPage() {
       fetchData();
     }
     if (params.seachProduct) {
-      const url = `https://back.komirka.pp.ua/api/v1/public/products/search?product-title=${encodeURIComponent(
-        params.seachProduct
-      )}&city=CHERNIVTSI&page=0&size=20`;
+      const url = `https://back.komirka.pp.ua/api/v1/public/products/search?product-title=${encodeURIComponent(params.seachProduct)}&city=CHERNIVTSI&page=0&size=20`;
       const fetchData = async () => {
         const res = await fetch(url);
         const data = await res.json();
@@ -52,31 +49,6 @@ export default function CategoryPage() {
       fetchData();
     }
   }, [params, page, sort, navigate]);
-
-  const getTypeCategory = category => {
-    switch (category) {
-      case 'FURNITURE':
-        return 'Меблі';
-        break;
-      case 'CLOTHE':
-        return 'Одяг';
-        break;
-      case 'ELECTRONIC':
-        return 'Техніка';
-        break;
-      case 'HOSE':
-        return 'Все для дому';
-        break;
-      case 'CHILDREN':
-        return 'Дитячий світ';
-        break;
-      case 'PETS':
-        return 'Наші улюбленці';
-        break;
-      default:
-        return '';
-    }
-  };
 
   if (arrayProducts.length === 0) {
     return (
@@ -96,7 +68,7 @@ export default function CategoryPage() {
 
   return (
     <div className="category container">
-      <h5>Головна сторінка/Категорія {getTypeCategory(params.categoryId)}</h5>
+      <h5>Головна сторінка/Категорія {translationCategory(params.categoryId)}</h5>
       <div className="header_category">
         <Pagination maxElementPage={responseServe.totalElements} setPage={value => setPage(value)} />
         <div className="box_sort_category_page">
@@ -113,14 +85,14 @@ export default function CategoryPage() {
         </div>
       </div>
       <div className="сategory_main_box">
-        <FilterProduct arrayProducts={arrayProducts} setArrayProducts={(value)=>setArrayProducts(value)} />
+        <FilterProduct arrayProducts={arrayProducts} setArrayProducts={value => setArrayProducts(value)} />
         <div className="cards_category">
           {arrayProducts.map((el, i) => (
             <CardProductCategory
+              key={el.reference}
               categoryId={params.categoryId || el.categoryName}
               seachProduct={params.seachProduct}
               reference={el.reference}
-              key={i}
               productTitle={el.productTitle}
               productDescription={el.productDescription}
               city={el.city}
