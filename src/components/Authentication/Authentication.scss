@@ -51,22 +51,32 @@
     }
 
     .header_log_in {
-        display: flex;
-        justify-content: center;
-        margin: 0 -34px;
-        margin-bottom: 43px;
 
-        &>button {
-            font-size: 19px;
-            font-weight: 700;
-            line-height: 19px;
-            letter-spacing: 0.57px;
-            border: none;
-            background: inherit;
-            cursor: pointer;
-            padding-bottom: 13px;
-            border-bottom: 1px solid #000;
+        &>p {
             width: 100%;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+
+        &__box-btn {
+            display: flex;
+            justify-content: center;
+            margin: 0 -34px;
+            margin-bottom: 43px;
+
+            &>button {
+                font-size: 19px;
+                font-weight: 700;
+                line-height: 19px;
+                letter-spacing: 0.57px;
+                border: none;
+                background: inherit;
+                cursor: pointer;
+                padding-bottom: 13px;
+                border-bottom: 1px solid #000;
+                width: 100%;
+            }
         }
 
         .active_btn_header_sing_up {
