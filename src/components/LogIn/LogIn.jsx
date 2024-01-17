@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import Button from 'components/Button/Button';
 import { ReactComponent as HideSvg } from '../../images/Hide.svg';
 import { ReactComponent as ShowSvg } from '../../images/Show.svg';
+import PasswordForgotModal from 'components/PasswordForgotModal/PasswordForgotModal';
 import './LogIn.scss';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
@@ -12,6 +13,7 @@ export default function LogIn() {
   const url = `https://back.komirka.pp.ua/api/v1/public/auth`;
   const [showHideElement1, setShowHideElement1] = useState(false);
   const [statusBtn, setStatusBtn] = useState(true);
+  const [showPasswordForgotModal, setShowPasswordForgotModal] = useState(false);
   const dispatch = useDispatch();
   const {
     register,
@@ -73,6 +75,9 @@ export default function LogIn() {
     }
   }, [errors.login, errors.password, getValues('login'), getValues('password')]);
   // добавление Disabled кнопке
+  const handleForgotPasswordClick = () => {
+    setShowPasswordForgotModal(true);
+  };
 
   const onSubmit = data => {
     axios
@@ -98,6 +103,8 @@ export default function LogIn() {
 
   return (
     <>
+      {showPasswordForgotModal ? <PasswordForgotModal onClose={() => setShowPasswordForgotModal(false)} />
+      :
       <form className="form_log_in" onSubmit={handleSubmit(onSubmit)}>
         <label className={errors?.login && `error_label`}>
           Номер телефону або email
@@ -140,10 +147,11 @@ export default function LogIn() {
           <p>Запам’ятати мене</p>
         </label>
         <p>
-          <a href="#">Забули пароль?</a>
+          <p href="#" onClick={handleForgotPasswordClick}>Забули пароль?</p>
         </p>
         <Button statusDisabled={statusBtn} classBtn="btn-blue" text="Увійти" />
       </form>
+      }
     </>
   );
 }
