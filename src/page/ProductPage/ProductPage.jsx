@@ -5,6 +5,8 @@ import Pagination from 'components/Pagination/Pagination';
 import CardProduct from 'components/CardProduct/CardProduct';
 import Slider from 'components/Slider/Slider';
 import Button from 'components/Button/Button';
+import translationState from 'components/TranslationText/TranslationState';
+import translationCategory from 'components/TranslationText/TranslationCategory';
 import { ReactComponent as Like } from '../../images/heart.svg';
 import './ProductPage.scss';
 
@@ -46,31 +48,6 @@ export default function ProductPage() {
     fetchData();
   }, [params, page, navigate]);
 
-  const getTypeCategory = category => {
-    switch (category) {
-      case 'FURNITURE':
-        return 'Меблі';
-        break;
-      case 'CLOTHE':
-        return 'Одяг';
-        break;
-      case 'ELECTRONIC':
-        return 'Техніка';
-        break;
-      case 'HOSE':
-        return 'Все для дому';
-        break;
-      case 'CHILDREN':
-        return 'Дитячий світ';
-        break;
-      case 'PETS':
-        return 'Наші улюбленці';
-        break;
-      default:
-        return '';
-    }
-  };
-
   if (product.length === 0) {
     return (
       <Oval
@@ -102,7 +79,7 @@ export default function ProductPage() {
 
   return (
     <section className="product container">
-      <h5>Головна сторінка/Категорія {getTypeCategory(params.categoryId)}</h5>
+      <h5>Головна сторінка/Категорія {translationCategory(params.categoryId)}</h5>
       <div className="product_main_block">
         <Slider />
         {/* <div className="box_img">
@@ -117,14 +94,14 @@ export default function ProductPage() {
                   <img src="/img/location.svg" alt="location" />
                   <h4>{product.city}</h4>
                 </div>
-                <h5>{product.state}</h5>
+                <h5>Стан - {translationState(product.state)}</h5>
               </div>
               <p>{product.productDescription}</p>
             </div>
             <Like onClick={e => addProductFavotite(e)} className="like" />
           </div>
           <h4>{product.ownerUsername}</h4>
-          <Button  text="Зателефонувати" classBtn="btn-blue btn_call" />
+          <Button text="Зателефонувати" classBtn="btn-blue btn_call" />
         </div>
       </div>
       <div className="similar_ads">
@@ -143,7 +120,7 @@ export default function ProductPage() {
           ))}
         </div>
         <div className="footer_category">
-          <Pagination maxElementPage={responseServe.totalElements} setPage={value => setPage(value)} />
+          <Pagination maxElementPage={responseServe.totalElements || null} setPage={value => setPage(value)} />
         </div>
       </div>
     </section>

@@ -46,6 +46,7 @@ export const App = () => {
           <Route path="/" element={<MainPage />}></Route>
           <Route path="/PrivacyPolicy" element={<PrivacyPolicy />}></Route>
           <Route path="/category/:categoryId" element={<CategoryPage />}></Route>
+          {/* <Route path="/reset-password/token/:token" element={<ResetPassword/>}></Route> */}
           <Route path="/seachProduct/:seachProduct" element={<CategoryPage />}></Route>
           <Route path="/category/:categoryId/product/:productId" element={<ProductPage />}></Route>
           <Route path="/favorite" element={<AdsPage />}></Route>

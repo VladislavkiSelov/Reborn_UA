@@ -46,8 +46,6 @@ export default function FilterProduct({ arrayProducts, setArrayProducts }) {
 
     if (resFilterState.length > 0) {
       return resFilterState;
-    } else {
-      return array;
     }
   }
 
@@ -90,7 +88,7 @@ export default function FilterProduct({ arrayProducts, setArrayProducts }) {
               <p>пошкоджений</p>
             </label>
           </div>
-          <Button classBtn="btn-blue" text="Показати результати" />
+          <Button statusDisabled={false} classBtn="btn-blue" text="Показати результати" />
         </form>
       </div>
     </aside>
