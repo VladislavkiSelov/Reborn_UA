@@ -40,7 +40,9 @@ export default function Footer() {
               </li>
               <li>Про нас</li>
               <li>Умови використання</li>
-              <li>Політика конфіденційності</li>
+              <li>
+                <Link to="PrivacyPolicy">Політика конфіденційності</Link>
+              </li>
             </ul>
           </div>
           <ul>

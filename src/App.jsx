@@ -9,6 +9,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Footer from 'components/Footer/Footer';
 import Header from 'components/Header/Header';
 import MainPage from 'page/MainPage/MainPage';
+import PrivacyPolicy from 'page/PrivacyPolicy/PrivacyPolicy';
 import CategoryPage from 'page/CategoryPage/CategoryPage';
 import ProductPage from 'page/ProductPage/ProductPage';
 import ErrorPage from 'page/ErrorPage/ErrorPage';
@@ -43,6 +44,7 @@ export const App = () => {
         <Header />
         <Routes>
           <Route path="/" element={<MainPage />}></Route>
+          <Route path="/PrivacyPolicy" element={<PrivacyPolicy />}></Route>
           <Route path="/category/:categoryId" element={<CategoryPage />}></Route>
           <Route path="/seachProduct/:seachProduct" element={<CategoryPage />}></Route>
           <Route path="/category/:categoryId/product/:productId" element={<ProductPage />}></Route>

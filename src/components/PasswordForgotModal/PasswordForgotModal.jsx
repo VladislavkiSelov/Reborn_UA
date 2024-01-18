@@ -23,7 +23,7 @@ export default function PasswordForgotModal() {
 
       try {
         // Make API request to send the email
-        const response = await fetch('/api/v1/public/reset-password', {
+        const response = await fetch('https://back.komirka.pp.ua/api/v1/public/reset-password', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ export default function PasswordForgotModal() {
 
       try {
         // Make API request to reset password with the reset token
-        const response = await fetch(`/api/v1/public/reset-password/${resetToken}`, {
+        const response = await fetch(`https://back.komirka.pp.ua/api/v1/public/reset-password/${resetToken}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -104,10 +104,9 @@ export default function PasswordForgotModal() {
 
         {resetToken && (
           <div>
-            <h2>Reset Password</h2>
             <form onSubmit={(e) => { e.preventDefault(); handlePasswordReset(); }}>
               <label>
-                New Password:
+                Новий пароль:
                 <input
                   type="password"
                   value={newPassword}
