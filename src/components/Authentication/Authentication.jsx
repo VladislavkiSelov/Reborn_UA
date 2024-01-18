@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { ReactComponent as CloseSvg } from '../../images/Close.svg';
 import SignUp from 'components/SignUp/SignUp';
 import LogIn from 'components/LogIn/LogIn';
@@ -38,7 +39,7 @@ export default function Authentication() {
           {statusAuthentication === 'SignUp' && <SignUp />}
           {statusAuthentication === 'ForgotPassword' && <PasswordForgotModal />}
           <p>
-            Під час входу ви погоджуєтесь з нашими <a href="#">Умовами користування</a>
+            Під час входу ви погоджуєтесь з нашими <Link onClick={closePage} to="PrivacyPolicy">Умовами користування</Link>
           </p>
         </div>
       </>
