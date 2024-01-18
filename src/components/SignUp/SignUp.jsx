@@ -84,35 +84,24 @@ export default function SignUp() {
     reset();
   };
 
-  useEffect(() => {
+  const addDisabled = () => {
     const name = getValues('name');
     const email = getValues('email');
     const password = getValues('password');
     const phone = getValues('phone');
     const repeatPassword = getValues('repeat_password');
 
-    if (Object.keys(errors).length > 0) {
+    if (Object.keys(errors).length > 0 || name.length === 0 || email.length === 0 || password.length === 0 || phone.length === 0 || repeatPassword.length === 0) {
       setStatusBtn(true);
       return;
-    }
-
-    if (!name || !email || !password || !phone || !repeatPassword) {
-      setStatusBtn(true);
-      return;
-    }
-
-    if (Object.keys(errors).length === 0) {
+    } else {
       setStatusBtn(false);
     }
-  }, [
-    errors,
-    getValues('name'),
-    getValues('email'),
-    getValues('password'),
-    getValues('phone'),
-    getValues('repeat_password'),
-  ]);
-  // добавление Disabled кнопке
+  };
+
+  useEffect(() => {
+    addDisabled();
+  });
 
   return (
     <>
