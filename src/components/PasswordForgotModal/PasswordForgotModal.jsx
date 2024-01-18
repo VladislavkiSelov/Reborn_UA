@@ -172,7 +172,7 @@ export default function PasswordForgotModal() {
   }, [errors, getValues, validationEmail, watch]);
 
   return (
-    <div>
+    <div className='password-forgot'>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label className="label">
           Email:
