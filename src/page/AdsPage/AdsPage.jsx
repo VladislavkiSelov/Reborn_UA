@@ -41,7 +41,7 @@
 
 import React, { useEffect, useState } from 'react';
 import CardUser from 'components/CardUser/CardUser';
-import CardFavorite from 'components/CardFavorite/CardFavorite';
+import CardAds from 'components/CardAds/CardAds';
 import './AdsPage.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFavoriteProducts } from 'store/sliceFavoriteProducts/sliceFavoriteProducts';
@@ -105,7 +105,7 @@ export default function AdsPage() {
         </div>
         <div className="ads__box-product">
           {allProducts.map(el => (
-            <CardFavorite
+            <CardAds
               key={el.reference}
               productTitle={el.productTitle}
               productDescription={el.productDescription}
@@ -113,6 +113,7 @@ export default function AdsPage() {
               state={el.state}
               reference={el.reference}
               categoryId={el.categoryName}
+              
             />
           ))}
         </div>
