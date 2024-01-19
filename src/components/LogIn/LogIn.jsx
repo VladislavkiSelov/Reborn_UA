@@ -18,6 +18,7 @@ export default function LogIn({ setStatusAuthentication }) {
     handleSubmit,
     getValues,
     reset,
+    setError,
     formState: { errors },
   } = useForm({ mode: 'all' });
 
@@ -75,6 +76,8 @@ export default function LogIn({ setStatusAuthentication }) {
         });
       })
       .catch(error => {
+        setError('login')
+        setError('password')
         console.error('Ошибка запроса:', error);
       });
     reset();
@@ -116,7 +119,7 @@ export default function LogIn({ setStatusAuthentication }) {
               <HideSvg className={errors?.password && `error_svg`} />
             </span>
           )}
-          {errors.password && <p className="error_text">*Не вірний формат</p>}
+          {errors.password && <p className="error_text">*Невірно введено пароль</p>}
         </label>
         <label htmlFor="remember_me" className="label_remember_me">
           <input type="checkbox" className="input_checkbox" id="remember_me" {...register('remember_me')} />

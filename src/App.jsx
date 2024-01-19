@@ -52,6 +52,7 @@ export const App = () => {
           <Route path="/favorite" element={<AdsPage />}></Route>
           <Route path="/own-cabinet" element={<OwnCabinetPage />}></Route>
           <Route path="/add-advert" element={<AddAdvertPage />}></Route>
+          <Route path="/add-advert" element={<AddAdvertPage />}></Route>
           <Route path="*" element={<ErrorPage />}></Route>
         </Routes>
         <Footer />

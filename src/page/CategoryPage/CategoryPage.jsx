@@ -50,6 +50,12 @@ export default function CategoryPage() {
     }
   }, [params, page, sort, navigate]);
 
+  console.log(arrayProducts);
+
+  if(!arrayProducts){
+    navigate('*')
+  }
+
   if (arrayProducts.length === 0) {
     return (
       <Oval

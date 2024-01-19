@@ -24,6 +24,7 @@
     }
 
     .label_city {
+        position: relative;
         font-size: 19px;
         font-weight: 700;
         line-height: 19px;
@@ -55,6 +56,30 @@
 .form_filter {
     display: flex;
     flex-direction: column;
+
+    &__list-city{
+        background: white;
+        padding: 15px 30px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 83px;
+        border: 1px solid #3E3E3E;
+        max-height: 450px;
+        overflow-y: scroll;
+        z-index: 10;
+
+        li {
+            margin-bottom: 10px;
+            cursor: pointer;
+            display: block;
+
+            &:hover {
+                color: #567A49;
+                font-weight: 700;
+            }
+        }
+    }
 }
 
 .checkbox_label {

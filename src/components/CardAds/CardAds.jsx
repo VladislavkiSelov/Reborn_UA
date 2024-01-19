@@ -1,36 +1,39 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Like } from '../../images/like_active.svg';
-import { useDispatch, useSelector } from 'react-redux';
-import { setFavoriteProducts } from 'store/sliceFavoriteProducts/sliceFavoriteProducts';
+import { useSelector } from 'react-redux';
+import Button from 'components/Button/Button';
 import './CardAds.scss';
 import axios from 'axios';
 
-export default function CardAds({ productTitle, productDescription, city, state, reference, categoryId }) {
+export default function CardAds({ ads, productTitle, productDescription, city, state, reference, categoryId, setAllProducts, getAllFavoriteProducts }) {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const allProducts = useSelector(state => state.favoriteProducts.favoriteProducts);
   const user = useSelector(state => state.user.user);
+
+  const btnText = ads === 'Активні оголошення' ? 'Редагувати' : 'Відновити';
 
   function handelClick() {
     navigate(`/category/${categoryId}/product/${reference}`);
   }
 
   function deleteProduct() {
-    if (!user) {
+    if (Object.keys(user) <= 0) {
+      const allProducts = JSON.parse(localStorage.getItem('products'));
       const newAllProducts = allProducts.filter(el => el.reference !== reference);
       localStorage.setItem('products', JSON.stringify(newAllProducts));
-      dispatch(setFavoriteProducts(newAllProducts) || []);
+      setAllProducts(newAllProducts || []);
     }
-    if (user) {
+    if (Object.keys(user) > 0) {
       const url = `https://back.komirka.pp.ua/api/v1/private/products/${reference}/favorites`;
-      const token = JSON.parse(localStorage.getItem('user')).authenticationToken
+      const token = JSON.parse(localStorage.getItem('user')).authenticationToken;
       axios
         .delete(url, {
-          headers:{Authorization: `Bearer ${token}`},
+          headers: { Authorization: `Bearer ${token}` },
         })
         .then(res => {
-          console.log(res);
+          (async function () {
+            setAllProducts(await getAllFavoriteProducts());
+          })();
         })
         .catch(error => console.error(error));
     }
@@ -55,9 +58,12 @@ export default function CardAds({ productTitle, productDescription, city, state,
         </div>
       </div>
       <Like className="like" />
-      <button onClick={deleteProduct} className="card-favorite__btn-delete">
-        Видалити
-      </button>
+      <div className="card-favorite__container_btn">
+        <button onClick={deleteProduct} className="btn-delete">
+          Видалити
+        </button>
+        {ads !== 'Улюблене' && <Button text={btnText} classBtn="btn-blue" />}
+      </div>
     </div>
   );
 }
