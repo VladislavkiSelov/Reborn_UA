@@ -53,6 +53,7 @@ export default function AdsPage() {
   const [allProducts, setAllProducts] = useState([]);
   const favoriteProducts = useSelector(state => state.favoriteProducts.favoriteProducts);
   const user = useSelector(state => state.user.user);
+  
 
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem('user'));
@@ -113,10 +114,11 @@ export default function AdsPage() {
               state={el.state}
               reference={el.reference}
               categoryId={el.categoryName}
-              
+
             />
           ))}
         </div>
+
       </div>
     </div>
   );
