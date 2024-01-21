@@ -136,10 +136,12 @@ export default function PasswordForgotModal() {
   } = useForm({ mode: 'onChange' });
 
   const [statusBtn, setStatusBtn] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const validationEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   const onSubmit = async data => {
+    setIsLoading(true);
     const email = getValues('email');
     try {
       // Make API request to send the email
@@ -151,8 +153,10 @@ export default function PasswordForgotModal() {
         body: JSON.stringify({ email }),
       });
       setValue('email', '');
+      setIsLoading(false);
     } catch (error) {
       console.error('Error sending email:', error);
+      setIsLoading(false);
     }
   };
 
@@ -184,7 +188,7 @@ export default function PasswordForgotModal() {
             })}
           />
         </label>
-        <Button statusDisabled={statusBtn} classBtn="btn-blue" text="Відправити" />
+        <Button statusDisabled={statusBtn} classBtn="btn-blue" text="Відправити" isLoading={isLoading}/>
       </form>
     </div>
   );
