@@ -16,6 +16,7 @@ export default function AdsPage() {
   const navigation = useNavigate();
 
   async function getAllFavoriteProducts() {
+    console.log('s');
     const token = JSON.parse(localStorage.getItem('user'));
     const url = `https://back.komirka.pp.ua/api/v1/private/products/favorite?size=6`;
     const resultAxios = await axios
