@@ -5,23 +5,23 @@ import Button from 'components/Button/Button';
 import { ReactComponent as ArrowDown } from '../../images/arrow_down.svg';
 import InputFile from 'components/InputFile/InputFile';
 import { setStatusProfile } from 'store/sliceStatusProfile/sliceStatusProfile';
-import './AddAdvertPage.scss';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import './AddAdvertPage.scss';
 
 export default function AddAdvertPage() {
   const [cityList, setSityList] = useState([]);
   const [showSityList, setShowSityList] = useState(false);
   const [showCategoryList, setShowCategoryList] = useState(false);
   const [filterCity, setFilterCity] = useState([]);
-  const navigation = useNavigate()
+  const navigation = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(state => state.user.user);
 
   if (Object.keys(user).length === 0) {
     dispatch(setStatusProfile(true));
-    navigation('/')
+    navigation('/');
   }
 
   const arrayDefaultValuesImg = ['img1', 'img2', 'img3', 'img4', 'img5', 'img6'];
@@ -54,12 +54,14 @@ export default function AddAdvertPage() {
       })
       .catch(error => console.error('Error fetching data:', error));
   }, []);
+  //получение все городов
 
   const cities = watch('city');
 
   useEffect(() => {
     setFilterCity(cities ? cityList.filter(city => city["Назва об'єкта українською мовою"].toUpperCase().startsWith(cities.toUpperCase())) : cityList.slice(0, 200));
   }, [cities, cityList]);
+  //поиск городо по значению в инпуте
 
   function clickCity(e) {
     setValue('city', e.target.textContent);
@@ -74,11 +76,6 @@ export default function AddAdvertPage() {
       e.preventDefault();
     }
   }
-
-  const onSubmit = data => {
-    console.log(data);
-    reset();
-  };
 
   function showCity(e) {
     if (showSityList === true) {
@@ -104,11 +101,17 @@ export default function AddAdvertPage() {
       document.querySelector('body').removeEventListener('click', clickBody);
     };
   }, []);
+  // Select city and category
+
+  const onSubmit = data => {
+    console.log(data);
+    reset();
+  };
 
   return (
     <section className="advert-page container">
       <div className="advert-page__wrapper-user">
-        <CardUser statusBtn={false}/>
+        <CardUser statusBtn={false} />
       </div>
       <form className="advert-page__form" onSubmit={handleSubmit(onSubmit)}>
         <h3>Додати оголошення</h3>
