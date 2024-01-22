@@ -19,8 +19,8 @@ export default function CardAds({ ads, productTitle, productDescription, city, s
     <>
       {statusDeleteModal && (
         <DeleteFromFav
-          setAllProducts={setAllProducts}
-          getAllFavoriteProducts={getAllFavoriteProducts}
+          setAllProducts={value => setAllProducts(value)}
+          getAllFavoriteProducts={() => getAllFavoriteProducts()}
           reference={reference}
           closeModal={value => setStatusDeleteModal(value)}
         />

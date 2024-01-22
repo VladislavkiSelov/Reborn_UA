@@ -9,7 +9,6 @@ export default function DeleteFromFav({ setAllProducts, getAllFavoriteProducts, 
   const [isLoading, setIsLoading] = useState(false);
 
   function deleteProduct() {
-    console.log(Object.keys(user));
     if (Object.keys(user).length <= 0) {
       const allProducts = JSON.parse(localStorage.getItem('products'));
       const newAllProducts = allProducts.filter(el => el.reference !== reference);
@@ -26,10 +25,8 @@ export default function DeleteFromFav({ setAllProducts, getAllFavoriteProducts, 
           headers: { Authorization: `Bearer ${token}` },
         })
         .then(res => {
-          (async function () {
-            setAllProducts(await getAllFavoriteProducts());
-            setIsLoading(false);
-          })();
+          getAllFavoriteProducts();
+          setIsLoading(false);
         })
         .catch(error => {
           setIsLoading(false);

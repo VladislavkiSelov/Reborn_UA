@@ -19,10 +19,13 @@ export default function AddAdvertPage() {
   const dispatch = useDispatch();
   const user = useSelector(state => state.user.user);
 
-  if (Object.keys(user).length === 0) {
-    dispatch(setStatusProfile(true));
-    navigation('/');
-  }
+  useEffect(() => {
+    const userId = JSON.parse(localStorage.getItem('user'));
+    if (userId === null) {
+      dispatch(setStatusProfile(true));
+      navigation('/');
+    }
+  }, [user]);
 
   const arrayDefaultValuesImg = ['img1', 'img2', 'img3', 'img4', 'img5', 'img6'];
 

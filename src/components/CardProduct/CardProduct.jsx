@@ -1,27 +1,16 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './CardProduct.scss';
+import AddFavorites from 'components/AddFavorites/AddFavorites';
+import { useSelector } from 'react-redux';
 
 export default function CardProduct({ productTitle, city, titleImage, categoryId, reference, el }) {
   const navigate = useNavigate();
+  const user = useSelector(state => state.user.user);
 
-  function goToAnotherPage(e) {
-    if (e.target.classList.contains('like')) {
-      const allProducts = JSON.parse(localStorage.getItem('products')) || [];
-      const res = allProducts.find(item => item.reference === reference);
-      if (res) {
-        return;
-      }
-      console.log(el);
-      const newAllProducts = [...allProducts, el];
-      localStorage.setItem('products', JSON.stringify(newAllProducts));
-      return;
-    }
-    navigate(`/category/${categoryId}/product/${reference}`);
-  }
 
   return (
-    <div onClick={e => goToAnotherPage(e)} className="card_product">
+    <div onClick={e => AddFavorites({ e, reference, user, categoryId, navigate })}  className="card_product">
       <div className="box_img_product_card">
         <img src={titleImage} alt={productTitle} />
       </div>

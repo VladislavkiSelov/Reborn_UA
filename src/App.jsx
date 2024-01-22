@@ -20,22 +20,29 @@ import axios from 'axios';
 
 export const App = () => {
   const dispatch = useDispatch();
-  const user = useSelector(state => state.user.user);
-  const statusProfile = useSelector(state => state.statusProfile.statusProfile);
 
   useEffect(() => {
-    const userId = JSON.parse(localStorage.getItem('user'));
-    if (userId === null) {
-      dispatch(setUser({}));
-      return;
-    }
+    const fetchData = async () => {
+      const userId = JSON.parse(localStorage.getItem('user'));
 
-    if (Object.keys(userId).length > 0) {
-      const url = `https://back.komirka.pp.ua/api/v1/public/users/${userId.userReference}`;
-      axios.get(url).then(res => {
-        dispatch(setUser(res.data));
-      });
-    }
+      if (userId === null) {
+        dispatch(setUser({}));
+        return;
+      }
+
+      if (Object.keys(userId).length > 0) {
+        const url = `https://back.komirka.pp.ua/api/v1/public/users/${userId.userReference}`;
+
+        try {
+          const res = await axios.get(url);
+          dispatch(setUser(res.data));
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (

@@ -50,8 +50,6 @@ export default function CategoryPage() {
     }
   }, [params, page, sort, navigate]);
 
-  console.log(arrayProducts);
-
   if(!arrayProducts){
     navigate('*')
   }

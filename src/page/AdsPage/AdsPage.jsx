@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import Button from 'components/Button/Button';
 import { useNavigate } from 'react-router-dom';
+import DeleteFromFav from 'components/DeleteFromFav/DeleteFromFav';
 
 export default function AdsPage() {
   const dispatch = useDispatch();
@@ -16,12 +17,13 @@ export default function AdsPage() {
   const navigation = useNavigate();
 
   async function getAllFavoriteProducts() {
-    console.log('s');
     const token = JSON.parse(localStorage.getItem('user'));
     const url = `https://back.komirka.pp.ua/api/v1/private/products/favorite?size=6`;
     const resultAxios = await axios
       .get(url, { headers: { accept: `*/*`, Authorization: `Bearer ${token.authenticationToken}` } })
-      .then(res => res.data.content)
+      .then(res => {
+        console.log(res.data.content);
+        setAllProducts(res.data.content)})
       .catch(() => navigation('*'));
     return resultAxios;
   }
@@ -31,7 +33,7 @@ export default function AdsPage() {
     const url = `https://back.komirka.pp.ua/api/v1/private/products/active?page=0&size=6`;
     const resultAxios = await axios
       .get(url, { headers: { accept: `*/*`, Authorization: `Bearer ${token.authenticationToken}` } })
-      .then(res => res.data.content)
+      .then(res => setAllProducts(res.data.content))
       .catch(() => navigation('*'));
     return resultAxios;
   }
@@ -41,32 +43,26 @@ export default function AdsPage() {
     const url = `https://back.komirka.pp.ua/api/v1/private/products/disabled?page=0&size=6`;
     const resultAxios = await axios
       .get(url, { headers: { accept: `*/*`, Authorization: `Bearer ${token.authenticationToken}` } })
-      .then(res => res.data.content)
+      .then(res => setAllProducts(res.data.content))
       .catch(() => navigation('*'));
     return resultAxios;
   }
 
   useEffect(() => {
     if (ads === 'Улюблене') {
-      if (Object.keys(user) > 0) {
-        (async function () {
-          setAllProducts(await getAllFavoriteProducts());
-        })();
+      if (Object.keys(user).length > 0) {
+        getAllFavoriteProducts();
       } else {
         setAllProducts(JSON.parse(localStorage.getItem('products')) || []);
       }
     }
 
     if (ads === 'Активні оголошення') {
-      (async function () {
-        setAllProducts(await getAllActiveAds());
-      })();
+      getAllActiveAds();
     }
 
     if (ads === 'Архів оголошень') {
-      (async function () {
-        setAllProducts(await getAllArchiveAds());
-      })();
+      getAllArchiveAds();
     }
   }, [dispatch, ads, user]);
 
@@ -88,9 +84,9 @@ export default function AdsPage() {
       </div>
       <div className="ads__wrapper">
         <div onClick={e => clickTypeAds(e)} className="ads__header">
-          <p className={`tab ${validUser.length <= 0  && 'disableTab'}`}>Активні оголошення</p>
-          <p className={`tab active-tab ${validUser.length <= 0  && 'disableTab'}`}>Улюблене</p>
-          <p className={`tab ${validUser.length <= 0  && 'disableTab'}`}>Архів оголошень</p>
+          <p className={`tab ${validUser.length <= 0 && 'disableTab'}`}>Активні оголошення</p>
+          <p className={`tab active-tab ${validUser.length <= 0 && 'disableTab'}`}>Улюблене</p>
+          <p className={`tab ${validUser.length <= 0 && 'disableTab'}`}>Архів оголошень</p>
         </div>
         <div className="ads__box-product">
           {allProducts.map(el => (
@@ -103,8 +99,7 @@ export default function AdsPage() {
               state={el.state}
               reference={el.reference}
               categoryId={el.categoryName}
-              setAllProducts={value => setAllProducts(value)}
-              getAllFavoriteProducts={getAllFavoriteProducts}
+              getAllFavoriteProducts={()=>getAllFavoriteProducts()}
             />
           ))}
         </div>

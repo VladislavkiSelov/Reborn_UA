@@ -8,7 +8,9 @@ import Button from 'components/Button/Button';
 import translationState from 'components/TranslationText/TranslationState';
 import translationCategory from 'components/TranslationText/TranslationCategory';
 import { ReactComponent as Like } from '../../images/heart.svg';
+import AddFavorites from 'components/AddFavorites/AddFavorites';
 import './ProductPage.scss';
+import { useSelector } from 'react-redux';
 
 export default function ProductPage() {
   const params = useParams();
@@ -17,6 +19,7 @@ export default function ProductPage() {
   const [product, setProduct] = useState([]);
   const [arrayProducts, setArrayProducts] = useState([]);
   const [responseServe, setResponseServe] = useState([]);
+  const user = useSelector(state => state.user.user);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -64,19 +67,6 @@ export default function ProductPage() {
     );
   }
 
-  function addProductFavotite(e) {
-    if (e.target.classList.contains('like')) {
-      const allProducts = JSON.parse(localStorage.getItem('products')) || [];
-      const res = allProducts.find(item => item.reference === product.reference);
-      if (res !== undefined) {
-        return;
-      }
-      const newAllProducts = [...allProducts, product];
-      localStorage.setItem('products', JSON.stringify(newAllProducts));
-      return;
-    }
-  }
-
   return (
     <section className="product container">
       <h5>Головна сторінка/Категорія {translationCategory(params.categoryId)}</h5>
@@ -98,7 +88,7 @@ export default function ProductPage() {
               </div>
               <p>{product.productDescription}</p>
             </div>
-            <Like onClick={e => addProductFavotite(e)} className="like" />
+            <Like onClick={e => AddFavorites({ e, reference: product.reference, user, categoryId: product.categoryName, navigate })} className="like" />
           </div>
           <h4>{product.ownerUsername}</h4>
           <Button text="Зателефонувати" classBtn="btn-blue btn_call" />
