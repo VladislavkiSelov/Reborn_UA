@@ -8,7 +8,7 @@ import Button from 'components/Button/Button';
 import translationState from 'components/TranslationText/TranslationState';
 import translationCategory from 'components/TranslationText/TranslationCategory';
 import { ReactComponent as Like } from '../../images/heart.svg';
-import AddFavorites from 'components/AddFavorites/AddFavorites';
+import ClickLikeAddFavorites from 'components/ClickLikeAddFavorites/ClickLikeAddFavorites';
 import './ProductPage.scss';
 import { useSelector } from 'react-redux';
 
@@ -88,7 +88,7 @@ export default function ProductPage() {
               </div>
               <p>{product.productDescription}</p>
             </div>
-            <Like onClick={e => AddFavorites({ e, reference: product.reference, user, categoryId: product.categoryName, navigate })} className="like" />
+            <Like onClick={e => ClickLikeAddFavorites({ e, reference: product.reference, user, categoryId: product.categoryName, navigate })} className="like" />
           </div>
           <h4>{product.ownerUsername}</h4>
           <Button text="Зателефонувати" classBtn="btn-blue btn_call" />

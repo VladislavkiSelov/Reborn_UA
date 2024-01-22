@@ -1,4 +1,4 @@
-export default function AddFavorites({ e, el,reference, user, categoryId ,navigate}) {
+export default function ClickLikeAddFavorites({ e, el,reference, user, categoryId ,navigate}) {
     if (e.target.classList.contains('like')) {
       if (!user) {
         const allProducts = JSON.parse(localStorage.getItem('products')) || [];

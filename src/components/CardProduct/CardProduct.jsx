@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './CardProduct.scss';
-import AddFavorites from 'components/AddFavorites/AddFavorites';
+import ClickLikeAddFavorites from 'components/ClickLikeAddFavorites/ClickLikeAddFavorites';
 import { useSelector } from 'react-redux';
 
 export default function CardProduct({ productTitle, city, titleImage, categoryId, reference, el }) {
@@ -10,7 +10,7 @@ export default function CardProduct({ productTitle, city, titleImage, categoryId
 
 
   return (
-    <div onClick={e => AddFavorites({ e, reference, user, categoryId, navigate })}  className="card_product">
+    <div onClick={e => ClickLikeAddFavorites({ e, reference, user, categoryId, navigate })}  className="card_product">
       <div className="box_img_product_card">
         <img src={titleImage} alt={productTitle} />
       </div>

@@ -4,14 +4,14 @@ import translationState from 'components/TranslationText/TranslationState';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Like } from '../../images/heart.svg';
 import { useSelector } from 'react-redux';
-import AddFavorites from 'components/AddFavorites/AddFavorites';
+import ClickLikeAddFavorites from 'components/ClickLikeAddFavorites/ClickLikeAddFavorites';
 
 export default function CardProductCategory({ productTitle, productDescription, city, state, reference, categoryId, el }) {
   const navigate = useNavigate();
   const user = useSelector(state => state.user.user);
 
   return (
-    <div onClick={e => AddFavorites({ e, reference, user, categoryId, navigate })} className="card_product_category">
+    <div onClick={e => ClickLikeAddFavorites({ e, reference, user, categoryId, navigate })} className="card_product_category">
       <div className="box_img_card_product_category">
         <img src="/img/img_furniture.png" alt="#" />
       </div>
