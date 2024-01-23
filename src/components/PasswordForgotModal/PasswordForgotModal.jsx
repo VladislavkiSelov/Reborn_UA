@@ -40,6 +40,7 @@ export default function PasswordForgotModal() {
       });
   };
 
+
   useEffect(() => {
     watch();
     const emailValue = getValues('email');
