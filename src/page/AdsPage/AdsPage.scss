@@ -34,7 +34,7 @@
             }
         }
 
-        .disableTab{
+        .disableTab {
             color: gray;
             pointer-events: none;
         }
@@ -71,5 +71,14 @@
         position: relative;
         left: 50%;
         transform: translateX(-50%);
+    }
+
+    .empty-products {
+        font-family: Jost;
+        font-size: 35px;
+        font-weight: 600;
+        line-height: 35px;
+        letter-spacing: 0.35px;
+        text-align: center;
     }
 }

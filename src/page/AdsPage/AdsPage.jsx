@@ -6,15 +6,34 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import Button from 'components/Button/Button';
 import { useNavigate } from 'react-router-dom';
-import DeleteFromFav from 'components/DeleteFromFav/DeleteFromFav';
 
 export default function AdsPage() {
   const dispatch = useDispatch();
   const [ads, setAds] = useState('Улюблене');
   const [allProducts, setAllProducts] = useState([]);
+  const [emptyProducts, setEmptyProducts] = useState('');
   const user = useSelector(state => state.user.user);
-  const validUser = Object.keys(user);
   const navigation = useNavigate();
+
+  const ifEmpty =
+    allProducts.length === 0 ? (
+      <p className='empty-products'>{emptyProducts}</p>
+    ) : (
+      allProducts.map(el => (
+        <CardAds
+          ads={ads}
+          key={el.reference}
+          productTitle={el.productTitle}
+          productDescription={el.productDescription}
+          city={el.city}
+          state={el.state}
+          reference={el.reference}
+          categoryId={el.categoryName}
+          setAllProducts={value => setAllProducts(value)}
+          getAllFavoriteProducts={() => getAllFavoriteProducts()}
+        />
+      ))
+    );
 
   async function getAllFavoriteProducts() {
     const token = JSON.parse(localStorage.getItem('user'));
@@ -23,7 +42,8 @@ export default function AdsPage() {
       .get(url, { headers: { accept: `*/*`, Authorization: `Bearer ${token.authenticationToken}` } })
       .then(res => {
         console.log(res.data.content);
-        setAllProducts(res.data.content)})
+        setAllProducts(res.data.content);
+      })
       .catch(() => navigation('*'));
     return resultAxios;
   }
@@ -48,23 +68,45 @@ export default function AdsPage() {
     return resultAxios;
   }
 
+  function checkUserSetProducts(getAllProduct) {
+    if (Object.keys(user).length > 0) {
+      getAllProduct();
+    } else if (ads === 'Улюблене') {
+      setAllProducts(JSON.parse(localStorage.getItem('products')));
+    } else {
+      setAllProducts([]);
+    }
+  }
+
   useEffect(() => {
     if (ads === 'Улюблене') {
-      if (Object.keys(user).length > 0) {
-        getAllFavoriteProducts();
-      } else {
-        setAllProducts(JSON.parse(localStorage.getItem('products')) || []);
-      }
+      checkUserSetProducts(getAllFavoriteProducts);
     }
 
     if (ads === 'Активні оголошення') {
-      getAllActiveAds();
+      checkUserSetProducts(getAllActiveAds);
     }
 
     if (ads === 'Архів оголошень') {
-      getAllArchiveAds();
+      checkUserSetProducts(getAllArchiveAds);
     }
   }, [dispatch, ads, user]);
+
+  useEffect(() => {
+    if (allProducts.length === 0) {
+      if (ads === 'Улюблене') {
+        setEmptyProducts(`У вас немає улюблених оголошень, додавайте оголошення в улюблені натискаючи на `);
+      }
+
+      if (ads === 'Активні оголошення') {
+        setEmptyProducts(`Активних оголошень поки немає, але ви можете виправити ситуацію:) `);
+      }
+
+      if (ads === 'Архів оголошень') {
+        setEmptyProducts(`Наразі немає оголошень в архіві`);
+      }
+    }
+  }, [allProducts, ads]);
 
   function clickTypeAds(e) {
     const element = e.target;
@@ -84,25 +126,11 @@ export default function AdsPage() {
       </div>
       <div className="ads__wrapper">
         <div onClick={e => clickTypeAds(e)} className="ads__header">
-          <p className={`tab ${validUser.length <= 0 && 'disableTab'}`}>Активні оголошення</p>
-          <p className={`tab active-tab ${validUser.length <= 0 && 'disableTab'}`}>Улюблене</p>
-          <p className={`tab ${validUser.length <= 0 && 'disableTab'}`}>Архів оголошень</p>
+          <p className={`tab`}>Активні оголошення</p>
+          <p className={`tab active-tab`}>Улюблене</p>
+          <p className={`tab`}>Архів оголошень</p>
         </div>
-        <div className="ads__box-product">
-          {allProducts.map(el => (
-            <CardAds
-              ads={ads}
-              key={el.reference}
-              productTitle={el.productTitle}
-              productDescription={el.productDescription}
-              city={el.city}
-              state={el.state}
-              reference={el.reference}
-              categoryId={el.categoryName}
-              getAllFavoriteProducts={()=>getAllFavoriteProducts()}
-            />
-          ))}
-        </div>
+        <div className="ads__box-product">{ifEmpty}</div>
         <Button text="На головну сторінку" classBtn="btn-green btn_go-home" handelClick={() => navigation('/')} />
       </div>
     </div>

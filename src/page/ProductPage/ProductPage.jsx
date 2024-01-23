@@ -67,6 +67,8 @@ export default function ProductPage() {
     );
   }
 
+  console.log(product);
+
   return (
     <section className="product container">
       <h5>Головна сторінка/Категорія {translationCategory(params.categoryId)}</h5>
@@ -88,7 +90,7 @@ export default function ProductPage() {
               </div>
               <p>{product.productDescription}</p>
             </div>
-            <Like onClick={e => ClickLikeAddFavorites({ e, reference: product.reference, user, categoryId: product.categoryName, navigate })} className="like" />
+            <Like onClick={e => ClickLikeAddFavorites({ e, reference: product.reference, user, categoryId: product.categoryName, navigate, el:product })} className="like" />
           </div>
           <h4>{product.ownerUsername}</h4>
           <Button text="Зателефонувати" classBtn="btn-blue btn_call" />

@@ -9,11 +9,14 @@ export default function DeleteFromFav({ setAllProducts, getAllFavoriteProducts, 
   const [isLoading, setIsLoading] = useState(false);
 
   function deleteProduct() {
-    if (Object.keys(user).length <= 0) {
+    console.log('a');
+    if (Object.keys(user).length === 0) {
+      console.log('s');
       const allProducts = JSON.parse(localStorage.getItem('products'));
       const newAllProducts = allProducts.filter(el => el.reference !== reference);
       localStorage.setItem('products', JSON.stringify(newAllProducts));
       setAllProducts(newAllProducts || []);
+      closeModal(false)
     }
 
     if (Object.keys(user).length > 0) {

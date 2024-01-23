@@ -8,9 +8,8 @@ export default function CardProduct({ productTitle, city, titleImage, categoryId
   const navigate = useNavigate();
   const user = useSelector(state => state.user.user);
 
-
   return (
-    <div onClick={e => ClickLikeAddFavorites({ e, reference, user, categoryId, navigate })}  className="card_product">
+    <div onClick={e => ClickLikeAddFavorites({ e, reference, user, categoryId, navigate, el })}  className="card_product">
       <div className="box_img_product_card">
         <img src={titleImage} alt={productTitle} />
       </div>

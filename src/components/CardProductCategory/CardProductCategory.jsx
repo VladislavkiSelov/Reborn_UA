@@ -11,7 +11,7 @@ export default function CardProductCategory({ productTitle, productDescription, 
   const user = useSelector(state => state.user.user);
 
   return (
-    <div onClick={e => ClickLikeAddFavorites({ e, reference, user, categoryId, navigate })} className="card_product_category">
+    <div onClick={e => ClickLikeAddFavorites({ e, reference, user, categoryId, navigate, el })} className="card_product_category">
       <div className="box_img_card_product_category">
         <img src="/img/img_furniture.png" alt="#" />
       </div>
