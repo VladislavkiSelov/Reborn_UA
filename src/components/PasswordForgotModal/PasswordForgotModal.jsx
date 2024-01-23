@@ -22,24 +22,22 @@ export default function PasswordForgotModal() {
   const onSubmit = async data => {
     setIsLoading(true);
     const email = getValues('email');
-    // Make API request to send the email
-    try {
-      const response = await fetch('https://back.komirka.pp.ua/api/v1/public/reset-password', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      });
-      setValue('email', '');
-      setIsLoading(false);
-    } catch (error) {
-      console.error('Error sending email:', error);
-      setIsLoading(false);
-      if (!response.ok) {
+    
+    await fetch('https://back.komirka.pp.ua/api/v1/public/reset-password', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email }),
+    })
+      .then(() => {
+        setValue('email', '');
+        setIsLoading(false);
+      })
+      .catch(error => {
+        console.error('Error sending email:', error);
         setError('email');
-      }
-    } 
+      });
   };
 
   useEffect(() => {
@@ -72,7 +70,7 @@ export default function PasswordForgotModal() {
           />
           {errors.email && <p className="error_text">*Невірно введено email</p>}
         </label>
-        <Button statusDisabled={statusBtn} classBtn="btn-blue" text="Відправити" isLoading={isLoading}/>
+        <Button statusDisabled={statusBtn} classBtn="btn-blue" text="Відправити" isLoading={isLoading} />
       </form>
     </div>
   );
