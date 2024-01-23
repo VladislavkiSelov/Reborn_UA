@@ -11,6 +11,15 @@
     border: none;
     cursor: pointer;
     transition: 0.3s;
+
+    &__text {
+      position: relative;
+    }
+
+    &__loading {
+      position: absolute;
+      left: -30px;
+    }
 }
 
 
@@ -34,7 +43,7 @@
 .btn-same-width {
   max-width: 315px;
   width: 100%;
-  min-width: 120px;
+  min-width: 192px;
   padding: 18px 0;
 }
 

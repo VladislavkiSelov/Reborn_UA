@@ -22,25 +22,30 @@ export default function PasswordForgotModal() {
   const onSubmit = async data => {
     setIsLoading(true);
     const email = getValues('email');
-    // Make API request to send the email
+    let response; // Declare response outside the try block
+
     try {
-      const response = await fetch('https://back.komirka.pp.ua/api/v1/public/reset-password', {
+      response = await fetch('https://back.komirka.pp.ua/api/v1/public/reset-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email }),
       });
+
       setValue('email', '');
       setIsLoading(false);
     } catch (error) {
       console.error('Error sending email:', error);
       setIsLoading(false);
+
+      // Move this inside the catch block
       if (!response.ok) {
         setError('email');
       }
-    } 
+    }
   };
+
 
   useEffect(() => {
     watch();
