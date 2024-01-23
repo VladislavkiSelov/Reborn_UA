@@ -8,6 +8,7 @@ import { setStatusProfile } from 'store/sliceStatusProfile/sliceStatusProfile';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import translationCategory from 'components/TranslationText/TranslationCategory';
 import './AddAdvertPage.scss';
 
 export default function AddAdvertPage() {
@@ -107,8 +108,45 @@ export default function AddAdvertPage() {
   // Select city and category
 
   const onSubmit = data => {
+    const token = JSON.parse(localStorage.getItem('user')).authenticationToken;
+    const url = `https://back.komirka.pp.ua/api/v1/private/product/create`;
+    const body = {
+      categoryName: translationCategory(data.category),
+      city: data.city,
+      productTitle: data.titel,
+      productDescription: data.text_advertisement,
+      state: data.state_product,
+      publishDate: '2024-01-23',
+    };
+
+    axios
+      .post(
+        url,
+        {},
+        {
+          headers: {
+            accept: `*/*`,
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then(res => {
+        const URL = `https://back.komirka.pp.ua/api/v1/private/product/${res.data.reference}`;
+        return axios.patch(URL, body, {
+          headers: {
+            accept: `*/*`,
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      })
+      .then(res => console.log(res))
+      .catch(error => {
+        console.log(error);
+      });
+
     console.log(data);
-    reset();
+    // reset();
   };
 
   return (
@@ -207,17 +245,17 @@ export default function AddAdvertPage() {
           <div>
             <label className="wrapper_radio">
               <p>Нова</p>
-              <input className="input_radio" {...register('state_product')} type="radio" value="A" />
+              <input className="input_radio" {...register('state_product')} type="radio" value="NEW" />
               <span className="radio"></span>
             </label>
             <label className="wrapper_radio">
               <p>Б/в</p>
-              <input className="input_radio" {...register('state_product')} type="radio" value="B" />
+              <input className="input_radio" {...register('state_product')} type="radio" value="USED" />
               <span className="radio"></span>
             </label>
             <label className="wrapper_radio">
               <p>Пошкоджена</p>
-              <input className="input_radio" {...register('state_product')} type="radio" value="C" />
+              <input className="input_radio" {...register('state_product')} type="radio" value="DAMAGED" />
               <span className="radio"></span>
             </label>
           </div>
