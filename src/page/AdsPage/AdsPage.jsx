@@ -41,7 +41,6 @@ export default function AdsPage() {
     const resultAxios = await axios
       .get(url, { headers: { accept: `*/*`, Authorization: `Bearer ${token.authenticationToken}` } })
       .then(res => {
-        console.log(res.data.content);
         setAllProducts(res.data.content);
       })
       .catch(() => navigation('*'));
@@ -53,7 +52,9 @@ export default function AdsPage() {
     const url = `https://back.komirka.pp.ua/api/v1/private/products/active?page=0&size=6`;
     const resultAxios = await axios
       .get(url, { headers: { accept: `*/*`, Authorization: `Bearer ${token.authenticationToken}` } })
-      .then(res => setAllProducts(res.data.content))
+      .then(res =>{
+        console.log(res.data.content);
+        setAllProducts(res.data.content)})
       .catch(() => navigation('*'));
     return resultAxios;
   }
