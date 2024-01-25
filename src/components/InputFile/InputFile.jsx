@@ -11,7 +11,7 @@ export default function InputFile({ register_name, setValue }) {
 
     fileReader.onload = event => {
       setPhotoUrl(fileReader.result);
-      setValue(register_name, fileReader.result);
+      setValue(register_name,e.target.files[0]);
     };
 
     fileReader.readAsDataURL(file);
