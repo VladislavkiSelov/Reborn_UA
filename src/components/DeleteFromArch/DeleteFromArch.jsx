@@ -4,7 +4,7 @@ import Button from 'components/Button/Button';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 
-export default function DeleteFromArch() {
+export default function DeleteFromArch({closeModal}) {
     return (
     <div className="DeleteFromFav">
       <div className="confirmation">
@@ -13,7 +13,7 @@ export default function DeleteFromArch() {
         <div className="confirmation__btns">
           <Button classBtn="btn-blue btn-same-width"  text="Підтвержую" />
 
-          <Button classBtn="btn-white btn-same-width"  text="Скасувати" />
+          <Button classBtn="btn-white btn-same-width"  handelClick={() => closeModal(false)}  text="Скасувати" />
         </div>
       </div>
     </div>
