@@ -27,27 +27,12 @@ export default function CardAds({
 }) {
   const navigate = useNavigate();
   const [statusDeleteModal, setStatusDeleteModal] = useState(false);
-  const [statusActiveModal, setStatusActiveModal] = useState(false);
   const [statusArchivModal, setStatusArchivModal] = useState(false);
   const [statusDeleteFromArch, setStatusDeleteFromArch] = useState(false);
   const [statusAdsrRestoredModal, setStatusAdsrRestoredModal] = useState(false);
   const user = useSelector(state => state.user.user);
 
   const img = images === 'cover image not presented' || images.length === 0 ? NoImg : images[0].imageUrl;
-
-  function handleDelete() {
-    switch (ads) {
-      case 'Активні оголошення':
-        setStatusActiveModal(true)
-        break;
-      case 'Архів оголошень':
-        setStatusArchivModal(true)
-        break;
-
-      default:
-        setStatusDeleteModal(true);
-    }
-  }
 
   function handelClick() {
     navigate(`/category/${categoryId}/product/${reference}`);
@@ -112,7 +97,7 @@ export default function CardAds({
     }
   }
 
-  function AdsrRestored(){
+  function AdsrRestored() {
     const url = `https://back.komirka.pp.ua/api/v1/private/product/${reference}/ACTIVE?period=30`;
     const token = JSON.parse(localStorage.getItem('user')).authenticationToken;
     axios
@@ -124,18 +109,17 @@ export default function CardAds({
       })
       .then(() => {
         setStatusAdsrRestoredModal(false);
-        getAllArchiveAds()
+        getAllArchiveAds();
       })
       .catch(error => console.error(error));
   }
-
 
   return (
     <>
       {statusDeleteModal && <DeleteFromFav deleteFavoriteAds={() => deleteFavoriteAds()} closeModal={value => setStatusDeleteModal(value)} />}
       {statusArchivModal && <ArchivModal getAllActiveAds={() => getAllActiveAds()} />}
       {statusDeleteFromArch && <DeleteFromArch deleteArchivAds={() => deleteArchivAds()} />}
-      {statusAdsrRestoredModal &&<AdsrRestoredModal AdsrRestored={()=>AdsrRestored()}/>}
+      {statusAdsrRestoredModal && <AdsrRestoredModal AdsrRestored={() => AdsrRestored()} />}
       <div className="card-ads">
         <div onClick={handelClick} className="card-ads__wrapper">
           <div className="card-ads__box_img">
@@ -171,7 +155,7 @@ export default function CardAds({
               Видалити
             </button>
           )}
-          {ads === 'Архів оголошень' && <Button handelClick={()=>setStatusAdsrRestoredModal(true)} text={`Відновити`} classBtn="btn-blue" />}
+          {ads === 'Архів оголошень' && <Button handelClick={() => setStatusAdsrRestoredModal(true)} text={`Відновити`} classBtn="btn-blue" />}
         </div>
       </div>
     </>
