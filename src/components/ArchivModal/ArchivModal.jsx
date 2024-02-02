@@ -3,7 +3,6 @@ import './ArchivModal.scss';
 import Button from 'components/Button/Button';
 
 export default function ArchivModal({getAllActiveAds}) {
-
   return (
     <div className="archivModal" >
       <div className="confirmation">

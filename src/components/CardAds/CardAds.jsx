@@ -27,12 +27,27 @@ export default function CardAds({
 }) {
   const navigate = useNavigate();
   const [statusDeleteModal, setStatusDeleteModal] = useState(false);
+  const [statusActiveModal, setStatusActiveModal] = useState(false);
   const [statusArchivModal, setStatusArchivModal] = useState(false);
   const [statusDeleteFromArch, setStatusDeleteFromArch] = useState(false);
   const [statusAdsrRestoredModal, setStatusAdsrRestoredModal] = useState(false);
   const user = useSelector(state => state.user.user);
 
   const img = images === 'cover image not presented' || images.length === 0 ? NoImg : images[0].imageUrl;
+
+  function handleDelete() {
+    switch (ads) {
+      case 'Активні оголошення':
+        setStatusActiveModal(true)
+        break;
+      case 'Архів оголошень':
+        setStatusArchivModal(true)
+        break;
+
+      default:
+        setStatusDeleteModal(true);
+    }
+  }
 
   function handelClick() {
     navigate(`/category/${categoryId}/product/${reference}`);
