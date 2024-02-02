@@ -17,11 +17,11 @@
         margin-bottom: 65px;
     }
 
-    .box_img {
-        width: 100%;
-        max-width: 760px;
-        border-radius: 10px;
-    }
+    // .box_img {
+    //     width: 100%;
+    //     max-width: 760px;
+    //     border-radius: 10px;
+    // }
 
     .content_product {
         position: relative;
@@ -36,12 +36,12 @@
 
         .like {
             position: absolute;
-            right: 75px;
+            right: 40px;
             top: 50px;
             transition: 0.2s;
             cursor: pointer;
 
-            &:hover{
+            &:hover {
                 transform: scale(1.2);
             }
         }
@@ -49,6 +49,7 @@
 
     .wrapper_content_product {
         width: 100%;
+
         &>h4 {
             padding: 30px 80px;
             border-radius: 5px;
@@ -116,18 +117,16 @@
 
         &>div {
             display: flex;
+            flex-wrap: wrap;
             gap: 50px;
-            justify-content: center;
+            justify-content: flex-start;
             margin-bottom: 55px;
-
-            &>a {
-                width: 100%;
-            }
         }
 
-        // .card_product {
-        //     width: 100%;
-        // }
+
+        .card_product {
+            width: calc((100% - 150px) / 4);
+        }
 
     }
 

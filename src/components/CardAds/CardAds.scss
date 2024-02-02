@@ -1,4 +1,4 @@
-.card-favorite {
+.card-ads {
     cursor: pointer;
     border-radius: 10px;
     background: #F5F5F5;
@@ -12,9 +12,11 @@
     }
 
     &__box_img {
-        min-width: 480px;
+        width: 100%;
+        max-width: 480px;
         height: 370px;
         border-radius: 10px;
+        overflow: hidden;
 
         img {
             object-fit: cover;

@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
 import { ReactComponent as LeftArrow } from '../../images/arrow_left.svg';
 import { ReactComponent as RightArrow } from '../../images/arrow_right.svg';
+import NoImg from '../../images/no_Photo.png';
 import ModalSlider from 'components/ModalSlider/ModalSlider';
 import './Slider.scss';
 
-export default function Slider({ arrayPicture = ['/img/img_furniture.png', '/img/dog.png', '/img/img_furniture.png', '/img/Frame_162.png'] }) {
+export default function Slider({ arrayPicture }) {
   const [activeSlide, setActiveSlide] = useState(0);
   const [modalSlider, setModalSlider] = useState(false);
+
+  if (arrayPicture.length === 0) {
+    arrayPicture = [...arrayPicture, NoImg];
+  }
+  // проверка если картинка в массиве если нет то добавляем NoImg
 
   function backClick() {
     if (activeSlide <= 0) {
@@ -42,7 +48,7 @@ export default function Slider({ arrayPicture = ['/img/img_furniture.png', '/img
         </div>
         <div className="container_picture">
           {arrayPicture.map((el, i) => (
-            <div onClick={e => handelClick(e)} className="box_img" id={i} key={i}>
+            <div onClick={e => handelClick(e)} className="box_picture" id={i} key={i}>
               <img src={el} alt="#" />
             </div>
           ))}

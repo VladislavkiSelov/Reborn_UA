@@ -16,7 +16,6 @@ export default function AddAdvertPage() {
   const [showSityList, setShowSityList] = useState(false);
   const [showCategoryList, setShowCategoryList] = useState(false);
   const [filterCity, setFilterCity] = useState([]);
-  const [reference, setReference] = useState([]);
   const navigation = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(state => state.user.user);
@@ -37,7 +36,6 @@ export default function AddAdvertPage() {
     setValue,
     reset,
     watch,
-    control,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -109,20 +107,21 @@ export default function AddAdvertPage() {
   // Select city and category
 
   const onSubmit = data => {
+    let reference = null;
     const token = JSON.parse(localStorage.getItem('user')).authenticationToken;
     const url = `https://back.komirka.pp.ua/api/v1/private/product/create`;
-    let newReference = null;
     const body = {
       categoryName: translationCategory(data.category),
       city: data.city,
       productTitle: data.titel,
       productDescription: data.text_advertisement,
       state: data.state_product,
-      publishDate: '2024-01-25',
+      publishDate: '2024-02-01',
     };
 
-    const formData = new FormData();
-    formData.append('image', data.img1);
+    const { img1, img2, img3, img4, img5, img6 } = data;
+    const arrayImg = [img1, img2, img3, img4, img5, img6];
+    const allImg = Object.values(arrayImg).filter(el => el);
 
     axios
       .post(
@@ -135,9 +134,12 @@ export default function AddAdvertPage() {
           },
         }
       )
+      .catch(error => {
+        console.log(`создание продукта`, error);
+      })
       .then(res => {
-        setReference(res.data.reference)
         const URL = `https://back.komirka.pp.ua/api/v1/private/product/${res.data.reference}`;
+        reference = res.data.reference;
         return axios.patch(URL, body, {
           headers: {
             accept: `*/*`,
@@ -146,30 +148,42 @@ export default function AddAdvertPage() {
           },
         });
       })
-      .then(res => {
-        const urlImg = `https://back.komirka.pp.ua/api/v1/private/product/${res.data.reference}/image`;
-        return axios.post(urlImg, formData, {
-          headers: {
-            accept: `*/*`,
-            'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${token}`,
-          },
-        });
+      .catch(error => {
+        console.log(`изменение продукта`, error);
       })
       .then(res => {
-        console.log(res);
-        const urlImgUpload = `https://back.komirka.pp.ua/api/v1/private/product/image/${res.data.id}`;
-        return axios.patch(urlImgUpload, formData, {
-          headers: {
-            accept: `*/*`,
-            'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${token}`,
-          },
+        const urlImg = `https://back.komirka.pp.ua/api/v1/private/product/${res.data.reference}/image`;
+        allImg.forEach(item => {
+          const formData = new FormData();
+          formData.append('image', item);
+          axios
+            .post(urlImg, formData, {
+              headers: {
+                accept: `*/*`,
+                'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${token}`,
+              },
+            })
+            .catch(error => {
+              console.log(`создание картинки`, error);
+            })
+            .then(res => {
+              const urlImgUpload = `https://back.komirka.pp.ua/api/v1/private/product/image/${res.data.id}`;
+              return axios.patch(urlImgUpload, formData, {
+                headers: {
+                  accept: `*/*`,
+                  'Content-Type': 'multipart/form-data',
+                  Authorization: `Bearer ${token}`,
+                },
+              });
+            })
+            .catch(error => {
+              console.log(`загрузка картинки`, error);
+            });
         });
       })
       .then(res => {
         const urlPatchStatusProduct = `https://back.komirka.pp.ua/api/v1/private/product/${reference}/ACTIVE?period=30`;
-        console.log(token);
         return axios.patch(
           urlPatchStatusProduct,
           {},
@@ -182,12 +196,10 @@ export default function AddAdvertPage() {
         );
       })
       .catch(error => {
-        console.log(error);
+        console.log(`загрузка обьявления`, error);
       });
 
-    console.log(data);
-
-    // reset();
+    reset();
   };
 
   return (
@@ -277,7 +289,6 @@ export default function AddAdvertPage() {
           <p>Додати фото (Перше фото буде на обкладинці оголошення) </p>
           <div className="container_box_input">
             {arrayDefaultValuesImg.map((el, i) => (
-              // <InputFile key={i}  register_name={el} Controller={Controller} control={control} />
               <InputFile key={i} setValue={(value, value2) => setValue(value, value2)} register_name={el} />
             ))}
           </div>

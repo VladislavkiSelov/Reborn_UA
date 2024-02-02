@@ -67,16 +67,11 @@ export default function ProductPage() {
     );
   }
 
-  console.log(product);
-
   return (
     <section className="product container">
       <h5>Головна сторінка/Категорія {translationCategory(params.categoryId)}</h5>
       <div className="product_main_block">
-        <Slider />
-        {/* <div className="box_img">
-          <img src="/img/img_furniture.png" alt="#" />
-        </div> */}
+        <Slider arrayPicture={product.images} />
         <div className="wrapper_content_product">
           <div className="content_product">
             <div className="wrapper_content">
@@ -90,7 +85,10 @@ export default function ProductPage() {
               </div>
               <p>{product.productDescription}</p>
             </div>
-            <Like onClick={e => ClickLikeAddFavorites({ e, reference: product.reference, user, categoryId: product.categoryName, navigate, el:product })} className="like" />
+            <Like
+              onClick={e => ClickLikeAddFavorites({ e, reference: product.reference, user, categoryId: product.categoryName, navigate, el: product })}
+              className="like"
+            />
           </div>
           <h4>{product.ownerUsername}</h4>
           <Button text="Зателефонувати" classBtn="btn-blue btn_call" />
@@ -100,20 +98,12 @@ export default function ProductPage() {
         <h3>Схожі оголошення</h3>
         <div>
           {arrayProducts.map((el, i) => (
-            <CardProduct
-              categoryId={params.categoryId}
-              reference={el.reference}
-              key={i}
-              productTitle={el.productTitle}
-              city={el.city}
-              titleImage={`/img/img_furniture.png`}
-              el={el}
-            />
+            <CardProduct categoryId={params.categoryId} reference={el.reference} key={i} productTitle={el.productTitle} city={el.city} titleImage={el.images} el={el} />
           ))}
         </div>
-        <div className="footer_category">
+        {/* <div className="footer_category">
           <Pagination maxElementPage={responseServe.totalElements || null} setPage={value => setPage(value)} />
-        </div>
+        </div> */}
       </div>
     </section>
   );

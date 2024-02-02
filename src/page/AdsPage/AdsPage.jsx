@@ -15,12 +15,15 @@ export default function AdsPage() {
   const user = useSelector(state => state.user.user);
   const navigation = useNavigate();
 
+  console.log(allProducts);
+
   const ifEmpty =
-    allProducts.length === 0 ? (
-      <p className='empty-products'>{emptyProducts}</p>
+    !allProducts || allProducts.length === 0 ? (
+      <p className="empty-products">{emptyProducts}</p>
     ) : (
       allProducts.map(el => (
         <CardAds
+          images={el.images}
           ads={ads}
           key={el.reference}
           productTitle={el.productTitle}
@@ -31,6 +34,10 @@ export default function AdsPage() {
           categoryId={el.categoryName}
           setAllProducts={value => setAllProducts(value)}
           getAllFavoriteProducts={() => getAllFavoriteProducts()}
+          getAllActiveAds={() => {
+            getAllActiveAds();
+          }}
+          getAllArchiveAds={() => getAllArchiveAds()}
         />
       ))
     );
@@ -52,9 +59,9 @@ export default function AdsPage() {
     const url = `https://back.komirka.pp.ua/api/v1/private/products/active?page=0&size=6`;
     const resultAxios = await axios
       .get(url, { headers: { accept: `*/*`, Authorization: `Bearer ${token.authenticationToken}` } })
-      .then(res =>{
-        console.log(res.data.content);
-        setAllProducts(res.data.content)})
+      .then(res => {
+        setAllProducts(res.data.content);
+      })
       .catch(() => navigation('*'));
     return resultAxios;
   }
@@ -94,7 +101,7 @@ export default function AdsPage() {
   }, [dispatch, ads, user]);
 
   useEffect(() => {
-    if (allProducts.length === 0) {
+    if (allProducts === null || allProducts.length === 0) {
       if (ads === 'Улюблене') {
         setEmptyProducts(`У вас немає улюблених оголошень, додавайте оголошення в улюблені натискаючи на `);
       }

@@ -50,8 +50,8 @@ export default function CategoryPage() {
     }
   }, [params, page, sort, navigate]);
 
-  if(!arrayProducts){
-    navigate('*')
+  if (!arrayProducts) {
+    navigate('*');
   }
 
   if (arrayProducts.length === 0) {
@@ -69,7 +69,7 @@ export default function CategoryPage() {
       />
     );
   }
-
+  
   return (
     <div className="category container">
       <h5>Головна сторінка/Категорія {translationCategory(params.categoryId)}</h5>
@@ -93,6 +93,7 @@ export default function CategoryPage() {
         <div className="cards_category">
           {arrayProducts.map((el, i) => (
             <CardProductCategory
+              images={el.images}
               key={el.reference}
               categoryId={params.categoryId || el.categoryName}
               seachProduct={params.seachProduct}
