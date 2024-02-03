@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Like } from '../../images/like_active.svg';
-import NoImg from '../../images/no_Photo.png';
+import NoImg from 'components/NoImg/NoImg';
 import Button from 'components/Button/Button';
 import DeleteFromFav from 'components/DeleteFromFav/DeleteFromFav';
 import DeleteFromArch from 'components/DeleteFromArch/DeleteFromArch';

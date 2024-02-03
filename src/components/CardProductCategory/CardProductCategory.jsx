@@ -1,7 +1,7 @@
 import React from 'react';
 import './CardProductCategory.scss';
 import translationState from 'components/TranslationText/TranslationState';
-import NoImg from '../../images/no_Photo.png';
+import NoImg from 'components/NoImg/NoImg';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Like } from '../../images/heart.svg';
 import { useSelector } from 'react-redux';

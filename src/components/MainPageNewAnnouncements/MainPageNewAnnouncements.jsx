@@ -13,6 +13,8 @@ export default function MainPageNewAnnouncements() {
     });
   }, [setAllProduct]);
 
+  console.log(allProduct);
+
   return (
     <div className="NewAnnouncements">
       <h2>Найновіші оголошення</h2>

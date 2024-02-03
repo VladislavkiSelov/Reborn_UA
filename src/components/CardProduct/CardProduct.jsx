@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './CardProduct.scss';
-import NoImg from '../../images/no_Photo.png';
+import NoImg from 'components/NoImg/NoImg';
 import ClickLikeAddFavorites from 'components/ClickLikeAddFavorites/ClickLikeAddFavorites';
 import { useSelector } from 'react-redux';
 import moment from 'moment/moment';
@@ -9,6 +9,8 @@ import moment from 'moment/moment';
 export default function CardProduct({ productTitle, city, titleImage, categoryId, reference, el, publishDate }) {
   const navigate = useNavigate();
   const user = useSelector(state => state.user.user);
+
+  console.log(titleImage);
 
   const img = titleImage === 'cover image not presented' || titleImage.length === 0 ? NoImg : titleImage[0];
   const date = moment(publishDate).format('YY.MM.DD');

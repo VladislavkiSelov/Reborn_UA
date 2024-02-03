@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ReactComponent as LeftArrow } from '../../images/arrow_left.svg';
 import { ReactComponent as RightArrow } from '../../images/arrow_right.svg';
-import NoImg from '../../images/no_Photo.png';
+import NoImg from 'components/NoImg/NoImg';
 import ModalSlider from 'components/ModalSlider/ModalSlider';
 import './Slider.scss';
 
