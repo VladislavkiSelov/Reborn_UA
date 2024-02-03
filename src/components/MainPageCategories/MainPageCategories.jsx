@@ -43,7 +43,7 @@ export default function MainPageCategories() {
   ];
 
   return (
-    <div className="categories container">
+    <section className="categories container">
       <h2>Категорії</h2>
       <div className="wrapper_categories">
         {arrayCategories.map((el, i) => (
@@ -57,6 +57,6 @@ export default function MainPageCategories() {
           </Link>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

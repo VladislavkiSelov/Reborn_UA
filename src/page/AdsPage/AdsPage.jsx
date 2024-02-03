@@ -15,15 +15,13 @@ export default function AdsPage() {
   const user = useSelector(state => state.user.user);
   const navigation = useNavigate();
 
-  console.log(allProducts);
-
   const ifEmpty =
     !allProducts || allProducts.length === 0 ? (
       <p className="empty-products">{emptyProducts}</p>
     ) : (
       allProducts.map(el => (
         <CardAds
-          images={el.images}
+          images={el.images || el.titleImage}
           ads={ads}
           key={el.reference}
           productTitle={el.productTitle}
@@ -41,6 +39,7 @@ export default function AdsPage() {
         />
       ))
     );
+    console.log(allProducts);
 
   async function getAllFavoriteProducts() {
     const token = JSON.parse(localStorage.getItem('user'));

@@ -12,15 +12,15 @@ export default function CardProductCategory({ productTitle, productDescription, 
   const user = useSelector(state => state.user.user);
 
   return (
-    <div onClick={e => ClickLikeAddFavorites({ e, reference, user, categoryId, navigate, el })} className="card_product_category">
-      <div className="box_img_card_product_category">
+    <div onClick={e => ClickLikeAddFavorites({ e, reference, user, categoryId, navigate, el })} className="card-product-category">
+      <div className="card-product-category__box_img">
         <img src={images[0] || NoImg} alt="#" />
       </div>
-      <div className="card_product_category_content">
+      <div className="card-product-category__content">
         <h2>{productTitle}</h2>
         <div>
           <h4>Стан - {translationState(state)}</h4>
-          <div className="location_card_product_category">
+          <div className="card-product-category__location">
             <img src="/img/location.svg" alt="location" />
             <h5> {city} </h5>
           </div>

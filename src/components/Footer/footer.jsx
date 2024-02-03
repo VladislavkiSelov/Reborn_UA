@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { Link } from 'react-router-dom';
 import './Footer.scss';
 
@@ -7,7 +7,9 @@ export default function Footer() {
     <div className="wrapper_footer">
       <footer className="footer container">
         <div className="logo_footer">
-          <img src="/img/logo_white.svg" alt="" />
+          <Link to={`/`}>
+            <img src="/img/logo_white.svg" alt="" />
+          </Link>
         </div>
         <nav className="nav_footer">
           <div className="nav_left">
@@ -53,5 +55,5 @@ export default function Footer() {
         <h3>Друге життя речей</h3>
       </footer>
     </div>
-  )
+  );
 }

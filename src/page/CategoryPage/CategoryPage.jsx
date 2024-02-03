@@ -35,8 +35,9 @@ export default function CategoryPage() {
       };
       fetchData();
     }
+
     if (params.seachProduct) {
-      const url = `https://back.komirka.pp.ua/api/v1/public/products/search?product-title=${encodeURIComponent(params.seachProduct)}&city=CHERNIVTSI&page=0&size=20`;
+      const url = `https://back.komirka.pp.ua/api/v1/public/products/search?product-title=${encodeURIComponent(params.seachProduct)}&city=${params.city}&page=0&size=20`;
       const fetchData = async () => {
         const res = await fetch(url);
         const data = await res.json();
@@ -69,13 +70,13 @@ export default function CategoryPage() {
       />
     );
   }
-  
+
   return (
     <div className="category container">
       <h5>Головна сторінка/Категорія {translationCategory(params.categoryId)}</h5>
-      <div className="header_category">
+      <div className="category__header">
         <Pagination maxElementPage={responseServe.totalElements} setPage={value => setPage(value)} />
-        <div className="box_sort_category_page">
+        <div className="category__header-sort">
           <h5>Сортувати за:</h5>
           <div className="wrapper_select">
             <div className="select_arrow_down">
@@ -88,7 +89,7 @@ export default function CategoryPage() {
           </div>
         </div>
       </div>
-      <div className="сategory_main_box">
+      <div className="category__main">
         <FilterProduct arrayProducts={arrayProducts} setArrayProducts={value => setArrayProducts(value)} />
         <div className="cards_category">
           {arrayProducts.map((el, i) => (
@@ -105,7 +106,7 @@ export default function CategoryPage() {
               el={el}
             />
           ))}
-          <div className="footer_category">{/* <Pagination maxElementPage={responseServe.totalElements} setPage={value => setPage(value)} /> */}</div>
+          <div className="category__footer">{/* <Pagination maxElementPage={responseServe.totalElements} setPage={value => setPage(value)} /> */}</div>
         </div>
       </div>
     </div>

@@ -11,14 +11,14 @@
         text-align: center;
         margin: 80px;
     }
-}
 
-.wrapper_card_product {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 45px;
+    &__wrapper-card {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 45px;
 
-    &>div{
-        width: calc((100% - 135px) / 4);
+        &>div {
+            width: calc((100% - 135px) / 4);
+        }
     }
 }

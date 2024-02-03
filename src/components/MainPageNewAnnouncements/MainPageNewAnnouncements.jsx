@@ -16,7 +16,7 @@ export default function MainPageNewAnnouncements() {
   return (
     <div className="NewAnnouncements">
       <h2>Найновіші оголошення</h2>
-      <div className="wrapper_card_product">
+      <div className="NewAnnouncements__wrapper-card">
         {allProduct.map((el, i) => (
           <CardProduct
             el={el}

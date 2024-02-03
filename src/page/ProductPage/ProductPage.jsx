@@ -9,8 +9,8 @@ import translationState from 'components/TranslationText/TranslationState';
 import translationCategory from 'components/TranslationText/TranslationCategory';
 import { ReactComponent as Like } from '../../images/heart.svg';
 import ClickLikeAddFavorites from 'components/ClickLikeAddFavorites/ClickLikeAddFavorites';
-import './ProductPage.scss';
 import { useSelector } from 'react-redux';
+import './ProductPage.scss';
 
 export default function ProductPage() {
   const params = useParams();
@@ -70,14 +70,14 @@ export default function ProductPage() {
   return (
     <section className="product container">
       <h5>Головна сторінка/Категорія {translationCategory(params.categoryId)}</h5>
-      <div className="product_main_block">
+      <div className="product__main">
         <Slider arrayPicture={product.images} />
-        <div className="wrapper_content_product">
-          <div className="content_product">
-            <div className="wrapper_content">
+        <div className="product__wrapper_content">
+          <div className="product__content">
+            <div className="product__box_content">
               <h3>{product.productTitle}</h3>
               <div>
-                <div className="wrapper_location">
+                <div className="product__location">
                   <img src="/img/location.svg" alt="location" />
                   <h4>{product.city}</h4>
                 </div>
@@ -94,7 +94,7 @@ export default function ProductPage() {
           <Button text="Зателефонувати" classBtn="btn-blue btn_call" />
         </div>
       </div>
-      <div className="similar_ads">
+      <div className="product__similar_ads">
         <h3>Схожі оголошення</h3>
         <div>
           {arrayProducts.map((el, i) => (
