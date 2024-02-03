@@ -82,10 +82,27 @@ export default function LogIn({ setStatusAuthentication }) {
     let requestData;
     const isPhoneNumber = /^\+?[0-9]+$/;
 
+    function formatPhoneNumber(phoneNumber) {
+      // Видаляємо всі нецифрові символи
+      const cleaned = ('' + phoneNumber).replace(/\D/g, '');
+
+      // Перевіряємо, чи номер телефону відповідає очікуваному формату
+      const match = cleaned.match(/^(\d{2})(\d{3})(\d{3})(\d{2})(\d{2})$/);
+
+      if (match) {
+        // Форматуємо номер телефону
+        const formattedNumber = `+${match[1]}(${match[2]})-${match[3]}-${match[4]}-${match[5]}`;
+        return formattedNumber;
+      }
+
+      // Повертаємо вхідний номер телефону у випадку, якщо він не відповідає очікуваному формату
+      return phoneNumber;
+    }
+
     if (isPhoneNumber.test(data.login)) {
       // Якщо введений телефон, відправляємо POST запит із полем phone
       requestData = {
-        phone: data.login,
+        phone: formatPhoneNumber(data.login),
         password: data.password,
       };
     } else {
