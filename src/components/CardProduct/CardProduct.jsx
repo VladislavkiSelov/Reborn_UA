@@ -12,7 +12,7 @@ export default function CardProduct({ productTitle, city, titleImage, categoryId
 
   console.log(titleImage);
 
-  const img = titleImage === 'cover image not presented' || titleImage.length === 0 ? NoImg : titleImage[0];
+  const img = titleImage === 'cover image not presented' || titleImage.length === 0 ? NoImg : titleImage;
   const date = moment(publishDate).format('YY.MM.DD');
 
   return (
