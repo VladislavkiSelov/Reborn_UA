@@ -32,11 +32,15 @@ export default function CardAds({
   const [statusAdsrRestoredModal, setStatusAdsrRestoredModal] = useState(false);
   const user = useSelector(state => state.user.user);
 
-  console.log(images);
+  const notImg = images === 'cover image not presented' || images.length === 0;
 
-  const img = images === 'cover image not presented' || images === undefined || images.length === 0 ? NoImg : images[0].imageUrl || images[0];
-
-  console.log(img);
+  const img = notImg
+    ? NoImg
+    : Array.isArray(images) && typeof images[0] === 'string'
+    ? images[0]
+    : Array.isArray(images) && typeof images[0] === 'object'
+    ? images[0].imageUrl
+    : images;
 
   function handelClick() {
     navigate(`/category/${categoryId}/product/${reference}`);
