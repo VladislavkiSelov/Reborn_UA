@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Search from 'components/Search/Search';
 import Button from 'components/Button/Button';
 import Authentication from 'components/Authentication/Authentication';
 import { setStatusProfile } from 'store/sliceStatusProfile/sliceStatusProfile';
-import './Header.scss';
 import { useDispatch, useSelector } from 'react-redux';
+import './Header.scss';
 
 export default function Header() {
   const dispatch = useDispatch();

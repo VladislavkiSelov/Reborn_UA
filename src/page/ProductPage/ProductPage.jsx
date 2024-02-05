@@ -8,6 +8,8 @@ import Button from 'components/Button/Button';
 import translationState from 'components/TranslationText/TranslationState';
 import translationCategory from 'components/TranslationText/TranslationCategory';
 import { ReactComponent as Like } from '../../images/heart.svg';
+import ClickLikeAddFavorites from 'components/ClickLikeAddFavorites/ClickLikeAddFavorites';
+import { useSelector } from 'react-redux';
 import './ProductPage.scss';
 
 export default function ProductPage() {
@@ -17,6 +19,7 @@ export default function ProductPage() {
   const [product, setProduct] = useState([]);
   const [arrayProducts, setArrayProducts] = useState([]);
   const [responseServe, setResponseServe] = useState([]);
+  const user = useSelector(state => state.user.user);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -64,33 +67,17 @@ export default function ProductPage() {
     );
   }
 
-  function addProductFavotite(e) {
-    if (e.target.classList.contains('like')) {
-      const allProducts = JSON.parse(localStorage.getItem('products')) || [];
-      const res = allProducts.find(item => item.reference === product.reference);
-      if (res !== undefined) {
-        return;
-      }
-      const newAllProducts = [...allProducts, product];
-      localStorage.setItem('products', JSON.stringify(newAllProducts));
-      return;
-    }
-  }
-
   return (
     <section className="product container">
       <h5>Головна сторінка/Категорія {translationCategory(params.categoryId)}</h5>
-      <div className="product_main_block">
-        <Slider />
-        {/* <div className="box_img">
-          <img src="/img/img_furniture.png" alt="#" />
-        </div> */}
-        <div className="wrapper_content_product">
-          <div className="content_product">
-            <div className="wrapper_content">
+      <div className="product__main">
+        <Slider arrayPicture={product.images} />
+        <div className="product__wrapper_content">
+          <div className="product__content">
+            <div className="product__box_content">
               <h3>{product.productTitle}</h3>
               <div>
-                <div className="wrapper_location">
+                <div className="product__location">
                   <img src="/img/location.svg" alt="location" />
                   <h4>{product.city}</h4>
                 </div>
@@ -98,30 +85,25 @@ export default function ProductPage() {
               </div>
               <p>{product.productDescription}</p>
             </div>
-            <Like onClick={e => addProductFavotite(e)} className="like" />
+            <Like
+              onClick={e => ClickLikeAddFavorites({ e, reference: product.reference, user, categoryId: product.categoryName, navigate, el: product })}
+              className="like"
+            />
           </div>
           <h4>{product.ownerUsername}</h4>
           <Button text="Зателефонувати" classBtn="btn-blue btn_call" />
         </div>
       </div>
-      <div className="similar_ads">
+      <div className="product__similar_ads">
         <h3>Схожі оголошення</h3>
         <div>
           {arrayProducts.map((el, i) => (
-            <CardProduct
-              categoryId={params.categoryId}
-              reference={el.reference}
-              key={i}
-              productTitle={el.productTitle}
-              city={el.city}
-              titleImage={`/img/img_furniture.png`}
-              el={el}
-            />
+            <CardProduct categoryId={params.categoryId} reference={el.reference} key={i} productTitle={el.productTitle} city={el.city} titleImage={el.images} el={el} />
           ))}
         </div>
-        <div className="footer_category">
+        {/* <div className="footer_category">
           <Pagination maxElementPage={responseServe.totalElements || null} setPage={value => setPage(value)} />
-        </div>
+        </div> */}
       </div>
     </section>
   );

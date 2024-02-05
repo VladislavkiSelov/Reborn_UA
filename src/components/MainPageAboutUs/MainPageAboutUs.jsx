@@ -3,12 +3,12 @@ import './MainPageAboutUs.scss';
 
 export default function MainPageAboutUs() {
   return (
-    <div className="aboutUs">
-      <div className="aboutUs_wrapper">
+    <div className="about_us">
+      <div className="aboutus_wrapper">
         <h2>Про нас</h2>
-        <div className="aboutUsContent">
+        <div className="about_us_content">
           <p>
-            <span className="green">Наша мета </span>
+            <span className="blue">Наша мета </span>
              - дати нове життя старим речам + <br />
             допомогти Вам знайти щось особливе та ексклюзивне
           </p>

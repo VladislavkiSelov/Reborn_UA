@@ -1,37 +1,26 @@
 import React from 'react';
 import './CardProductCategory.scss';
 import translationState from 'components/TranslationText/TranslationState';
+import NoImg from 'components/NoImg/NoImg';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Like } from '../../images/heart.svg';
+import { useSelector } from 'react-redux';
+import ClickLikeAddFavorites from 'components/ClickLikeAddFavorites/ClickLikeAddFavorites';
 
-export default function CardProductCategory({ productTitle, productDescription, city, state, reference, categoryId, el }) {
+export default function CardProductCategory({ productTitle, productDescription, city, state, reference, categoryId, el, images }) {
   const navigate = useNavigate();
-
-  function goToAnotherPage(e) {
-    if (e.target.classList.contains('like')) {
-      console.log('like');
-      const allProducts = JSON.parse(localStorage.getItem('products')) || [];
-      const res = allProducts.find(item => item.reference === reference);
-      if (res) {
-        return;
-      }
-      const newAllProducts = [...allProducts, el];
-      localStorage.setItem('products', JSON.stringify(newAllProducts));
-      return;
-    }
-    navigate(`/category/${categoryId}/product/${reference}`);
-  }
+  const user = useSelector(state => state.user.user);
 
   return (
-    <div onClick={e => goToAnotherPage(e)} className="card_product_category">
-      <div className="box_img_card_product_category">
-        <img src="/img/img_furniture.png" alt="#" />
+    <div onClick={e => ClickLikeAddFavorites({ e, reference, user, categoryId, navigate, el })} className="card-product-category">
+      <div className="card-product-category__box_img">
+        <img src={images[0] || NoImg} alt="#" />
       </div>
-      <div className="card_product_category_content">
+      <div className="card-product-category__content">
         <h2>{productTitle}</h2>
         <div>
           <h4>Стан - {translationState(state)}</h4>
-          <div className="location_card_product_category">
+          <div className="card-product-category__location">
             <img src="/img/location.svg" alt="location" />
             <h5> {city} </h5>
           </div>

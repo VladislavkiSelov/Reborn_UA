@@ -11,6 +11,15 @@
     border: none;
     cursor: pointer;
     transition: 0.3s;
+
+    &__text {
+      position: relative;
+    }
+
+    &__loading {
+      position: absolute;
+      left: -30px;
+    }
 }
 
 
@@ -29,6 +38,13 @@
     &:active {
         background: #567A49;
     }
+}
+
+.btn-same-width {
+  max-width: 315px;
+  width: 100%;
+  min-width: 192px;
+  padding: 18px 0;
 }
 
 
@@ -65,4 +81,24 @@
     &:active {
         background: #3E3E3E;
     }
+}
+
+.btn-white {
+  background: #EFEFEF;
+  border: 1px solid #3E3E3E;
+  color: #3E3E3E;
+
+  &:hover {
+      background: #3E3E3E;
+      color: #EFEFEF;
+  }
+
+  &:disabled {
+      background: #B0B0B0;
+      pointer-events: none;
+  }
+
+  &:active {
+      background: #3E3E3E;
+  }
 }

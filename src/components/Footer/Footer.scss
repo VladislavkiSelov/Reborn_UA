@@ -36,6 +36,18 @@
         font-size: 18px;
         font-weight: 400;
         line-height: 33px;
+        cursor: pointer;
+
+        &:hover{
+            color: #567A49;;
+        }
+    }
+
+    a{
+        cursor: pointer;
+        &:hover{
+            color: #567A49;
+        }
     }
 }
 

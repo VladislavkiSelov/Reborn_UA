@@ -1,67 +1,69 @@
 .category {
     width: 100%;
 
-    &>h5{
+    &>h5 {
         padding-top: 50px;
     }
-}
 
-.header_category {
-    display: flex;
-    justify-content: flex-end;
-    gap: 50px;
-    padding-top: 50px;
-}
-
-.box_sort_category_page {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-
-    select {
-        border-radius: 4px;
-        border: 1px solid #555;
-        padding: 18px 45px 15px 15px;
-        color: #000;
-        font-size: 18px;
-        font-weight: 300;
-        line-height: 22px;
-        appearance: none;
-        cursor: pointer;
+    &__header {
+        display: flex;
+        justify-content: flex-end;
+        gap: 50px;
+        padding-top: 50px;
     }
 
-    .wrapper_select {
-        position: relative;
+    &__header-sort {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+
+        select {
+            border-radius: 4px;
+            border: 1px solid #555;
+            padding: 18px 45px 15px 15px;
+            color: #000;
+            font-size: 18px;
+            font-weight: 300;
+            line-height: 22px;
+            appearance: none;
+            cursor: pointer;
+        }
+
+        .wrapper_select {
+            position: relative;
+        }
+
+        .select_arrow_down {
+            position: absolute;
+            width: 10.925px;
+            height: 20.194px;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
     }
 
-    .select_arrow_down {
-        position: absolute;
-        width: 10.925px;
-        height: 20.194px;
-        right: 20px;
-        top: 50%;
-        transform: translateY(-50%);
-        pointer-events: none;
+    &__main {
+        display: flex;
+        width: 100%;
+        padding-top: 70px;
+
     }
-}
 
-.сategory_main_box {
-    display: flex;
-    width: 100%;
-    padding-top: 70px;
 
-}
+    .cards_category {
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
+        margin-left: 65px;
+        width: 100%;
+    }
 
-.footer_category {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 55px;
-}
+    &__footer {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 55px;
+    }
 
-.cards_category {
-    display: flex;
-    flex-direction: column;
-    gap: 50px;
-    margin-left: 65px;
-    width: 100%;
 }

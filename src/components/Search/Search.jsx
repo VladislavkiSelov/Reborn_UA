@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import './Search.scss';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import './Search.scss';
 
 function Search() {
   const [cityList, setSityList] = useState([]);
@@ -41,7 +41,7 @@ function Search() {
 
   function handleKeyPress(e) {
     if (e.key === 'Enter') {
-      navigation(`/seachProduct/${product}`);
+      navigation(`/seachProduct/${product}/city/${cities}`);
     }
   }
 

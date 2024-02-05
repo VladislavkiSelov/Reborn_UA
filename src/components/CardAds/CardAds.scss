@@ -1,23 +1,25 @@
-.card-favorite {
+.card-ads {
     cursor: pointer;
     border-radius: 10px;
     background: #F5F5F5;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     position: relative;
 
-    &__wrapper{
+    &__wrapper {
         display: flex;
         flex-direction: row;
         width: 100%;
     }
 
     &__box_img {
-        min-width: 480px;
+        width: 100%;
+        max-width: 480px;
         height: 370px;
         border-radius: 10px;
+        overflow: hidden;
 
         img {
-            object-fit: cover;
+            object-fit: contain;
             height: 100%;
             width: 100%;
         }
@@ -82,24 +84,29 @@
         pointer-events: none;
     }
 
-    &__btn-delete {
+    &__container_btn {
         position: absolute;
         right: 40px;
         bottom: 40px;
-        color: #3E3E3E;
-        font-size: 19px;
-        font-weight: 700;
-        line-height: 19px;
-        letter-spacing: 0.57px;
-        padding: 20px 50px;
-        border-radius: 10px;
-        border: 1px solid #000;
-        cursor: pointer;
-        z-index: 10;
-    
-        &:hover{
-         background: #000;
-         color: white;
+        gap: 35px;
+        display: flex;
+
+        .btn-delete {
+            color: #3E3E3E;
+            font-size: 19px;
+            font-weight: 700;
+            line-height: 19px;
+            letter-spacing: 0.57px;
+            padding: 20px 50px;
+            border-radius: 10px;
+            border: 1px solid #000;
+            cursor: pointer;
+            z-index: 10;
+
+            &:hover {
+                background: #000;
+                color: white;
+            }
         }
     }
 }
