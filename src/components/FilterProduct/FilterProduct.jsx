@@ -1,19 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import Button from 'components/Button/Button';
 import './FilterProduct.scss';
-import axios from 'axios';
+import SeachCity from 'components/SeachCity/SeachCity';
 
-export default function FilterProduct({ arrayProducts, setArrayProducts }) {
-  const [cityList, setSityList] = useState([]);
-  const [filterCity, setFilterCity] = useState([]);
-  const [showSityList, setShowSityList] = useState(false);
-  const [cities, setCities] = useState('КИЇВ');
+
+export default function FilterProduct({ arrayProducts, setArrayProducts, originArrayProducts }) {
   const {
     register,
     handleSubmit,
     watch,
-    reset,
     setValue,
     getValues,
     formState: { errors },
@@ -51,74 +47,24 @@ export default function FilterProduct({ arrayProducts, setArrayProducts }) {
       resFilterState.push(...resFilter);
     }
 
-    if (resFilterState.length > 0) {
-      return resFilterState;
-    }
+    return newState || used || damaged ? resFilterState : array;
   }
 
   function filterProduct() {
-    const resFilterCity = filterCityMain(arrayProducts);
+    const resFilterCity = filterCityMain(originArrayProducts);
     const resFilterState = filterState(resFilterCity);
     return resFilterState;
   }
   //filter
 
-  function closeListCity(e) {
-    if (e.target.tagName === 'UL' || e.target.tagName === 'INPUT') {
-      return;
-    }
-    setShowSityList(false);
-  }
-
-  function showCity(e) {
-    if (showSityList === true) {
-      return;
-    }
-    setShowSityList(true);
-  }
-
-  function clickCity(e) {
-    setValue('city', e.target.textContent);
-    setShowSityList(false);
-    e.preventDefault();
-  }
-
-  useEffect(() => {
-    setCities(watch('city'));
-  });
-   //записіваю в стейт значение инпута
-
-  useEffect(() => {
-    axios
-      .get('/city.json')
-      .then(res => {
-        setSityList(res.data);
-      })
-      .catch(error => console.error('Error fetching data:', error));
-  }, []);
-  //загружаю все города
-
-  useEffect(() => {
-    setFilterCity(cities ? cityList.filter(city => city["Назва об'єкта українською мовою"].toUpperCase().startsWith(cities.toUpperCase())) : cityList.slice(0, 200));
-  }, [cities, cityList]);
-  //фильтрную города по значению инпута
-
-  useEffect(() => {
-    function clickBody(e) {
-      closeListCity(e);
-    }
-    document.querySelector('body').addEventListener('click', clickBody);
-    return () => {
-      document.querySelector('body').removeEventListener('click', clickBody);
-    };
-  }, []);
-  //закрываю список городов
-
-
   const onSubmit = data => {
-    const newArrayProducts = filterProduct();
-    setArrayProducts(newArrayProducts);
-    reset();
+    if (Object.values(data).some(el => Boolean(el) === true)) {
+      const newArrayProducts = filterProduct();
+      setArrayProducts(newArrayProducts);
+    } else {
+      setArrayProducts(originArrayProducts);
+      //нужно добавить продукты которые снова нужно скачать с сервера и отобразить
+    }
   };
 
   return (
@@ -126,19 +72,7 @@ export default function FilterProduct({ arrayProducts, setArrayProducts }) {
       <div className="filter_wrapper">
         <h3>Фільтри:</h3>
         <form className="form_filter" onSubmit={handleSubmit(onSubmit)}>
-          <label className="label_city">
-            Місто
-            <input onClick={e => showCity(e)} type="text" {...register('city')} />
-            {showSityList && (
-              <ul className="form_filter__list-city">
-                {filterCity.map((el, i) => (
-                  <li onClick={e => clickCity(e)} key={i}>
-                    {el["Назва об'єкта українською мовою"]}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </label>
+          <SeachCity setValue={(value1, value2) => setValue(value1, value2)} register={register} watch={value => watch(value)} classLabel={`label_city`} arrow={false}/>
           <h4>Стан</h4>
           <div className="box_input_checkbox_filter">
             <label className="checkbox_label">

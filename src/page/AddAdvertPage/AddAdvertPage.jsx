@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import translationCategory from 'components/TranslationText/TranslationCategory';
 import './AddAdvertPage.scss';
+import SeachCity from 'components/SeachCity/SeachCity';
 
 export default function AddAdvertPage() {
   const [cityList, setSityList] = useState([]);
@@ -232,30 +233,7 @@ export default function AddAdvertPage() {
             )}
           </div>
         </label>
-        <label className="advert-page__form__input-city">
-          <p>Назва міста/селища</p>
-          <div className="wrapper_select">
-            <span className="select_arrow_down">
-              <ArrowDown />
-            </span>
-            <input
-              type="seach"
-              {...register('city', {
-                required: true,
-              })}
-              onClick={e => showCity(e)}
-            />
-            {showSityList && (
-              <ul className="advert-page__form__list-city">
-                {filterCity.map((el, i) => (
-                  <li key={i} onClick={e => clickCity(e)}>
-                    {el["Назва об'єкта українською мовою"]}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        </label>
+        <SeachCity register={register} setValue={(value1, value2) => setValue(value1, value2)} watch={value => watch(value)} classLabel={`advert-page__form__input-city`} arrow={true}/>
         <label>
           <p>Ім’я та Прізвище</p>
           <input

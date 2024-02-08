@@ -10,8 +10,6 @@ export default function CardProduct({ productTitle, city, titleImage, categoryId
   const navigate = useNavigate();
   const user = useSelector(state => state.user.user);
 
-  console.log(titleImage);
-
   const img = titleImage === 'cover image not presented' || titleImage.length === 0 ? NoImg : titleImage;
   const date = moment(publishDate).format('YY.MM.DD');
 
