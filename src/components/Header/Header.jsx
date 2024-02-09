@@ -33,7 +33,7 @@ export default function Header() {
           </Link>
         </div>
         <Search />
-        <Button  handelClick={goToPage} text="Додати оголошення" classBtn="btn-green" />
+        <Button  handelClick={goToPage} text="Додати оголошення" classBtn="btn-green add" />
         <div className="box_btn_header">
           <Link to="/favorite">
             <img src="/img/heart.svg" alt="like" />
