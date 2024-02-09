@@ -90,7 +90,7 @@ export default function LogIn({ setStatusAuthentication }) {
       const cleaned = ('' + phoneNumber).replace(/\D/g, '');
 
       // Перевіряємо, чи номер телефону відповідає очікуваному формату
-      const match = cleaned.match(/^(\d{2})(\d{3})(\d{3})(\d{2})(\d{2})$/);
+      const match = cleaned.match(/^(\d{2})(\d{3})(\d{2})(\d{2})(\d{3})$/);
 
       if (match) {
         // Форматуємо номер телефону
