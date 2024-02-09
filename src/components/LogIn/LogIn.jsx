@@ -21,6 +21,7 @@ export default function LogIn({ setStatusAuthentication }) {
     handleSubmit,
     getValues,
     reset,
+    watch,
     setError,
     formState: { errors },
   } = useForm({ mode: 'all' });
@@ -40,7 +41,9 @@ export default function LogIn({ setStatusAuthentication }) {
     } else {
       setLoginPattern(null);
     }
-  }, [getValues, setLoginPattern, urlEmail, urlPhone]);
+  }, [watch('login')]);
+
+  console.log(url);
 
   const validationPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
