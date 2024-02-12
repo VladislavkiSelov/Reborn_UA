@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import CardUser from 'components/CardUser/CardUser';
 import Button from 'components/Button/Button';
@@ -11,15 +11,17 @@ import { useNavigate } from 'react-router-dom';
 import translationCategory from 'components/TranslationText/TranslationCategory';
 import './AddAdvertPage.scss';
 import SeachCity from 'components/SeachCity/SeachCity';
+import { IMaskInput } from 'react-imask';
+import moment from 'moment';
 
 export default function AddAdvertPage() {
-  const [cityList, setSityList] = useState([]);
-  const [showSityList, setShowSityList] = useState(false);
   const [showCategoryList, setShowCategoryList] = useState(false);
-  const [filterCity, setFilterCity] = useState([]);
+  const [statusDisabled, setStatusDisabled] = useState(true);
   const navigation = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(state => state.user.user);
+  const inputRef = useRef(null);
+  const isInitialRender = useRef(true);
 
   useEffect(() => {
     const userId = JSON.parse(localStorage.getItem('user'));
@@ -35,8 +37,10 @@ export default function AddAdvertPage() {
     register,
     handleSubmit,
     setValue,
+    getValues,
     reset,
     watch,
+    setError,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -47,30 +51,23 @@ export default function AddAdvertPage() {
       img5: '',
       img6: '',
     },
-    mode: 'onSubmit',
+    mode: 'all',
   });
 
-  useEffect(() => {
-    axios
-      .get('/city.json')
-      .then(res => {
-        setSityList(res.data);
-      })
-      .catch(error => console.error('Error fetching data:', error));
-  }, []);
-  //получение все городов
+  const validationName = /^[А-Яа-яЁё]+ [А-Яа-яЁё]+$/;
 
-  const cities = watch('city');
+  const handleAccept = () => {
+    setValue('phone', inputRef.current.value);
+  };
 
-  useEffect(() => {
-    setFilterCity(cities ? cityList.filter(city => city["Назва об'єкта українською мовою"].toUpperCase().startsWith(cities.toUpperCase())) : cityList.slice(0, 200));
-  }, [cities, cityList]);
-  //поиск городо по значению в инпуте
+  const handleEmpty = () => {
+    setValue('phone', inputRef.current.value);
+  };
 
-  function clickCity(e) {
-    setValue('city', e.target.textContent);
-    setShowSityList(false);
-    e.preventDefault();
+  function checkStateProduct(data) {
+    if (!data.state_product) {
+      setError('state_product');
+    }
   }
 
   function clickCategory(e) {
@@ -81,33 +78,9 @@ export default function AddAdvertPage() {
     }
   }
 
-  function showCity(e) {
-    if (showSityList === true) {
-      return;
-    }
-    setShowSityList(true);
-  }
-
-  function close(e) {
-    if (e.target.tagName === 'UL' || e.target.tagName === 'INPUT') {
-      return;
-    }
-    setShowSityList(false);
-    setShowCategoryList(false);
-  }
-
-  useEffect(() => {
-    function clickBody(e) {
-      close(e);
-    }
-    document.querySelector('body').addEventListener('click', clickBody);
-    return () => {
-      document.querySelector('body').removeEventListener('click', clickBody);
-    };
-  }, []);
-  // Select city and category
-
   const onSubmit = data => {
+    const date = moment(new Date()).format('YYYY-MM-DD');
+    checkStateProduct(data);
     let reference = null;
     const token = JSON.parse(localStorage.getItem('user')).authenticationToken;
     const url = `https://back.komirka.pp.ua/api/v1/private/product/create`;
@@ -117,7 +90,7 @@ export default function AddAdvertPage() {
       productTitle: data.titel,
       productDescription: data.text_advertisement,
       state: data.state_product,
-      publishDate: '2024-02-01',
+      publishDate: date,
     };
 
     const { img1, img2, img3, img4, img5, img6 } = data;
@@ -204,120 +177,153 @@ export default function AddAdvertPage() {
   };
 
   return (
-    <section className="advert-page container">
-      <div className="advert-page__wrapper-user">
-        <CardUser statusBtn={false} />
-      </div>
-      <form className="advert-page__form" onSubmit={handleSubmit(onSubmit)}>
-        <h3>Додати оголошення</h3>
-        <label className="advert-page__form__input-category">
-          <p>Оберіть категорію</p>
-          <div className="wrapper_select">
-            <span className="select_arrow_down">
-              <ArrowDown />
-            </span>
+    <section>
+      <h5 className="nav-advert-page container">
+        Головна сторінка/Особистий кабінет<span className="nav-advert-page__nav">/Додавання оголошення</span>
+      </h5>
+      <div className="advert-page container">
+        <div className="advert-page__wrapper-user">
+          <CardUser statusBtn={false} />
+        </div>
+        <form className="advert-page__form" onSubmit={handleSubmit(onSubmit)}>
+          <h3>Додати оголошення</h3>
+          <label className={`advert-page__form__input-category ${errors.phone && `error_label`}`}>
+            <p>Оберіть категорію</p>
+            <div className="wrapper_select">
+              <span className="select_arrow_down">
+                <ArrowDown />
+              </span>
+              <input
+                className={errors.category && `error_input`}
+                onClick={() => setShowCategoryList(true)}
+                {...register('category', {
+                  required: true,
+                })}></input>
+              {showCategoryList && (
+                <ul onClick={e => clickCategory(e)} className="advert-page__form__list-category">
+                  <li>Меблі</li>
+                  <li>Одяг</li>
+                  <li>Техніка</li>
+                  <li>Все для дому</li>
+                  <li>Дитячий світ</li>
+                  <li>Домашні улюбленці</li>
+                </ul>
+              )}
+            </div>
+          </label>
+          <SeachCity
+            errors={errors}
+            register={register}
+            setValue={(value1, value2) => setValue(value1, value2)}
+            watch={value => watch(value)}
+            classLabel={`advert-page__form__input-city`}
+            arrow={true}
+          />
+          <label className={errors.name && `error_label`}>
+            <p>Ім’я та Прізвище</p>
             <input
-              onClick={() => setShowCategoryList(true)}
-              {...register('category', {
+              className={errors.name && `error_input`}
+              type="text"
+              {...register('name', {
                 required: true,
-              })}></input>
-            {showCategoryList && (
-              <ul onClick={e => clickCategory(e)} className="advert-page__form__list-category">
-                <li>Меблі</li>
-                <li>Одяг</li>
-                <li>Техніка</li>
-                <li>Все для дому</li>
-                <li>Дитячий світ</li>
-                <li>Домашні улюбленці</li>
-              </ul>
-            )}
+                pattern: validationName,
+              })}
+            />
+          </label>
+          <label className={errors.phone && `error_label`}>
+            <p>Номер телефону вказаний у оголошенні</p>
+            <IMaskInput
+              mask="+{38}(000)-00-00-000"
+              radix="."
+              unmask={false}
+              inputRef={inputRef}
+              value={getValues('phone')}
+              onAccept={handleAccept}
+              onComplete={handleEmpty}
+              className={errors.phone && `error_input`}
+              type="text"
+              {...register('phone', {
+                required: true,
+              })}
+            />
+          </label>
+          <label className={`titel ${errors.titel && `error_label`}`}>
+            <p>Заголовок оголошення</p>
+            <input
+              className={errors.titel && `error_input`}
+              placeholder="Не більше 30 - ти символів"
+              {...register('titel', {
+                maxLength: 40,
+                required: true,
+              })}
+            />
+          </label>
+          <label className={errors.text_advertisement && `error_label`}>
+            <p>Текст оголошення</p>
+            <textarea
+              className={errors.text_advertisement && `error_input`}
+              {...register('text_advertisement', {
+                maxLength: 9000,
+                required: true,
+              })}></textarea>
+          </label>
+          <label className="wrapper-input-file">
+            <p>Додати фото (Перше фото буде на обкладинці оголошення) </p>
+            <p>Доступний формат - JPEG, максимальний розмір фото - 10 Мб </p>
+            <div className="container_box_input">
+              {arrayDefaultValuesImg.map((el, i) => (
+                <InputFile key={i} setValue={(value, value2) => setValue(value, value2)} register_name={el} />
+              ))}
+            </div>
+          </label>
+          <div className="box_state_product">
+            <h4>Оберіть стан речі:</h4>
+            <div>
+              <label className={`wrapper_radio`}>
+                <p>Нова</p>
+                <input className="input_radio" {...register('state_product')} type="radio" value="NEW" />
+                <span className="radio"></span>
+              </label>
+              <label className={`wrapper_radio`}>
+                <p>Б/в</p>
+                <input className="input_radio" {...register('state_product')} type="radio" value="USED" />
+                <span className="radio"></span>
+              </label>
+              <label className={`wrapper_radio`}>
+                <p>Пошкоджена</p>
+                <input className="input_radio" {...register('state_product')} type="radio" value="DAMAGED" />
+                <span className="radio"></span>
+              </label>
+            </div>
           </div>
-        </label>
-        <SeachCity register={register} setValue={(value1, value2) => setValue(value1, value2)} watch={value => watch(value)} classLabel={`advert-page__form__input-city`} arrow={true}/>
-        <label>
-          <p>Ім’я та Прізвище</p>
-          <input
-            type="text"
-            {...register('name', {
-              required: true,
-            })}
-          />
-        </label>
-        <label>
-          <p>Номер телефону вказаний у оголошенні</p>
-          <input type="text" {...register('phone', { required: true })} />
-        </label>
-        <label className="titel">
-          <p>Заголовок оголошення</p>
-          <input
-            placeholder="Не більше 30 - ти символів"
-            {...register('titel', {
-              required: true,
-            })}
-          />
-        </label>
-        <label>
-          <p>Текст оголошення</p>
-          <textarea
-            {...register('text_advertisement', {
-              required: true,
-            })}></textarea>
-        </label>
-        <label>
-          <p>Додати фото (Перше фото буде на обкладинці оголошення) </p>
-          <div className="container_box_input">
-            {arrayDefaultValuesImg.map((el, i) => (
-              <InputFile key={i} setValue={(value, value2) => setValue(value, value2)} register_name={el} />
-            ))}
+          <div className="box_delivery_method">
+            <h4>Вкажіть спосіб відправки:</h4>
+            <div>
+              <label className="wrapper_checkbox">
+                <input className="input_checkbox" type="checkbox" {...register('pickup')} />
+                <span className="check_box"></span>
+                <p>Самовивіз</p>
+              </label>
+              <label className="wrapper_checkbox">
+                <input className="input_checkbox" type="checkbox" {...register('post_office')} />
+                <span className="check_box"></span>
+                <p>Нова Пошта</p>
+              </label>
+              <label className="wrapper_checkbox">
+                <input className="input_checkbox" type="checkbox" {...register('personal_meeting')} />
+                <span className="check_box"></span>
+                <p>Особиста зустріч</p>
+              </label>
+              <label className="wrapper_checkbox">
+                <input className="input_checkbox" type="checkbox" {...register('by_appointment')} />
+                <span className="check_box"></span>
+                <p>За домовленістю</p>
+              </label>
+            </div>
           </div>
-        </label>
-        <div className="box_state_product">
-          <h4>Оберіть стан речі:</h4>
-          <div>
-            <label className="wrapper_radio">
-              <p>Нова</p>
-              <input className="input_radio" {...register('state_product')} type="radio" value="NEW" />
-              <span className="radio"></span>
-            </label>
-            <label className="wrapper_radio">
-              <p>Б/в</p>
-              <input className="input_radio" {...register('state_product')} type="radio" value="USED" />
-              <span className="radio"></span>
-            </label>
-            <label className="wrapper_radio">
-              <p>Пошкоджена</p>
-              <input className="input_radio" {...register('state_product')} type="radio" value="DAMAGED" />
-              <span className="radio"></span>
-            </label>
-          </div>
-        </div>
-        <div className="box_delivery_method">
-          <h4>Вкажіть спосіб відправки:</h4>
-          <div>
-            <label className="wrapper_checkbox">
-              <input className="input_checkbox" type="checkbox" {...register('pickup')} />
-              <span className="check_box"></span>
-              <p>Самовивіз</p>
-            </label>
-            <label className="wrapper_checkbox">
-              <input className="input_checkbox" type="checkbox" {...register('post_office')} />
-              <span className="check_box"></span>
-              <p>Нова Пошта</p>
-            </label>
-            <label className="wrapper_checkbox">
-              <input className="input_checkbox" type="checkbox" {...register('personal_meeting')} />
-              <span className="check_box"></span>
-              <p>Особиста зустріч</p>
-            </label>
-            <label className="wrapper_checkbox">
-              <input className="input_checkbox" type="checkbox" {...register('by_appointment')} />
-              <span className="check_box"></span>
-              <p>За домовленістю</p>
-            </label>
-          </div>
-        </div>
-        <Button classBtn="btn-graphite" text="Зберегти" />
-      </form>
+          <Button classBtn="btn-graphite" text="Зберегти" />
+        </form>
+      </div>
     </section>
   );
 }

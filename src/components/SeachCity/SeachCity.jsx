@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { ReactComponent as ArrowDown } from '../../images/arrow_down.svg';
 
-export default function SeachCity({ register, setValue, watch, classLabel, arrow }) {
+export default function SeachCity({ register, setValue, watch, classLabel, arrow, errors }) {
   const [cityList, setSityList] = useState([]);
   const [filterCity, setFilterCity] = useState([]);
   const [showSityList, setShowSityList] = useState(false);
@@ -60,13 +60,17 @@ export default function SeachCity({ register, setValue, watch, classLabel, arrow
   //закрываю список городов
 
   return (
-    <label className={classLabel}>
+    <label className={`${classLabel} ${errors?.name && `error_label`}`}>
+      <p>
       Місто
+      </p>
       <div className="wrapper_select">
-        <input onClick={e => showCity(e)} type="text" {...register('city')} />
-        {arrow && <span className="select_arrow_down">
-          <ArrowDown />
-        </span>}
+        <input className={errors?.name && `error_input`} onClick={e => showCity(e)} type="text" {...register('city')} />
+        {arrow && (
+          <span className="select_arrow_down">
+            <ArrowDown />
+          </span>
+        )}
         {showSityList && (
           <ul className="form_filter__list-city">
             {filterCity.map((el, i) => (
