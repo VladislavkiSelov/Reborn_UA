@@ -1,13 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import CardUser from 'components/CardUser/CardUser';
 import Button from 'components/Button/Button';
 import { ReactComponent as ArrowDown } from '../../images/arrow_down.svg';
 import InputFile from 'components/InputFile/InputFile';
-import { setStatusProfile } from 'store/sliceStatusProfile/sliceStatusProfile';
 import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import translationCategory from 'components/TranslationText/TranslationCategory';
 import './AddAdvertPage.scss';
 import SeachCity from 'components/SeachCity/SeachCity';
@@ -16,20 +13,7 @@ import moment from 'moment';
 
 export default function AddAdvertPage() {
   const [showCategoryList, setShowCategoryList] = useState(false);
-  const [statusDisabled, setStatusDisabled] = useState(true);
-  const navigation = useNavigate();
-  const dispatch = useDispatch();
-  const user = useSelector(state => state.user.user);
   const inputRef = useRef(null);
-  const isInitialRender = useRef(true);
-
-  useEffect(() => {
-    const userId = JSON.parse(localStorage.getItem('user'));
-    if (userId === null) {
-      dispatch(setStatusProfile(true));
-      navigation('/');
-    }
-  }, [user]);
 
   const arrayDefaultValuesImg = ['img1', 'img2', 'img3', 'img4', 'img5', 'img6'];
 
@@ -51,18 +35,18 @@ export default function AddAdvertPage() {
       img5: '',
       img6: '',
     },
-    mode: 'all',
+    mode: 'onChange',
   });
 
   const validationName = /^[А-Яа-яЁё]+ [А-Яа-яЁё]+$/;
 
-  const handleAccept = () => {
+  const handleAccept = useMemo(() => () => {
     setValue('phone', inputRef.current.value);
-  };
-
-  const handleEmpty = () => {
+  }, [setValue]);
+  
+  const handleEmpty = useMemo(() => () => {
     setValue('phone', inputRef.current.value);
-  };
+  }, [setValue]);
 
   function checkStateProduct(data) {
     if (!data.state_product) {
@@ -77,13 +61,16 @@ export default function AddAdvertPage() {
       e.preventDefault();
     }
   }
+  console.log(errors);
 
   const onSubmit = data => {
     const date = moment(new Date()).format('YYYY-MM-DD');
     checkStateProduct(data);
+
     let reference = null;
     const token = JSON.parse(localStorage.getItem('user')).authenticationToken;
     const url = `https://back.komirka.pp.ua/api/v1/private/product/create`;
+
     const body = {
       categoryName: translationCategory(data.category),
       city: data.city,
@@ -187,7 +174,7 @@ export default function AddAdvertPage() {
         </div>
         <form className="advert-page__form" onSubmit={handleSubmit(onSubmit)}>
           <h3>Додати оголошення</h3>
-          <label className={`advert-page__form__input-category ${errors.phone && `error_label`}`}>
+          <label className={`advert-page__form__input-category ${errors.category && `error_label`}`}>
             <p>Оберіть категорію</p>
             <div className="wrapper_select">
               <span className="select_arrow_down">

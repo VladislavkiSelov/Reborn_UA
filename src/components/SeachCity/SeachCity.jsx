@@ -60,12 +60,12 @@ export default function SeachCity({ register, setValue, watch, classLabel, arrow
   //закрываю список городов
 
   return (
-    <label className={`${classLabel} ${errors?.name && `error_label`}`}>
+    <label className={`${classLabel} ${errors?.city && `error_label`}`}>
       <p>
       Місто
       </p>
       <div className="wrapper_select">
-        <input className={errors?.name && `error_input`} onClick={e => showCity(e)} type="text" {...register('city')} />
+        <input className={errors?.city && `error_input`} onClick={e => showCity(e)} type="text" {...register('city')} />
         {arrow && (
           <span className="select_arrow_down">
             <ArrowDown />
