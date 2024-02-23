@@ -1,3 +1,14 @@
+.nav-advert-page{
+    padding-top: 50px;
+    padding-bottom: 50px;
+    font-family: JOST;
+    font-weight: 500;
+    font-size: 27px;
+
+    &__nav{
+        color: grey;
+    }
+    }
 .advert-page {
     display: flex;
     width: 100%;
@@ -124,6 +135,18 @@
         &__list-category {
             top: 51px;
         }
+
+        .error_input {
+            border: #FC3D3D solid 1px;
+        }
+    
+        .error_label {
+            color: #FC3D3D;
+            p{
+                color: #FC3D3D;
+
+            }
+        }
     }
 
 
@@ -172,6 +195,15 @@
 
             &:checked+.check_box {
                 background-image: url('../../images/check.svg');
+            }
+        }
+    }
+
+    .wrapper-input-file{
+        p{
+            &:nth-child(2){
+                font-weight: 300;
+                font-size: 18px;
             }
         }
     }

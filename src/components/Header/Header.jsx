@@ -11,12 +11,17 @@ export default function Header() {
   const dispatch = useDispatch();
   const statusProfile = useSelector(state => state.statusProfile.statusProfile);
   const navigate = useNavigate();
+  const user = localStorage.getItem('user');
   function handelClickProfile() {
     dispatch(setStatusProfile(true));
   }
 
   function goToPage() {
     navigate('/add-advert');
+  }
+
+  function handleLogout() {
+    localStorage.removeItem('user');
   }
 
   return (
@@ -28,14 +33,18 @@ export default function Header() {
           </Link>
         </div>
         <Search />
-        <Button  handelClick={goToPage} text="Додати оголошення" classBtn="btn-green" />
+        <Button  handelClick={goToPage} text="Додати оголошення" classBtn="btn-green add" />
         <div className="box_btn_header">
           <Link to="/favorite">
             <img src="/img/heart.svg" alt="like" />
           </Link>
-          <button onClick={handelClickProfile}>
+          {!user && <button onClick={handelClickProfile}>
             <img src="/img/profile.svg" alt="profile" />
-          </button>
+          </button>}
+
+          {user && <button onClick={handleLogout}>
+            <img src="/img/exit_icon.svg" alt="exit" />
+          </button>}
         </div>
       </header>
       {statusProfile && <Authentication/>}

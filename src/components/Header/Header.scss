@@ -4,6 +4,9 @@
     align-items: center;
     width: 100%;
     // justify-content: space-between;
+    & img{
+      max-height: 35px;
+    }
 
     .header-logo {
         min-width: 183px;
@@ -29,4 +32,17 @@
             cursor: pointer;
         }
     }
+}
+
+
+@media (max-width: 750px) {
+  .add .btn__text {
+    display: none;
+  }
+  .add:after {
+    content: "+";
+    font-size: 20px;
+    font-weight: 700;
+  }
+
 }

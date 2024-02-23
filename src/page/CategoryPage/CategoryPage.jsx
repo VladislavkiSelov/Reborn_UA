@@ -12,6 +12,7 @@ export default function CategoryPage() {
   const params = useParams();
   const navigate = useNavigate();
   const [arrayProducts, setArrayProducts] = useState([]);
+  const [originArrayProducts, setOriginArrayProducts] = useState([]);
   const [responseServe, setResponseServe] = useState([]);
   const [page, setPage] = useState(0);
   const [sort, setSort] = useState('POPULARITY');
@@ -28,26 +29,29 @@ export default function CategoryPage() {
           const data = await response.json();
           setResponseServe(data);
           setArrayProducts(data.content);
+          setOriginArrayProducts(data.content);
         } catch (error) {
           console.error('Error fetching data:', error);
           navigate('*');
         }
       };
+
       fetchData();
     }
 
     if (params.seachProduct) {
-      const url = `https://back.komirka.pp.ua/api/v1/public/products/search?product-title=${encodeURIComponent(params.seachProduct)}&city=${params.city}&page=0&size=20`;
-      const fetchData = async () => {
+      const url = `https://back.komirka.pp.ua/api/v1/public/products/search?product-title=${encodeURIComponent(params.seachProduct)}&city=${params.city}&page=${page}&sort=${sort}`;
+      const fetchDataSeach = async () => {
         const res = await fetch(url);
         const data = await res.json();
         setResponseServe(data);
         setArrayProducts(data.content);
+        setOriginArrayProducts(data.content);
         if (data.content.length === 0) {
           navigate('*');
         }
       };
-      fetchData();
+      fetchDataSeach();
     }
   }, [params, page, sort, navigate]);
 
@@ -90,7 +94,7 @@ export default function CategoryPage() {
         </div>
       </div>
       <div className="category__main">
-        <FilterProduct arrayProducts={arrayProducts} setArrayProducts={value => setArrayProducts(value)} />
+        <FilterProduct originArrayProducts={originArrayProducts} arrayProducts={arrayProducts} setArrayProducts={value => setArrayProducts(value)} />
         <div className="cards_category">
           {arrayProducts.map((el, i) => (
             <CardProductCategory

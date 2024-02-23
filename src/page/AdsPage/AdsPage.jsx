@@ -39,7 +39,6 @@ export default function AdsPage() {
         />
       ))
     );
-    console.log(allProducts);
 
   async function getAllFavoriteProducts() {
     const token = JSON.parse(localStorage.getItem('user'));

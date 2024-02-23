@@ -9,21 +9,43 @@ import { useDispatch } from 'react-redux';
 import { setUser } from 'store/sliceReducer/sliceUser';
 
 export default function LogIn({ setStatusAuthentication }) {
-  const url = `https://back.komirka.pp.ua/api/v1/public/auth`;
+  const urlEmail = `https://back.komirka.pp.ua/api/v1/public/auth`;
+  const urlPhone = `https://back.komirka.pp.ua/api/v1/public/auth/phone`;
+  const [url, setUrl] = useState('');
   const [showHideElement1, setShowHideElement1] = useState(false);
   const [statusBtn, setStatusBtn] = useState(true);
+  const [loginPattern, setLoginPattern] = useState(null);
   const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
     getValues,
     reset,
+    watch,
     setError,
     formState: { errors },
   } = useForm({ mode: 'all' });
 
+  useEffect(() => {
+    const isPhoneNumber = /^\+?[0-9]+$/;
+    const isEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    const loginValue = getValues('login');
+
+    if (isPhoneNumber.test(loginValue)) {
+      setUrl(urlPhone);
+      setLoginPattern(isPhoneNumber);
+    } else if (isEmail.test(loginValue)) {
+      setUrl(urlEmail);
+      setLoginPattern(isEmail);
+    } else {
+      setLoginPattern(null);
+    }
+  }, [watch('login')]);
+
+  console.log(url);
+
   const validationPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-  const validationEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   function showPassword(e) {
     const input = e.currentTarget;
@@ -41,7 +63,7 @@ export default function LogIn({ setStatusAuthentication }) {
   const addDisabled = () => {
     const login = getValues('login');
     const password = getValues('password');
-    
+
     if (Object.keys(errors).length > 0 || login.length === 0 || password.length === 0) {
       setStatusBtn(true);
       return;
@@ -60,11 +82,42 @@ export default function LogIn({ setStatusAuthentication }) {
   };
 
   const onSubmit = data => {
-    axios
-      .post(url, {
+    let requestData;
+    const isPhoneNumber = /^\+?[0-9]+$/;
+
+    function formatPhoneNumber(phoneNumber) {
+      // Видаляємо всі нецифрові символи
+      const cleaned = ('' + phoneNumber).replace(/\D/g, '');
+
+      // Перевіряємо, чи номер телефону відповідає очікуваному формату
+      const match = cleaned.match(/^(\d{2})(\d{3})(\d{2})(\d{2})(\d{3})$/);
+
+      if (match) {
+        // Форматуємо номер телефону
+        const formattedNumber = `+${match[1]}(${match[2]})-${match[3]}-${match[4]}-${match[5]}`;
+        return formattedNumber;
+      }
+
+      // Повертаємо вхідний номер телефону у випадку, якщо він не відповідає очікуваному формату
+      return phoneNumber;
+    }
+
+    if (isPhoneNumber.test(data.login)) {
+      // Якщо введений телефон, відправляємо POST запит із полем phone
+      requestData = {
+        phone: formatPhoneNumber(data.login),
+        password: data.password,
+      };
+    } else {
+      // Якщо введено електронну пошту, відправляємо POST запит із полем email
+      requestData = {
         email: data.login,
         password: data.password,
-      })
+      };
+    }
+
+    axios
+      .post(url, requestData)
       .then(response => {
         localStorage.setItem('user', JSON.stringify(response.data));
         return response;
@@ -93,7 +146,7 @@ export default function LogIn({ setStatusAuthentication }) {
             className={errors.login && `error_input`}
             {...register('login', {
               required: true,
-              pattern: validationEmail,
+              pattern: loginPattern,
             })}
           />
           {errors.login && <p className="error_text">*Невірно введено логін</p>}
