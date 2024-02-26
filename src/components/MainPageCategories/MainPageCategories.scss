@@ -33,6 +33,7 @@
         width: calc(100% - 220px / 3);
         border-radius: 50%;
         transition: 0.2s;
+        overflow: hidden;
         cursor: pointer;
 
         &:hover {
@@ -42,7 +43,7 @@
         img {
             position: relative;
             left: 50%;
-            top: 50%;
+            top: 40%;
             transform: translate(-50%, -50%);
             object-fit: contain;
             display: block;
@@ -53,7 +54,7 @@
         h3 {
             white-space: nowrap;
             position: absolute;
-            bottom: 35px;
+            bottom: 50px;
             left: 50%;
             transform: translateX(-50%);
             color: #161616;
@@ -65,28 +66,28 @@
             z-index: 2;
         }
     }
-}
 
-.card_furniture {
-    background: #ABD998;
-}
+    .card_furniture {
+        background: #ABD998;
+    }
 
-.card_cloth {
-    background: #FFE562;
-}
+    .card_cloth {
+        background: #FFE562;
+    }
 
-.card_machinery {
-    background: #5FA0CA;
-}
+    .card_machinery {
+        background: #5FA0CA;
+    }
 
-.card_home {
-    background: #329BAD;
-}
+    .card_home {
+        background: #329BAD;
+    }
 
-.card_kidsToys {
-    background: #89C4C4;
-}
+    .card_kidsToys {
+        background: #89C4C4;
+    }
 
-.card_animals {
-    background: #92B884;
+    .card_animals {
+        background: #92B884;
+    }
 }

@@ -8,7 +8,7 @@ function Search() {
   const [product, setProduct] = useState('');
   const [filterCity, setFilterCity] = useState([]);
   const [showSityList, setShowSityList] = useState(false);
-  const [cities, setCities] = useState('КИЇВ');
+  const [cities, setCities] = useState('Київ');
   const navigation = useNavigate();
 
   function changeCity(e) {
@@ -82,7 +82,7 @@ function Search() {
         <img src="/img/location.svg" alt="#" />
         <input className="searchSiti" type="text" onClick={e => showCity(e)} onChange={e => changeCity(e)} placeholder="локація" value={cities} />
         {showSityList && (
-          <ul className="advert-page__form__list-city">
+          <ul className="searchContainer__list-city">
             {filterCity.map((el, i) => (
               <li onClick={e => clickCity(e)} key={i}>
                 {el["Назва об'єкта українською мовою"]}

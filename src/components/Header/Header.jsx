@@ -11,7 +11,6 @@ export default function Header() {
   const dispatch = useDispatch();
   const statusProfile = useSelector(state => state.statusProfile.statusProfile);
   const navigate = useNavigate();
-  const user = localStorage.getItem('user');
   function handelClickProfile() {
     dispatch(setStatusProfile(true));
   }
@@ -38,13 +37,13 @@ export default function Header() {
           <Link to="/favorite">
             <img src="/img/heart.svg" alt="like" />
           </Link>
-          {!user && <button onClick={handelClickProfile}>
+           <button onClick={handelClickProfile}>
             <img src="/img/profile.svg" alt="profile" />
-          </button>}
+          </button>
 
-          {user && <button onClick={handleLogout}>
+         <button onClick={handleLogout}>
             <img src="/img/exit_icon.svg" alt="exit" />
-          </button>}
+          </button>
         </div>
       </header>
       {statusProfile && <Authentication/>}

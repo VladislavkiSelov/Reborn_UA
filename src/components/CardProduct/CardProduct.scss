@@ -23,15 +23,12 @@
         background: inherit;
         border: none;
         cursor: pointer;
+        z-index: 2;
 
         img {
             width: 32px;
             height: 30px;
             transition: 0.2s;
-
-            &:hover {
-                transform: scale(1.2);
-            }
         }
     }
 
