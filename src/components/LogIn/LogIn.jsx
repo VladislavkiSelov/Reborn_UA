@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Button from 'components/Button/Button';
 import { ReactComponent as HideSvg } from '../../images/Hide.svg';
@@ -8,44 +8,78 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setUser } from 'store/sliceReducer/sliceUser';
 
-export default function LogIn({ setStatusAuthentication }) {
+export default function LogIn({ setStatusAuthentication, closePage }) {
   const urlEmail = `https://back.komirka.pp.ua/api/v1/public/auth`;
   const urlPhone = `https://back.komirka.pp.ua/api/v1/public/auth/phone`;
   const [url, setUrl] = useState('');
   const [showHideElement1, setShowHideElement1] = useState(false);
-  const [statusBtn, setStatusBtn] = useState(true);
   const [loginPattern, setLoginPattern] = useState(null);
+  const [statusBtn, setStatusBtn] = useState(true);
+  const [statusLogin, setStatusLogin] = useState(true);
+  let loginRef = useRef('');
+
   const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
     getValues,
+    setValue,
     reset,
     watch,
     setError,
     formState: { errors },
   } = useForm({ mode: 'all' });
+  const validationPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+  const editFormatLogin = useCallback(
+    phoneNumber => {
+      if (phoneNumber.length === 1) {
+        const login = '+38(' + phoneNumber.substring(0, 3);
+        setValue('login', login);
+        return;
+      }
+      if (phoneNumber.length === 7) {
+        const login = '+38(' + phoneNumber.substring(4, 7) + ')-';
+        setValue('login', login);
+        return;
+      }
+      if (phoneNumber.length === 11) {
+        const login = '+38(' + phoneNumber.substring(4, 7) + ')-' + phoneNumber.substring(9, 11) + '-';
+        setValue('login', login);
+        return;
+      }
+      if (phoneNumber.length === 14) {
+        const login = '+38(' + phoneNumber.substring(4, 7) + ')-' + phoneNumber.substring(9, 11) + '-' + phoneNumber.substring(12, 14) + '-';
+        setValue('login', login);
+        return;
+      }
+      if (phoneNumber.length > 18) {
+        const login =
+          '+38(' + phoneNumber.substring(4, 7) + ')-' + phoneNumber.substring(9, 11) + '-' + phoneNumber.substring(12, 14) + '-' + phoneNumber.substring(15, 18);
+        setValue('login', login);
+      }
+    },
+    [setValue]
+  );
 
   useEffect(() => {
-    const isPhoneNumber = /^\+?[0-9]+$/;
+    const isPhoneNumber = /\d+[\(+\)]*/;
     const isEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-    const loginValue = getValues('login');
-
-    if (isPhoneNumber.test(loginValue)) {
-      setUrl(urlPhone);
-      setLoginPattern(isPhoneNumber);
-    } else if (isEmail.test(loginValue)) {
+    const loginValue = watch('login');
+    if (isEmail.test(loginValue)) {
       setUrl(urlEmail);
       setLoginPattern(isEmail);
-    } else {
-      setLoginPattern(null);
+      setStatusLogin(false);
+    } else if (isPhoneNumber.test(loginValue)) {
+      setUrl(urlPhone);
+      setLoginPattern(/^(\+38\(\d{3}\)-\d{2}-\d{2}-\d{3})$/);
+      setStatusLogin(true);
+      if (loginValue.length > loginRef.current.length) {
+        editFormatLogin(loginValue);
+      }
     }
-  }, [watch('login')]);
-
-  console.log(url);
-
-  const validationPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    loginRef.current = loginValue;
+  }, [watch('login'), editFormatLogin]);
 
   function showPassword(e) {
     const input = e.currentTarget;
@@ -77,47 +111,10 @@ export default function LogIn({ setStatusAuthentication }) {
   });
   // добавление Disabled кнопке
 
-  const handleForgotPasswordClick = () => {
-    setStatusAuthentication('ForgotPassword');
-  };
-
   const onSubmit = data => {
-    let requestData;
-    const isPhoneNumber = /^\+?[0-9]+$/;
-
-    function formatPhoneNumber(phoneNumber) {
-      // Видаляємо всі нецифрові символи
-      const cleaned = ('' + phoneNumber).replace(/\D/g, '');
-
-      // Перевіряємо, чи номер телефону відповідає очікуваному формату
-      const match = cleaned.match(/^(\d{2})(\d{3})(\d{2})(\d{2})(\d{3})$/);
-
-      if (match) {
-        // Форматуємо номер телефону
-        const formattedNumber = `+${match[1]}(${match[2]})-${match[3]}-${match[4]}-${match[5]}`;
-        return formattedNumber;
-      }
-
-      // Повертаємо вхідний номер телефону у випадку, якщо він не відповідає очікуваному формату
-      return phoneNumber;
-    }
-
-    if (isPhoneNumber.test(data.login)) {
-      // Якщо введений телефон, відправляємо POST запит із полем phone
-      requestData = {
-        phone: formatPhoneNumber(data.login),
-        password: data.password,
-      };
-    } else {
-      // Якщо введено електронну пошту, відправляємо POST запит із полем email
-      requestData = {
-        email: data.login,
-        password: data.password,
-      };
-    }
-
+    const body = statusLogin ? { phone: data.login, password: data.password } : { email: data.login, password: data.password };
     axios
-      .post(url, requestData)
+      .post(url, body)
       .then(response => {
         localStorage.setItem('user', JSON.stringify(response.data));
         return response;
@@ -129,11 +126,14 @@ export default function LogIn({ setStatusAuthentication }) {
         });
       })
       .catch(error => {
-        setError('login')
-        setError('password')
+        setError('login');
+        setError('password');
         console.error('Ошибка запроса:', error);
+      })
+      .finally(() => {
+        closePage();
+        reset();
       });
-    reset();
   };
 
   return (
@@ -143,6 +143,7 @@ export default function LogIn({ setStatusAuthentication }) {
           Номер телефону або email
           <input
             type="text"
+            ref={loginRef}
             className={errors.login && `error_input`}
             {...register('login', {
               required: true,
@@ -180,7 +181,7 @@ export default function LogIn({ setStatusAuthentication }) {
           <p>Запам’ятати мене</p>
         </label>
         <p>
-          <p href="#" onClick={handleForgotPasswordClick}>
+          <p href="#" onClick={() => setStatusAuthentication('ForgotPassword')}>
             Забули пароль?
           </p>
         </p>
@@ -189,5 +190,3 @@ export default function LogIn({ setStatusAuthentication }) {
     </>
   );
 }
-
-

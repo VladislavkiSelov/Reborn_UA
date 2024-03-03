@@ -12,6 +12,7 @@ export default function Authentication() {
   const [statusAuthentication, setStatusAuthentication] = useState('LogIn');
   const statusProfile = useSelector(state => state.statusProfile.statusProfile);
   const dispatch = useDispatch();
+  
   function closePage() {
     dispatch(setStatusProfile(false));
   }
@@ -35,7 +36,7 @@ export default function Authentication() {
               </button>
             </div>
           </div>
-          {statusAuthentication === 'LogIn' && <LogIn setStatusAuthentication={value => setStatusAuthentication(value)} />}
+          {statusAuthentication === 'LogIn' && <LogIn closePage={closePage} setStatusAuthentication={value => setStatusAuthentication(value)} />}
           {statusAuthentication === 'SignUp' && <SignUp />}
           {statusAuthentication === 'ForgotPassword' && <PasswordForgotModal />}
           <p>

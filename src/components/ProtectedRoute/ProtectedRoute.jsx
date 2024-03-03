@@ -11,9 +11,10 @@ import { useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 
 export default function ProtectedRoute() {
-  const user = useSelector(state => state.user);
+  const user = useSelector(state => state.user.user);
 
-  if (user) {
+
+  if (Object.keys(user).length > 0) {
     return (
       <Routes>
         <Route path="/" element={<MainPage />}></Route>
