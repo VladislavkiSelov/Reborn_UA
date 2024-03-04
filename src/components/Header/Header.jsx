@@ -19,7 +19,7 @@ export default function Header() {
   }
 
   function goToAdsPage() {
-    navigate('/add-advert');
+    navigate('/protected/add-advert');
   }
 
   function handleLogout() {

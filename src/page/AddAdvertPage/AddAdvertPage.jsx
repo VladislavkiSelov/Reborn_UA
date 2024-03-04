@@ -61,7 +61,6 @@ export default function AddAdvertPage() {
       e.preventDefault();
     }
   }
-  console.log(errors);
 
   const onSubmit = data => {
     const date = moment(new Date()).format('YYYY-MM-DD');
