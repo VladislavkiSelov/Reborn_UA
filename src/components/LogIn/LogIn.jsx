@@ -63,14 +63,16 @@ export default function LogIn({ setStatusAuthentication, closePage }) {
   );
 
   useEffect(() => {
-    const isPhoneNumber = /\d+[\(+\)]*/;
     const isEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const loginValue = watch('login');
+
     if (isEmail.test(loginValue)) {
       setUrl(urlEmail);
       setLoginPattern(isEmail);
       setStatusLogin(false);
-    } else if (isPhoneNumber.test(loginValue)) {
+    }
+
+    if (/^\d/.test(loginValue[0]) || loginValue[0] === '+') {
       setUrl(urlPhone);
       setLoginPattern(/^(\+38\(\d{3}\)-\d{2}-\d{2}-\d{3})$/);
       setStatusLogin(true);
@@ -78,6 +80,7 @@ export default function LogIn({ setStatusAuthentication, closePage }) {
         editFormatLogin(loginValue);
       }
     }
+
     loginRef.current = loginValue;
   }, [watch('login'), editFormatLogin]);
 
