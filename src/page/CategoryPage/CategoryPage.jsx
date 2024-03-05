@@ -15,19 +15,23 @@ export default function CategoryPage() {
   const [originArrayProducts, setOriginArrayProducts] = useState([]);
   const [responseServe, setResponseServe] = useState([]);
   const [page, setPage] = useState(0);
+  const [size, setSize] = useState(6);
+  const [sortList, setSortList] = useState(false);
+  const [valueInputPagination, setValueInputPagination] = useState(1);
   const [sort, setSort] = useState('POPULARITY');
 
-  console.log(arrayProducts);
-
-  function CheckSort(e) {
-    setSort(e.target.value);
+  function closeListCity(e) {
+    if (e.target.classList.contains('choose-sort')) {
+      return;
+    }
+    setSortList(false);
   }
 
   useEffect(() => {
     if (params.categoryId) {
       const fetchData = async () => {
         try {
-          const response = await fetch(`https://back.komirka.pp.ua/api/v1/public/products/listing?category=${params.categoryId}&page=${page}&size=6&sort=${sort}`);
+          const response = await fetch(`https://back.komirka.pp.ua/api/v1/public/products/listing?category=${params.categoryId}&page=${page}&size=${size}&sort=${sort}`);
           const data = await response.json();
           setResponseServe(data);
           setArrayProducts(data.content);
@@ -44,7 +48,7 @@ export default function CategoryPage() {
     if (params.seachProduct) {
       const url = `https://back.komirka.pp.ua/api/v1/public/products/search?product-title=${encodeURIComponent(params.seachProduct)}&city=${
         params.city
-      }&page=${0}&size=${6}`;
+      }&page=${page}&size=${size}`;
 
       const fetchDataSeach = async () => {
         try {
@@ -52,7 +56,7 @@ export default function CategoryPage() {
           const data = await res.json();
           setResponseServe(data);
           setArrayProducts(data.content);
-          setOriginArrayProducts(data.content);;
+          setOriginArrayProducts(data.content);
         } catch (err) {
           console.log(`error fetch deach product`);
           navigate('*');
@@ -62,6 +66,17 @@ export default function CategoryPage() {
       fetchDataSeach();
     }
   }, [params, page, sort, navigate]);
+
+  useEffect(() => {
+    function clickBody(e) {
+      closeListCity(e);
+    }
+    document.querySelector('body').addEventListener('click', clickBody);
+    return () => {
+      document.querySelector('body').removeEventListener('click', clickBody);
+    };
+  }, []);
+  //закрываю список
 
   if (!arrayProducts) {
     navigate('*');
@@ -83,21 +98,47 @@ export default function CategoryPage() {
     );
   }
 
+  function openSortList() {
+    if (sortList) {
+      setSortList(false);
+    } else {
+      setSortList(true);
+    }
+  }
+
+  function chooseSortValue(e) {
+    if (e.target.textContent === 'Найновіші') {
+      setSort('DATE');
+    } else if (e.target.textContent === 'Популярні') {
+      setSort('POPULARITY');
+    }
+    setSortList(false);
+  }
+
   return (
     <div className="category container">
-      <h5>Головна сторінка/Категорія {translationCategory(params.categoryId)}</h5>
+      <h5 className="navigation">
+        Головна сторінка<span className="hidden">/Категорія {translationCategory(params.categoryId)}</span>
+      </h5>
       <div className="category__header">
-        <Pagination maxElementPage={responseServe.totalElements} setPage={value => setPage(value)} />
+        <Pagination
+          valueInput={valueInputPagination}
+          setValueInput={value => setValueInputPagination(value)}
+          size={size}
+          maxElementPage={responseServe.totalElements}
+          setPage={value => setPage(value)}
+        />
         <div className="category__header-sort">
           <h5>Сортувати за:</h5>
           <div className="wrapper_select">
-            <div className="select_arrow_down">
-              <ArrowDown />
-            </div>
-            <select onChange={e => CheckSort(e)}>
-              <option value="POPULARITY">Популярніші</option>
-              <option value="DATE">Дата</option>
-            </select>
+            <h4 onClick={openSortList} className="choose-sort">
+              {sort === 'POPULARITY' ? 'Популярні' : 'Найновіші'}
+            </h4>
+            {sortList && (
+              <ul onClick={e => chooseSortValue(e)} className="list-sort">
+                <li>{sort !== 'POPULARITY' ? 'Популярні' : 'Найновіші'}</li>
+              </ul>
+            )}
           </div>
         </div>
       </div>
@@ -118,7 +159,16 @@ export default function CategoryPage() {
               el={el}
             />
           ))}
-          <div className="category__footer">{/* <Pagination maxElementPage={responseServe.totalElements} setPage={value => setPage(value)} /> */}</div>
+          <div className="category__footer">
+            {' '}
+            <Pagination
+              valueInput={valueInputPagination}
+              setValueInput={value => setValueInputPagination(value)}
+              size={size}
+              maxElementPage={responseServe.totalElements}
+              setPage={value => setPage(value)}
+            />
+          </div>
         </div>
       </div>
     </div>

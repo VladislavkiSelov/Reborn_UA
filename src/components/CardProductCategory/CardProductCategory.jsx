@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './CardProductCategory.scss';
 import translationState from 'components/TranslationText/TranslationState';
 import NoImg from 'components/NoImg/NoImg';
@@ -9,7 +9,17 @@ import ClickLikeAddFavorites from 'components/ClickLikeAddFavorites/ClickLikeAdd
 
 export default function CardProductCategory({ productTitle, productDescription, city, state, reference, categoryId, el, images }) {
   const navigate = useNavigate();
+  const [statusLike, setStatusLike] = useState(false);
   const user = useSelector(state => state.user.user);
+
+  function handelClickLike() {
+    console.log(statusLike);
+    if (!statusLike) {
+      setStatusLike(true);
+    } else {
+      setStatusLike(false);
+    }
+  }
 
   return (
     <div onClick={e => ClickLikeAddFavorites({ e, reference, user, categoryId, navigate, el })} className="card-product-category">
@@ -26,7 +36,9 @@ export default function CardProductCategory({ productTitle, productDescription, 
           </div>
         </div>
         <p>{productDescription}</p>
-        <Like className="like" />
+        <button onClick={handelClickLike}>
+        {!statusLike ? <img src="/img/heart.svg" alt="like" className="like" /> : <img src="/img/activeLike.png" alt="like" className="like" />}
+      </button>
       </div>
     </div>
   );

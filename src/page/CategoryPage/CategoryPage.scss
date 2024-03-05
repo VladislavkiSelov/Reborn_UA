@@ -1,8 +1,15 @@
 .category {
     width: 100%;
 
-    &>h5 {
+    &>.navigation {
+        font-weight: 500;
+        font-family: Jost;
         padding-top: 50px;
+        font-size: 27px;
+    }
+
+    .hidden {
+        color: #999999;
     }
 
     &__header {
@@ -15,7 +22,7 @@
     &__header-sort {
         display: flex;
         align-items: center;
-        gap: 30px;
+        gap: 15px;
 
         select {
             border-radius: 4px;
@@ -41,6 +48,35 @@
             top: 50%;
             transform: translateY(-50%);
             pointer-events: none;
+        }
+
+        .choose-sort {
+            font-weight: 300;
+            font-size: 18px;
+            line-height: 133%;
+            border: 1px solid #555;
+            border-radius: 4px;
+            padding: 15px 40px;
+            margin-bottom: 2px;
+            cursor: pointer;
+        }
+
+        .list-sort {
+            position: absolute;
+            left: 0;
+            top: 58px;
+            border: 1px solid #c1c1c1;
+            border-radius: 4px;
+            padding: 15px 40px;
+            padding-bottom: 0;
+
+            li {
+                font-weight: 300;
+                font-size: 18px;
+                line-height: 133%;
+                margin-bottom: 15px; 
+                cursor: pointer;       
+            }
         }
     }
 

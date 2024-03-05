@@ -3,9 +3,8 @@ import { ReactComponent as BtnLeft } from '../../images/left_parenthesis.svg';
 import { ReactComponent as BtnRight } from '../../images/right_parenthesis.svg';
 import './Pagination.scss';
 
-export default function Pagination({ maxElementPage, setPage }) {
+export default function Pagination({ maxElementPage, setPage, size, valueInput, setValueInput}) {
   const [max, setMax] = useState(0);
-  const [valueInput, setValueInput] = useState(1);
 
   function handelChange(e) {
     if (e.target.value > max) {
@@ -41,8 +40,8 @@ export default function Pagination({ maxElementPage, setPage }) {
   }
 
   useEffect(() => {
-    setMax(Math.ceil(maxElementPage / 6));
-  }, [maxElementPage]);
+    setMax(Math.ceil(maxElementPage / size));
+  }, [maxElementPage, size]);
 
   useEffect(() => {
     if (valueInput === '') {

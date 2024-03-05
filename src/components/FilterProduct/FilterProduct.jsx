@@ -2,8 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import Button from 'components/Button/Button';
 import './FilterProduct.scss';
-import SeachCity from 'components/SeachCity/SeachCity';
-
+import SearchCity from 'components/SearchCity/SearchCity';
 
 export default function FilterProduct({ arrayProducts, setArrayProducts, originArrayProducts }) {
   const {
@@ -17,9 +16,8 @@ export default function FilterProduct({ arrayProducts, setArrayProducts, originA
 
   function filterCityMain(array) {
     const city = getValues('city');
-
     if (city) {
-      const resFilter = array.filter(el => el.city === city);
+      const resFilter = array.filter(el => el.city.toUpperCase() === city.toUpperCase());
       return resFilter;
     } else {
       return array;
@@ -72,7 +70,7 @@ export default function FilterProduct({ arrayProducts, setArrayProducts, originA
       <div className="filter_wrapper">
         <h3>Фільтри:</h3>
         <form className="form_filter" onSubmit={handleSubmit(onSubmit)}>
-          <SeachCity setValue={(value1, value2) => setValue(value1, value2)} register={register} watch={value => watch(value)} classLabel={`label_city`} arrow={false}/>
+          <SearchCity setValue={(value1, value2) => setValue(value1, value2)} register={register} watch={value => watch(value)} classLabel={`label_city`} arrow={false} />
           <h4>Стан</h4>
           <div className="box_input_checkbox_filter">
             <label className="checkbox_label">

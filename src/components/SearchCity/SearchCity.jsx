@@ -23,7 +23,9 @@ export default function SeachCity({ register, setValue, watch, classLabel, arrow
   }
 
   function clickCity(e) {
-    setValue('city', e.target.textContent);
+    const textValue = e.target.textContent;
+    const textTransform = textValue.substring(0, 1).toUpperCase() + textValue.substring(1).toLowerCase();
+    setValue("city",textTransform);
     setShowSityList(false);
     e.preventDefault();
   }
@@ -31,7 +33,6 @@ export default function SeachCity({ register, setValue, watch, classLabel, arrow
   useEffect(() => {
     setCities(watch('city'));
   });
-  //записіваю в стейт значение инпута
 
   useEffect(() => {
     axios
@@ -84,3 +85,10 @@ export default function SeachCity({ register, setValue, watch, classLabel, arrow
     </label>
   );
 }
+
+
+
+
+
+
+

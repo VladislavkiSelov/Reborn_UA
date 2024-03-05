@@ -1,10 +1,15 @@
 .card_product {
     border-radius: 10px;
-    background: white;
+    background: #f4f4f4;
     backdrop-filter: blur(1px);
     padding: 8px;
     cursor: pointer;
     position: relative;
+    transition: 0.3s;
+
+    &:hover {
+        background: white;
+    }
 
     h4 {
         color: #161616;

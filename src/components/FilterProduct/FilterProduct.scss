@@ -73,6 +73,11 @@
             margin-bottom: 10px;
             cursor: pointer;
             display: block;
+            text-transform: lowercase;
+
+            &::first-letter {
+                text-transform: uppercase;
+              }
 
             &:hover {
                 color: #567A49;

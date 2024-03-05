@@ -19,6 +19,7 @@
             height: 100%;
             width: 100%;
         }
+
     }
 
     &__content {
@@ -65,11 +66,9 @@
             right: 40px;
             top: 40px;
             transition: 0.3s;
+            width: 32px;
+            height: 30px;
             cursor: pointer;
-
-            &:hover {
-                transform: scale(1.2);
-            }
         }
     }
 

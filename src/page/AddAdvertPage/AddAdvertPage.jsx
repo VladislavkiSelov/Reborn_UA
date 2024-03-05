@@ -7,7 +7,7 @@ import InputFile from 'components/InputFile/InputFile';
 import axios from 'axios';
 import translationCategory from 'components/TranslationText/TranslationCategory';
 import './AddAdvertPage.scss';
-import SeachCity from 'components/SeachCity/SeachCity';
+import SeachCity from 'components/SearchCity/SearchCity';
 import { IMaskInput } from 'react-imask';
 import moment from 'moment';
 
