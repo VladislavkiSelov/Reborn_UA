@@ -187,11 +187,11 @@ export default function SignUp() {
           )}
           {errors.repeat_password && <p className="error_text">*Паролі не співпадають</p>}
         </label>
-        <label htmlFor="remember_me" className="label_remember_me">
+        {/* <label htmlFor="remember_me" className="label_remember_me">
           <input className="input_checkbox" type="checkbox" id="remember_me" {...register('remember_me')} />
           <span className="check_box"></span>
           <p>Запам’ятати мене</p>
-        </label>
+        </label> */}
         <Button statusDisabled={statusBtn} classBtn="btn-blue" text="Зарєеструватися" />
       </form>
     </>

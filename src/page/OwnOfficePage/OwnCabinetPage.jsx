@@ -5,14 +5,9 @@ import CardUser from 'components/CardUser/CardUser';
 import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import Button from 'components/Button/Button';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { setStatusProfile } from 'store/sliceStatusProfile/sliceStatusProfile';
 
 export default function OwnCabinetPage() {
   const user = useSelector(state => state.user.user);
-  const dispatch = useDispatch();
-  const navigation = useNavigate();
 
   const validationName = /^[А-Яа-яЁёA-Za-z]{2,20} [А-Яа-яЁёA-Za-z]{2,20}$/;
   const validationEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -54,14 +49,6 @@ export default function OwnCabinetPage() {
       .then(res => console.log(res));
     reset();
   };
-
-  useEffect(() => {
-    const userId = JSON.parse(localStorage.getItem('user'));
-    if (userId === null) {
-      dispatch(setStatusProfile(true));
-      navigation('/');
-    }
-  }, [user]);
 
   return (
     <div className="own_cabinet container">

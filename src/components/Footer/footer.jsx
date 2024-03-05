@@ -38,7 +38,7 @@ export default function Footer() {
                 <Link to="favorite">Улюблене</Link>
               </li>
               <li>
-                <Link to="own-cabinet">Мій кабінет</Link>
+                <Link to="/protected/own-cabinet">Мій кабінет</Link>
               </li>
               <li>Про нас</li>
               <li>Умови використання</li>

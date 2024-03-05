@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './CardProduct.scss';
 import NoImg from 'components/NoImg/NoImg';
@@ -8,10 +8,20 @@ import moment from 'moment/moment';
 
 export default function CardProduct({ productTitle, city, titleImage, categoryId, reference, el, publishDate }) {
   const navigate = useNavigate();
+  const [statusLike, setStatusLike] = useState(false);
   const user = useSelector(state => state.user.user);
 
   const img = titleImage === 'cover image not presented' || titleImage.length === 0 ? NoImg : titleImage;
   const date = moment(publishDate).format('YY.MM.DD');
+
+  function handelClickLike() {
+    console.log(statusLike);
+    if (!statusLike) {
+      setStatusLike(true);
+    } else {
+      setStatusLike(false);
+    }
+  }
 
   return (
     <div onClick={e => ClickLikeAddFavorites({ e, reference, user, categoryId, navigate, el })} className="card_product">
@@ -25,8 +35,8 @@ export default function CardProduct({ productTitle, city, titleImage, categoryId
           {city} - {date}
         </h5>
       </div>
-      <button>
-        <img src="/img/heart.svg" alt="like" className="like" />
+      <button onClick={handelClickLike}>
+        {!statusLike ? <img src="/img/heart.svg" alt="like" className="like" /> : <img src="/img/activeLike.png" alt="like" className="like" />}
       </button>
     </div>
   );

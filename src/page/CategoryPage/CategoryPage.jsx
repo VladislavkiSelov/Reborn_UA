@@ -17,6 +17,8 @@ export default function CategoryPage() {
   const [page, setPage] = useState(0);
   const [sort, setSort] = useState('POPULARITY');
 
+  console.log(arrayProducts);
+
   function CheckSort(e) {
     setSort(e.target.value);
   }
@@ -40,17 +42,23 @@ export default function CategoryPage() {
     }
 
     if (params.seachProduct) {
-      const url = `https://back.komirka.pp.ua/api/v1/public/products/search?product-title=${encodeURIComponent(params.seachProduct)}&city=${params.city}&page=${page}&sort=${sort}`;
+      const url = `https://back.komirka.pp.ua/api/v1/public/products/search?product-title=${encodeURIComponent(params.seachProduct)}&city=${
+        params.city
+      }&page=${0}&size=${6}`;
+
       const fetchDataSeach = async () => {
-        const res = await fetch(url);
-        const data = await res.json();
-        setResponseServe(data);
-        setArrayProducts(data.content);
-        setOriginArrayProducts(data.content);
-        if (data.content.length === 0) {
+        try {
+          const res = await fetch(url);
+          const data = await res.json();
+          setResponseServe(data);
+          setArrayProducts(data.content);
+          setOriginArrayProducts(data.content);;
+        } catch (err) {
+          console.log(`error fetch deach product`);
           navigate('*');
         }
       };
+
       fetchDataSeach();
     }
   }, [params, page, sort, navigate]);

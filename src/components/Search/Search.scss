@@ -53,4 +53,34 @@
         line-height: 22px;
         max-width: 410px;
     }
+
+    &__list-city {
+        background: white;
+        padding: 15px 30px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 83px;
+        border: 1px solid #3E3E3E;
+        max-height: 450px;
+        overflow-y: scroll;
+        z-index: 2;
+
+        li {
+            text-transform: lowercase;
+            margin-bottom: 10px;
+            cursor: pointer;
+            display: block;
+            text-transform: lowercase;
+
+            &::first-letter {
+                text-transform: uppercase;
+              }
+
+            &:hover {
+                color: #567A49;
+                font-weight: 700;
+            }
+        }
+    }
 }

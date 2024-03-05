@@ -8,7 +8,7 @@ function Search() {
   const [product, setProduct] = useState('');
   const [filterCity, setFilterCity] = useState([]);
   const [showSityList, setShowSityList] = useState(false);
-  const [cities, setCities] = useState('КИЇВ');
+  const [cities, setCities] = useState('Київ');
   const navigation = useNavigate();
 
   function changeCity(e) {
@@ -23,7 +23,9 @@ function Search() {
   }
 
   function clickCity(e) {
-    setCities(e.target.textContent);
+    const textValue = e.target.textContent;
+    const textTransform = textValue.substring(0, 1).toUpperCase() + textValue.substring(1).toLowerCase();
+    setCities(textTransform);
     setShowSityList(false);
     e.preventDefault();
   }
@@ -51,7 +53,7 @@ function Search() {
       .then(res => {
         setSityList(res.data);
       })
-      .catch(error => console.error('Error fetching data:', error));
+      .catch(error => console.error('Error fetch city list:', error));
     setProduct('');
   }, []);
   //загружаю все города
@@ -82,7 +84,7 @@ function Search() {
         <img src="/img/location.svg" alt="#" />
         <input className="searchSiti" type="text" onClick={e => showCity(e)} onChange={e => changeCity(e)} placeholder="локація" value={cities} />
         {showSityList && (
-          <ul className="advert-page__form__list-city">
+          <ul className="searchContainer__list-city">
             {filterCity.map((el, i) => (
               <li onClick={e => clickCity(e)} key={i}>
                 {el["Назва об'єкта українською мовою"]}

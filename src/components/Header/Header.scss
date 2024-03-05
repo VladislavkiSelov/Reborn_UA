@@ -3,10 +3,7 @@
     flex-direction: row;
     align-items: center;
     width: 100%;
-    // justify-content: space-between;
-    & img{
-      max-height: 35px;
-    }
+    // justify-content: space-between
 
     .header-logo {
         min-width: 183px;
@@ -30,6 +27,11 @@
             border: none;
             padding: 0;
             cursor: pointer;
+
+            &>img{
+              height: 35px;
+              width: 35px;
+            }
         }
     }
 }
